@@ -1,5 +1,5 @@
 const theme = {
-  maxWidth: "85rem", // 1360px
+  maxWidth: "64rem", // 1024px
 
   media: {
     lg: 1024,

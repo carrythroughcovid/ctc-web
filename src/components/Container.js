@@ -1,4 +1,6 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
+
+import media from "../utils/media"
 
 const Container = styled.div`
   max-width: ${props => props.theme.maxWidth};
@@ -6,6 +8,17 @@ const Container = styled.div`
   margin: 0 auto;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+
+  ${props =>
+    props.fullWidth &&
+    css`
+      padding-left: 0;
+      padding-right: 0;
+      ${media.md`
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      `}
+    `}
 `
 
 export default Container
