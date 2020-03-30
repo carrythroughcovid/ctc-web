@@ -63,6 +63,25 @@ const ButtonLink = styled(Link)`
   }
 `
 
+const DetailBlock = styled.div`
+  padding-bottom: 1.5rem;
+`
+
+const BlockContent = styled.div`
+  margin-top: 0.875rem;
+  padding: 0.75rem 0.625rem;
+  background-color: #ececec;
+`
+
+const DetailTitle = styled.div`
+  padding-top: 1rem;
+  padding-bottom: 0.875rem;
+  font-weight: bold;
+`
+const OfferingItem = styled.div`
+  text-transform: capitalize;
+`
+
 const IndexPage = () => {
   // TODO hook up real data store
   const {
@@ -71,6 +90,9 @@ const IndexPage = () => {
     businessType,
     businessName,
     suburb,
+    details,
+    about,
+    offerings,
   } = mockListing
 
   return (
@@ -93,7 +115,26 @@ const IndexPage = () => {
 
         <ButtonLink to="/">Visit Website</ButtonLink>
 
-        <div>tabs Products/Services - Current offering - Details About</div>
+        <DetailTitle>Products/Service</DetailTitle>
+        <DetailBlock>
+          Current offering
+          <BlockContent>
+            {offerings.map(offering => (
+              // TODO: add icons and map them to offering names
+              <OfferingItem>[x] {offering}</OfferingItem>
+            ))}
+          </BlockContent>
+        </DetailBlock>
+        <DetailBlock>
+          Details
+          {/* TODO: Make sure new lines/tabs display corectly */}
+          <BlockContent>{details}</BlockContent>
+        </DetailBlock>
+
+        <DetailTitle>About</DetailTitle>
+        <DetailBlock>
+          <BlockContent>{about}</BlockContent>
+        </DetailBlock>
       </Container>
     </Page>
   )
