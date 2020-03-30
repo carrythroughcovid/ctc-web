@@ -1,5 +1,6 @@
 const theme = {
   maxWidth: "64rem", // 1024px
+  headerHeight: "4.25rem",
 
   media: {
     lg: 1024,
