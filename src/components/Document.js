@@ -11,7 +11,7 @@ const Document = ({ children }) => {
       <>
         <Normalize />
         <GlobalStyles />
-        {children}
+          {children}
       </>
     </ThemeProvider>
   )
