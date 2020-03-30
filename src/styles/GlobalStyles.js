@@ -11,7 +11,7 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: inherit;
   }
   body {
-    font-family: Helvetica Neue,Arial,Helvetica,sans-serif;
+    font-family: 'Roboto', sans-serif;
   }
   a {
     text-decoration: none;
@@ -22,7 +22,7 @@ const GlobalStyles = createGlobalStyle`
     }
   }
   h1, h2, h3 ,h4 ,h5 ,h6 {
-    font-family: Helvetica Neue,Arial,Helvetica,sans-serif;
+    font-family: 'Roboto', sans-serif;
   }
   ::selection {
     background-color: ${props => props.theme.colour.primary};
