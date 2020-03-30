@@ -7,7 +7,7 @@ import Container from "../components/Container"
 
 // import media from "../utils/media"
 
-import mockListing from "../../mockContent/listing1"
+import mockListing from "../../mockContent/listings"
 
 const BusinessImage = styled.img`
   width: 100%;
@@ -93,7 +93,7 @@ const IndexPage = () => {
     details,
     about,
     offerings,
-  } = mockListing
+  } = mockListing[0]
 
   return (
     <Page>
