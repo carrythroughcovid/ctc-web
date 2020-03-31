@@ -5,6 +5,7 @@ import listings from "../../mockContent/listings"
 import Listing from "../components/Listing"
 import Container from "../components/Container"
 import Page from "../components/Page"
+import SelectGroup from  "../components/SelectGroup"
 
 import { offerings, categories, states } from "../utils/presets"
 import media from "../utils/media"
@@ -24,7 +25,6 @@ const ListingsContainer = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
   `}
-
 `
 
 const SearchResultsPage = ({}) => {
@@ -38,9 +38,9 @@ const SearchResultsPage = ({}) => {
   const filteredListings = listings.filter(
     ({ suburb, businessName, offerings, businessType, state }) => {
       const searchValue = values.searchInput.toLowerCase()
-      const selectedOffering = values.offering
-      const selectedCategory = values.category
-      const selectedState = values.state
+      const selectedOffering = values.offering.toLowerCase()
+      const selectedCategory = values.category.toLowerCase()
+      const selectedState = values.state.toLowerCase()
       // TODO: look into this, this might not be performant at all
       const results = {
         matchedSuburb: suburb.toLowerCase().includes(searchValue),
@@ -48,9 +48,9 @@ const SearchResultsPage = ({}) => {
         matchedOffering:
           offerings.includes(selectedOffering) || selectedOffering === "",
         matchedCategory:
-        businessType.includes(selectedCategory) || selectedCategory === "",
+        businessType.toLowerCase().includes(selectedCategory) || selectedCategory === "",
         matchedState:
-        state.includes(selectedState) || selectedState === "",
+        state.toLowerCase().includes(selectedState) || selectedState === "",
       }
 
       return (
@@ -76,51 +76,9 @@ const SearchResultsPage = ({}) => {
             </label>
           </FieldGroup>
           <FieldGroup>
-            <label style={{marginRight: '1rem'}}>
-              Offerings: &nbsp;
-              <select
-                name="offering"
-                value={values.offering}
-                onChange={handleInputChange}
-              >
-                <option value="">All</option>
-                {offerings.map((offering, index) => (
-                  <option key={index} value={offering}>
-                    {offering}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label style={{marginRight: '1rem'}}>
-              State: &nbsp;
-              <select
-                name="state"
-                value={values.state}
-                onChange={handleInputChange}
-              >
-                <option value="">All</option>
-                {states.map((state, index) => (
-                  <option key={index} value={state}>
-                    {state}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Category: &nbsp;
-              <select
-                name="category"
-                value={values.category}
-                onChange={handleInputChange}
-              >
-                <option value="">All</option>
-                {categories.map((category, index) => (
-                  <option key={index} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <SelectGroup name="offering" value={values.offering} items = {offerings} onSelect = {handleInputChange}></SelectGroup>
+            <SelectGroup name="state" value={values.state} items = {states} onSelect = {handleInputChange}></SelectGroup>
+            <SelectGroup name="category" value={values.category} items = {categories} onSelect = {handleInputChange}></SelectGroup>
           </FieldGroup>
         </Form>
 
