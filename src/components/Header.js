@@ -9,8 +9,8 @@ const StyledHeader = styled.header`
   background-color: #f2f2f2;
   display: flex;
   align-items: center;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: ${({ theme }) => theme.containerGutter};
+  padding-right: ${({ theme }) => theme.containerGutter};
 `
 
 const HeaderLink = styled(Link)`

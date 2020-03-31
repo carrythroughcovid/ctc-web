@@ -1,15 +1,25 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
-const FooterContainer = styled.div`
-  background-color: ${props => props.theme.colour.primary};
+const StyledFooter = styled.header`
+  height: ${props => props.theme.headerHeight};
+  background-color: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: ${({ theme }) => theme.containerGutter};
+  padding-right: ${({ theme }) => theme.containerGutter};
+  font-size: 0.75rem;
 `
 
 const Footer = () => {
   return (
-    <FooterContainer>
-      Carry through Covid
-    </FooterContainer>
+    <StyledFooter>
+      Questions or feedback? We'd love to hear from you&nbsp;
+      <a href="mailto:contact@carrythroughcovid.com">
+        contact@carrythroughcovid.com
+      </a>
+    </StyledFooter>
   )
 }
 

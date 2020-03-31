@@ -26,6 +26,7 @@ const GlobalStyles = createGlobalStyle`
   }
   ::selection {
     background-color: ${props => props.theme.colour.primary};
+    color: white;
   }
 `
 
