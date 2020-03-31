@@ -6,7 +6,7 @@ import Listing from "../components/Listing"
 import Container from "../components/Container"
 import Page from "../components/Page"
 
-import { offerings } from "../utils/presets"
+import { offerings, categories } from "../utils/presets"
 import media from "../utils/media"
 
 const Form = styled.form`
@@ -28,28 +28,31 @@ const ListingsContainer = styled.div`
 `
 
 const SearchResultsPage = ({}) => {
-  const [values, setValues] = useState({ searchInput: "", offering: "" })
+  const [values, setValues] = useState({ searchInput: "", offering: "", category: "" })
 
   const handleInputChange = e => {
     const { name, value } = e.target
-    setValues({ ...values, [name]: value }, console.log(values))
+    setValues({ ...values, [name]: value })
   }
 
   const filteredListings = listings.filter(
-    ({ suburb, businessName, offerings }) => {
+    ({ suburb, businessName, offerings, businessType }) => {
       const searchValue = values.searchInput.toLowerCase()
       const selectedOffering = values.offering
+      const selectedCategory = values.category
       // TODO: look into this, this might not be performant at all
       const results = {
         matchedSuburb: suburb.toLowerCase().includes(searchValue),
         matchedName: businessName.toLowerCase().includes(searchValue),
         matchedOffering:
           offerings.includes(selectedOffering) || selectedOffering === "",
+        matchedCategory:
+        businessType.includes(selectedCategory) || selectedCategory === "",
       }
 
       return (
         (results.matchedSuburb || results.matchedName) &&
-        results.matchedOffering
+        results.matchedOffering && results.matchedCategory
       )
     }
   )
@@ -70,7 +73,7 @@ const SearchResultsPage = ({}) => {
             </label>
           </FieldGroup>
           <FieldGroup>
-            <label>
+            <label style={{marginRight: '1rem'}}>
               Offerings: &nbsp;
               <select
                 name="offering"
@@ -81,6 +84,21 @@ const SearchResultsPage = ({}) => {
                 {offerings.map((offering, index) => (
                   <option key={index} value={offering}>
                     {offering}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Category: &nbsp;
+              <select
+                name="category"
+                value={values.categories}
+                onChange={handleInputChange}
+              >
+                <option value="">All</option>
+                {categories.map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
                   </option>
                 ))}
               </select>
