@@ -4,6 +4,7 @@ import styled from "styled-components"
 
 import Page from "../components/Page"
 import Container from "../components/Container"
+import srp from "./srp"
 
 import media from "../utils/media"
 
@@ -26,4 +27,5 @@ const IndexPage = () => (
   </Page>
 )
 
-export default IndexPage
+// TODO: just using SRP untill we have homepage design
+export default srp
