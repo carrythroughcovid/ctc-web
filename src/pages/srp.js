@@ -6,7 +6,7 @@ import Listing from "../components/Listing"
 import Container from "../components/Container"
 import Page from "../components/Page"
 
-import { offerings, categories } from "../utils/presets"
+import { offerings, categories, states } from "../utils/presets"
 import media from "../utils/media"
 
 const Form = styled.form`
@@ -28,7 +28,7 @@ const ListingsContainer = styled.div`
 `
 
 const SearchResultsPage = ({}) => {
-  const [values, setValues] = useState({ searchInput: "", offering: "", category: "" })
+  const [values, setValues] = useState({ searchInput: "", offering: "", category: "", state: "" })
 
   const handleInputChange = e => {
     const { name, value } = e.target
@@ -36,10 +36,11 @@ const SearchResultsPage = ({}) => {
   }
 
   const filteredListings = listings.filter(
-    ({ suburb, businessName, offerings, businessType }) => {
+    ({ suburb, businessName, offerings, businessType, state }) => {
       const searchValue = values.searchInput.toLowerCase()
       const selectedOffering = values.offering
       const selectedCategory = values.category
+      const selectedState = values.state
       // TODO: look into this, this might not be performant at all
       const results = {
         matchedSuburb: suburb.toLowerCase().includes(searchValue),
@@ -48,11 +49,13 @@ const SearchResultsPage = ({}) => {
           offerings.includes(selectedOffering) || selectedOffering === "",
         matchedCategory:
         businessType.includes(selectedCategory) || selectedCategory === "",
+        matchedState:
+        state.includes(selectedState) || selectedState === "",
       }
 
       return (
         (results.matchedSuburb || results.matchedName) &&
-        results.matchedOffering && results.matchedCategory
+        results.matchedOffering && results.matchedCategory && results.matchedState
       )
     }
   )
@@ -88,11 +91,26 @@ const SearchResultsPage = ({}) => {
                 ))}
               </select>
             </label>
+            <label style={{marginRight: '1rem'}}>
+              State: &nbsp;
+              <select
+                name="state"
+                value={values.state}
+                onChange={handleInputChange}
+              >
+                <option value="">All</option>
+                {states.map((state, index) => (
+                  <option key={index} value={state}>
+                    {state}
+                  </option>
+                ))}
+              </select>
+            </label>
             <label>
               Category: &nbsp;
               <select
                 name="category"
-                value={values.categories}
+                value={values.category}
                 onChange={handleInputChange}
               >
                 <option value="">All</option>

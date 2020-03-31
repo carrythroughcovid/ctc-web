@@ -6,6 +6,7 @@ const listings = [
     businessType: "Retail",
     offerings: ["online", "delivery", "virtual", "credit"],
     suburb: "Richmond",
+    state: "vic",
     link: "http://google.com.au",
     about:
       "Business owners will be asked to add info about their business, and this is an opportunity to tell their story and connect with the community.",
@@ -22,6 +23,7 @@ const listings = [
     businessType: "Retail",
     offerings: ["online", "delivery", "credit"],
     suburb: "Melbourne",
+    state: "vic",
     link: "http://google.com.au",
     about:
       "Business owners will be asked to add info about their business, and this is an opportunity to tell their story and connect with the community.",
@@ -38,6 +40,7 @@ const listings = [
     businessType: "Cafe",
     offerings: ["credit"],
     suburb: "South Yarra",
+    state: "vic",
     link: "http://google.com.au",
     about:
       "Business owners will be asked to add info about their business, and this is an opportunity to tell their story and connect with the community.",
@@ -54,6 +57,7 @@ const listings = [
     businessType: "Retail",
     offerings: ["online", "delivery", "virtual", "credit"],
     suburb: "Richmond",
+    state: "vic",
     link: "http://google.com.au",
     about:
       "Business owners will be asked to add info about their business, and this is an opportunity to tell their story and connect with the community.",
@@ -69,7 +73,8 @@ const listings = [
     mobile: "040000000",
     businessType: "Retail",
     offerings: ["online", "delivery", "credit"],
-    suburb: "Melbourne",
+    suburb: "Padbury",
+    state: "wa",
     link: "http://google.com.au",
     about:
       "Business owners will be asked to add info about their business, and this is an opportunity to tell their story and connect with the community.",
@@ -85,7 +90,8 @@ const listings = [
     mobile: "040000000",
     businessType: "Cafe",
     offerings: ["credit"],
-    suburb: "South Yarra",
+    suburb: "Baxter",
+    state: "sa",
     link: "http://google.com.au",
     about:
       "Business owners will be asked to add info about their business, and this is an opportunity to tell their story and connect with the community.",
