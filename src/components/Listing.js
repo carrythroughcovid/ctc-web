@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
+import media from "../utils/media"
 
 const ListingImage = styled.img`
   width: 100%;
@@ -23,6 +24,10 @@ const ListingContainer = styled(Link)`
   max-width: 400px;
   margin: 1rem auto;
   display: block;
+
+  ${media.sm`
+    flex-basis: 30%;
+  `}
 
   &:hover {
     text-decoration: none;
