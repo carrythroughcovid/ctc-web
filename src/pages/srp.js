@@ -7,6 +7,7 @@ import Container from "../components/Container"
 import Page from "../components/Page"
 
 import { offerings } from "../utils/presets"
+import media from "../utils/media"
 
 const Form = styled.form`
   padding-top: 2rem;
@@ -14,6 +15,16 @@ const Form = styled.form`
 
 const FieldGroup = styled.div`
   padding-bottom: 0.5rem;
+`
+
+const ListingsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  ${media.sm`
+    flex-direction: row;
+    flex-wrap: wrap;
+  `}
+
 `
 
 const SearchResultsPage = ({}) => {
@@ -77,9 +88,12 @@ const SearchResultsPage = ({}) => {
           </FieldGroup>
         </Form>
 
-        {filteredListings.map((listing, index) => (
-          <Listing key={index} listing={listing}></Listing>
-        ))}
+        <ListingsContainer>
+          {filteredListings.map((listing, index) => (
+            <Listing key={index} listing={listing}></Listing>
+          ))}
+        </ListingsContainer>
+
       </Container>
     </Page>
   )
