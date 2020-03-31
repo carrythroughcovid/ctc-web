@@ -6,41 +6,76 @@ import Listing from "../components/Listing"
 import Container from "../components/Container"
 import Page from "../components/Page"
 
-const SearchForm = styled.div`
+import { offerings } from "../utils/presets"
+
+const Form = styled.form`
   padding-top: 2rem;
 `
 
+const FieldGroup = styled.div`
+  padding-bottom: 0.5rem;
+`
+
 const SearchResultsPage = ({}) => {
-  const [values, setValues] = useState({ searchInput: "" })
+  const [values, setValues] = useState({ searchInput: "", offering: "" })
 
   const handleInputChange = e => {
     const { name, value } = e.target
-    setValues({ ...values, [name]: value })
+    setValues({ ...values, [name]: value }, console.log(values))
   }
 
-  const filteredListings = listings.filter(({ suburb, businessName }) => {
-    const searchValue = values.searchInput.toLowerCase()
-    // TODO: look into this, this might not be performant at all
-    return (
-      suburb.toLowerCase().includes(searchValue) ||
-      businessName.toLowerCase().includes(searchValue)
-    )
-  })
+  const filteredListings = listings.filter(
+    ({ suburb, businessName, offerings }) => {
+      const searchValue = values.searchInput.toLowerCase()
+      const selectedOffering = values.offering
+      // TODO: look into this, this might not be performant at all
+      const results = {
+        matchedSuburb: suburb.toLowerCase().includes(searchValue),
+        matchedName: businessName.toLowerCase().includes(searchValue),
+        matchedOffering:
+          offerings.includes(selectedOffering) || selectedOffering === "",
+      }
+
+      return (
+        (results.matchedSuburb || results.matchedName) &&
+        results.matchedOffering
+      )
+    }
+  )
 
   return (
     <Page>
       <Container>
-        <SearchForm>
-          <label>
-            Search by location or business name: &nbsp;
-            <input
-              type="text"
-              name="searchInput"
-              onChange={handleInputChange}
-              value={values.searchInput}
-            />
-          </label>
-        </SearchForm>
+        <Form>
+          <FieldGroup>
+            <label>
+              Search by location or business name: &nbsp;
+              <input
+                type="text"
+                name="searchInput"
+                onChange={handleInputChange}
+                value={values.searchInput}
+              />
+            </label>
+          </FieldGroup>
+          <FieldGroup>
+            <label>
+              Offerings: &nbsp;
+              <select
+                name="offering"
+                value={values.offering}
+                onChange={handleInputChange}
+              >
+                <option value="">All</option>
+                {offerings.map((offering, index) => (
+                  <option key={index} value={offering}>
+                    {offering}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </FieldGroup>
+        </Form>
 
         {filteredListings.map((listing, index) => (
           <Listing key={index} listing={listing}></Listing>

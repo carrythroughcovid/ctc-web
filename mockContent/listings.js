@@ -20,7 +20,7 @@ const listings = [
     email: "test2@email.com",
     mobile: "040000000",
     businessType: "Retail",
-    offerings: ["online", "delivery", "virtual", "credit"],
+    offerings: ["online", "delivery", "credit"],
     suburb: "Melbourne",
     link: "http://google.com.au",
     about:
@@ -36,7 +36,7 @@ const listings = [
     email: "test3@email.com",
     mobile: "040000000",
     businessType: "Cafe",
-    offerings: ["online", "delivery", "virtual", "credit"],
+    offerings: ["credit"],
     suburb: "South Yarra",
     link: "http://google.com.au",
     about:
