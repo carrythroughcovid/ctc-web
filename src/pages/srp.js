@@ -1,7 +1,6 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 
-import listings from "../../mockContent/listings"
 import Listing from "../components/Listing"
 import Container from "../components/Container"
 import Page from "../components/Page"
@@ -28,29 +27,49 @@ const ListingsContainer = styled.div`
 `
 
 const SearchResultsPage = ({}) => {
-  const [values, setValues] = useState({ searchInput: "", offering: "", category: "", state: "" })
+  const [values, setValues] = useState({ searchInput: "", offering: "", category: "", state: "", listings: []})
+
+  useEffect(() => {
+    fetch(`https://carrythroughcovid.herokuapp.com/api/v1/business`)
+      .then(response => response.json())
+      .then(resultData => {
+        const newData = resultData.map(result => {
+          return (
+            {
+              ...result,
+              "state": "vic"
+            }
+          )
+        })
+
+        setValues({ ...values, listings: newData})
+      })
+  }, [])
 
   const handleInputChange = e => {
     const { name, value } = e.target
     setValues({ ...values, [name]: value })
   }
 
-  const filteredListings = listings.filter(
-    ({ suburb, businessName, offerings, businessType, state }) => {
+  const filteredListings = values.listings.filter(
+    (listing) => {
+      const { name, suburb, offerings, categories, state } = listing
+      const actualSuburb = suburb || '' 
       const searchValue = values.searchInput.toLowerCase()
       const selectedOffering = values.offering.toLowerCase()
       const selectedCategory = values.category.toLowerCase()
       const selectedState = values.state.toLowerCase()
+
       // TODO: look into this, this might not be performant at all
+      
       const results = {
-        matchedSuburb: suburb.toLowerCase().includes(searchValue),
-        matchedName: businessName.toLowerCase().includes(searchValue),
+        matchedSuburb: actualSuburb.toLowerCase().includes(searchValue),
+        matchedName: name.toLowerCase().includes(searchValue),
         matchedOffering:
-          offerings.includes(selectedOffering) || selectedOffering === "",
+          offerings.map(o => o.name.toLowerCase()).includes(selectedOffering) || selectedOffering === "",
         matchedCategory:
-        businessType.toLowerCase().includes(selectedCategory) || selectedCategory === "",
-        matchedState:
-        state.toLowerCase().includes(selectedState) || selectedState === "",
+        categories.map(c => c.name.toLowerCase()).includes(selectedCategory) || selectedCategory === "",
+        matchedState: state.toLowerCase().includes(selectedState) || selectedState === "",
       }
 
       return (
