@@ -45,16 +45,18 @@ const ListingDetailsContainer = styled.div`
 `
 
 const Listing = ({listing}) => {
+  const {name, suburb, categories} = listing
+  const category = categories.length === 0 ? '' : categories[0].name
 
   return (
     <ListingContainer to="/pdp">
-      <ListingImage src={listing.image}></ListingImage>
+      <ListingImage src='https://images.unsplash.com/photo-1571204829887-3b8d69e4094d?w=800&q=80'></ListingImage>
 
         <ListingDetailsContainer>
-          <BusinessName>{listing.businessName}</BusinessName>
+          <BusinessName>{name}</BusinessName>
           <BusinessLocation>
-              {listing.businessType}
-              <span> / {listing.suburb}</span>
+              {category}
+              <span> / {suburb}</span>
           </BusinessLocation>
         </ListingDetailsContainer>
 
