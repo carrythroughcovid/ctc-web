@@ -13,11 +13,13 @@
     "gatsby-plugin-sharp": "^2.4.13",
     "gatsby-plugin-styled-components": "^3.2.1",
     "gatsby-source-filesystem": "^2.1.56",
+    "gatsby-source-rest-api": "^0.2.3",
     "gatsby-transformer-sharp": "^2.3.19",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
+    "slugify": "^1.4.0",
     "styled-components": "^5.0.1",
     "styled-normalize": "^8.0.7"
   },

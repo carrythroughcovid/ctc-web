@@ -11,9 +11,7 @@ const ListingImage = styled.img`
   display: block;
 `
 
-const BusinessName = styled.div`
-
-`
+const BusinessName = styled.div``
 
 const BusinessLocation = styled.div`
   font-size: 0.875rem;
@@ -40,27 +38,26 @@ const ListingContainer = styled(Link)`
 `
 
 const ListingDetailsContainer = styled.div`
-  background-color: #C4C4C4;
+  background-color: #c4c4c4;
   padding: 1rem;
 `
 
-const Listing = ({listing}) => {
-  const {name, suburb, categories} = listing
-  const category = categories.length === 0 ? '' : categories[0].name
+const Listing = ({ listing }) => {
+  const { name, suburb, categories, slug } = listing
+  const category = categories.length === 0 ? "" : categories[0].name
 
   return (
-    <ListingContainer to="/pdp">
-      <ListingImage src='https://images.unsplash.com/photo-1571204829887-3b8d69e4094d?w=800&q=80'></ListingImage>
+    <ListingContainer to={`business/${slug}`}>
+      <ListingImage src="https://images.unsplash.com/photo-1571204829887-3b8d69e4094d?w=800&q=80"></ListingImage>
 
-        <ListingDetailsContainer>
-          <BusinessName>{name}</BusinessName>
-          <BusinessLocation>
-              {category}
-              <span> / {suburb}</span>
-          </BusinessLocation>
-        </ListingDetailsContainer>
-
-  </ListingContainer>
+      <ListingDetailsContainer>
+        <BusinessName>{name}</BusinessName>
+        <BusinessLocation>
+          {category}
+          <span> / {suburb}</span>
+        </BusinessLocation>
+      </ListingDetailsContainer>
+    </ListingContainer>
   )
 }
 
