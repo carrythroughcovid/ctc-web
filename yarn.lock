@@ -4919,6 +4919,11 @@ fd-slicer@~1.1.0:
   dependencies:
     pend "~1.2.0"
 
+fetch-multiple@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/fetch-multiple/-/fetch-multiple-1.2.3.tgz#48cf045c1582396da02034be7dfa836bb5dae7b2"
+  integrity sha1-SM8EXBWCOW2gIDS+ffqDa7Xa57I=
+
 figgy-pudding@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/figgy-pudding/-/figgy-pudding-3.5.1.tgz#862470112901c727a0e495a80744bd5baa1d6790"
@@ -5496,6 +5501,13 @@ gatsby-source-filesystem@^2.1.56:
     read-chunk "^3.2.0"
     valid-url "^1.0.9"
     xstate "^4.8.0"
+
+gatsby-source-rest-api@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/gatsby-source-rest-api/-/gatsby-source-rest-api-0.2.3.tgz#1bbe2274a7ec686a5f07d0e5eabc84f537967287"
+  integrity sha512-cE3fvgOfJQxW+GvHm/GzwFbmMOdQLjiS52l+vvYn1UHeBvpM6COT+vCamNCfFJYrmTddoDUhUJ3xHjZ9O4Ackw==
+  dependencies:
+    fetch-multiple "^1.2.3"
 
 gatsby-telemetry@^1.1.56:
   version "1.1.56"
