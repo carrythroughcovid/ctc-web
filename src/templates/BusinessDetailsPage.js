@@ -151,11 +151,7 @@ const BusinessDetailsPage = ({ data }) => {
   // TODO hook up real data store
   const { image, businessLogo, businessType, details, about } = mockListing[0]
 
-  console.log(data)
-
   const { name, suburb, offerings } = data.businesses
-
-  console.log(offerings)
 
   return (
     <Page>

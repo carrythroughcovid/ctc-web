@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -11,21 +11,22 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: inherit;
   }
   body {
-    font-family: 'Roboto', sans-serif;
+    font-family: ${({ theme }) => theme.font.base};
   }
   a {
     text-decoration: none;
     cursor: pointer;
+    color: ${({ theme }) => theme.colour.primary};
 
     :hover {
       text-decoration: underline;
     }
   }
   h1, h2, h3 ,h4 ,h5 ,h6 {
-    font-family: 'Roboto', sans-serif;
+    font-family: ${({ theme }) => theme.font.base};
   }
   ::selection {
-    background-color: ${props => props.theme.colour.primary};
+    background-color: ${({ theme }) => theme.colour.primary};
     color: white;
   }
 `
