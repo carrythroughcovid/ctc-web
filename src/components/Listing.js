@@ -5,41 +5,96 @@ import media from "../utils/media"
 
 const ListingImage = styled.img`
   width: 100%;
-  height: 16rem;
+  height: 10rem;
+  ${media.sm`
+    height: 12rem;
+  `}
   object-fit: cover;
   object-position: center;
-  display: block;
 `
 
-const BusinessName = styled.div``
+const BusinessName = styled.div`
+  text-align: center;
+  font-size: 1.25rem;
+  font-family: Lato;
+  font-weight: bold;
+  line-height: 2rem;
+  color: #1D1F24;
+  margin-bottom: 1rem;
+`
 
-const BusinessLocation = styled.div`
-  font-size: 0.875rem;
+const BusinessDescription = styled.div`
+  color: #1D1F24;
+  opacity: 0.7;
+  padding-bottom: 1rem;
+  line-height: 1rem;
+  max-height: 2rem;
+  overflow: hidden;
 `
 
 const ListingContainer = styled(Link)`
-  margin: 0.5rem 0 0.5rem 0;
-  max-width: 400px;
   margin: 1rem auto;
   display: block;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 0.25rem;
+  height: 19rem;
+  width: 100%;
 
   ${media.sm`
-    flex-basis: 30%;
+    max-width: 16rem;
+    height: 24rem;
+  `}
+
+  ${media.md`
+    height: 24rem;
+    max-width: 20rem
+  `}
+
+  ${media.lg`
+    max-width: 20rem;
+    height: 24rem;
   `}
 
   &:hover {
     text-decoration: none;
-    box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 0px 20rem inset;
+    /* box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 0px 20rem inset; */
   }
 
   &:active {
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 0px 20rem inset;
+    /* box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 0px 20rem inset; */
   }
 `
 
 const ListingDetailsContainer = styled.div`
-  background-color: #c4c4c4;
-  padding: 1rem;
+  background-color: #ffffff;
+  padding: 0rem 1rem 0rem 1rem;
+  margin-bottom: 0rem;
+  margin-top: 1rem;
+`
+
+const BaseLabel = styled.div`
+  border-radius: 0.25rem;
+  position: absolute;
+  padding: 0.25rem;
+  color: #ffffff;
+  font-size: 0.75rem;
+  display: block;
+`
+
+const SuburbLabel = styled(BaseLabel)`
+  left: 1rem;
+  top: 1rem;
+  background-color: #BE52F2;
+`
+
+const CategoryLabel = styled(BaseLabel)`
+  right: 1rem;
+  top: 1rem;
+  background-color: #6CD4C4;
+`
+
+const ImageContainer = styled.div`
+  position: relative;
 `
 
 const Listing = ({ listing }) => {
@@ -48,14 +103,14 @@ const Listing = ({ listing }) => {
 
   return (
     <ListingContainer to={`business/${slug}`}>
-      <ListingImage src="https://images.unsplash.com/photo-1571204829887-3b8d69e4094d?w=800&q=80"></ListingImage>
-
+      <ImageContainer>
+        <SuburbLabel>{suburb}</SuburbLabel>
+        <CategoryLabel>{category}</CategoryLabel>
+        <ListingImage src="https://images.unsplash.com/photo-1571204829887-3b8d69e4094d?w=800&q=80"></ListingImage>
+      </ImageContainer>    
       <ListingDetailsContainer>
         <BusinessName>{name}</BusinessName>
-        <BusinessLocation>
-          {category}
-          <span> / {suburb}</span>
-        </BusinessLocation>
+        <BusinessDescription>This is the description of the business and how they would like the puclic to reachout to help them in these strange times.</BusinessDescription>
       </ListingDetailsContainer>
     </ListingContainer>
   )
