@@ -1,6 +1,7 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import CheckboxGroup from "../components/CheckboxGroup"
+import React, { useState } from 'react'
+import styled from 'styled-components'
+
+import CheckboxGroup from '../components/CheckboxGroup'
 
 const FormContainer = styled.form`
   max-width: 30rem;
@@ -40,11 +41,11 @@ const OfferingContainer = styled.div`
 
 const UpdateListingPage = () => {
   const [values, setValues] = useState({
-    name: "",
-    businessName: "",
-    suburb: "",
-    details: "",
-    about: "",
+    name: '',
+    businessName: '',
+    suburb: '',
+    details: '',
+    about: '',
     options: {},
   })
 
@@ -65,24 +66,24 @@ const UpdateListingPage = () => {
   }
 
   const checkboxOfferings = [
-    { checkboxId: 0, value: "Online", isChecked: false },
-    { checkboxId: 1, value: "Delivery", isChecked: false },
-    { checkboxId: 2, value: "Virtual", isChecked: false },
-    { checkboxId: 3, value: "Credit", isChecked: false },
+    { checkboxId: 0, value: 'Online', isChecked: false },
+    { checkboxId: 1, value: 'Delivery', isChecked: false },
+    { checkboxId: 2, value: 'Virtual', isChecked: false },
+    { checkboxId: 3, value: 'Credit', isChecked: false },
   ]
 
   const checkboxCategories = [
-    { checkboxId: 0, value: "Retail", isChecked: false },
-    { checkboxId: 1, value: "Hospitality", isChecked: false },
-    { checkboxId: 2, value: "Services", isChecked: false },
-    { checkboxId: 3, value: "Cafe", isChecked: false },
-    { checkboxId: 4, value: "Other", isChecked: false },
+    { checkboxId: 0, value: 'Retail', isChecked: false },
+    { checkboxId: 1, value: 'Hospitality', isChecked: false },
+    { checkboxId: 2, value: 'Services', isChecked: false },
+    { checkboxId: 3, value: 'Cafe', isChecked: false },
+    { checkboxId: 4, value: 'Other', isChecked: false },
   ]
 
   return (
     <FormContainer
       onSubmit={handleSubmit}
-      style={{ display: "flex", flexDirection: "column" }}
+      style={{ display: 'flex', flexDirection: 'column' }}
     >
       <div>Please tell us about your business.</div>
       <label htmlFor="businessName">
@@ -116,7 +117,7 @@ const UpdateListingPage = () => {
         <label>
           <div>Offering</div>
           <CheckboxGroup
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
             checkboxId="offerings"
             checkboxState={checkboxOfferings}
             handleCheck={updateCheckboxValues}

@@ -1,8 +1,8 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from 'react'
+import { Link } from 'gatsby'
 
-import Page from "../components/Page"
-import Container from "../components/Container"
+import Page from '../components/Page'
+import Container from '../components/shared/Container'
 
 const IndexPage = () => (
   <Page>

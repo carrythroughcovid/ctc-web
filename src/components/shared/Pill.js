@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 
 const Pill = styled.span`
@@ -12,6 +11,7 @@ const Pill = styled.span`
   align-items: center;
   border-radius: 90px;
   margin-right: 1rem;
+  text-transform: capitalize;
 `
 
 export default Pill

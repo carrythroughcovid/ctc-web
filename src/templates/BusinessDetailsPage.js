@@ -1,33 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Page from '../components/Page'
-import Container from '../components/Container'
-import media from '../utils/media'
-
 import mockListing from '../../mockContent/listings'
 
+import media from '../utils/media'
+import Page from '../components/Page'
+import BackToSearch from '../components/BDP/BackToSearch'
+import Container from '../components/shared/Container'
 import Pill from '../components/shared/Pill'
+import { ButtonLink } from '../components/shared/Button'
+import BusinessTypeIcon from '../components/shared/BusinessTypeIcon'
 
 const BusinessImage = styled.img`
   width: 100%;
-  height: 20rem;
+  height: 15rem;
   object-fit: cover;
   object-position: center;
 
   ${media.md`
-    height: 24rem;
-  `}
-`
-
-const BusinessLogo = styled.img`
-  width: 3.5rem;
-  height: 3.5rem;
-  object-fit: cover;
-  object-position: center;
-
-  ${media.md`
-    margin-top: 1rem;
+    height: 20.5rem;
+    border-radius: 0.5rem;
   `}
 `
 
@@ -40,8 +32,7 @@ const BusinessDetails = styled.div`
   ${media.md`
     flex-direction: column-reverse;
     align-items: start;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding: 0;
   `}
 `
 
@@ -52,13 +43,12 @@ const DetailsWrapper = styled.div`
   padding-right: ${({ theme }) => theme.containerGutter};
 
   ${media.md`
-    background-color: #f2f2f2;
-    padding: 3rem 1.5rem;
+    padding: 3rem 1.5rem 3rem 0;
     width: 24rem;
-    flex-basis: 24rem;
+    flex-basis: 20.5rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
   `}
 `
 
@@ -70,41 +60,26 @@ const Details = styled.div`
   `}
 `
 const BusinessName = styled.h1`
-  font-size: 1rem;
-  font-weight: normal;
+  font-size: 1.5rem;
+  font-weight: bold;
   margin: 0;
-  padding-bottom: 0.25rem;
+  padding-bottom: 0.5rem;
 
   ${media.md`
     font-size: 1.75rem;
+    font-weight: normal;
   `}
 `
 
 const BusinessLocation = styled.div`
+  color: ${({ theme }) => theme.colour.grey};
   font-size: 0.875rem;
 
   ${media.md`
-    padding-top: 2rem;
+    padding-top: 0.75rem;
+    padding-bottom: 2rem;
     font-size: 1rem;
   `}
-`
-
-const ButtonLink = styled.a`
-  width: 100%;
-  display: block;
-  text-align: center;
-  background-color: ${props => props.theme.colour.primary};
-  color: white;
-  padding: 1rem;
-
-  &:hover {
-    text-decoration: none;
-    box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 0px 20rem inset;
-  }
-
-  &:active {
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 0px 20rem inset;
-  }
 `
 
 const DetailBlock = styled.div`
@@ -112,36 +87,34 @@ const DetailBlock = styled.div`
 `
 
 const BlockContent = styled.div`
-  margin-top: 0.875rem;
-  padding: 0.75rem 0.625rem;
-  background-color: #ececec;
+  font-size: 1.125rem;
+  color: ${({ theme }) => theme.colour.grey};
+`
+
+const BlockCallout = styled.div`
+  font-size: 1.625rem;
+  padding-bottom: 1rem;
+  font-weight: 500;
 `
 
 const DetailTitle = styled.div`
-  padding-top: 1rem;
-  padding-bottom: 0.875rem;
-  font-weight: bold;
+  color: ${({ theme }) => theme.colour.primary};
+  font-family: ${({ theme }) => theme.font.alt};
+  text-transform: uppercase;
+  letter-spacing: 1.75px;
+  padding-top: 2rem;
+  padding-bottom: 1.5rem;
 
   ${media.md`
     font-weight: normal;
-    font-size: 1.75rem;
     padding-top: 3.5rem;
   `}
 `
-const OfferingItem = styled.div`
-  text-transform: capitalize;
-
-  ${media.md`
-    display: inline-block;
-    padding-right: 2rem;
-  `}
-`
-
 const Wrapper = styled.div`
   ${media.md`
     display: flex;
     flex-direction: row-reverse;
-    padding-top: 2.875rem;
+    padding-top: 1.875rem;
   `}
 `
 
@@ -149,14 +122,21 @@ const ImageWrapper = styled.div`
   flex: 1;
 `
 
+const BusinessTypeIconWrapper = styled.div`
+  display: block;
+  ${media.md`
+    display: none;
+  `}
+`
+
 const BusinessDetailsPage = ({ data }) => {
   // TODO hook up real data store
-  const { image, businessLogo, businessType, details, about } = mockListing[0]
-
+  const { image, businessType, details, about } = mockListing[0]
   const { name, suburb, offerings } = data.businesses
 
   return (
     <Page>
+      <BackToSearch />
       <Container fullWidth>
         <Wrapper>
           <ImageWrapper>
@@ -165,7 +145,9 @@ const BusinessDetailsPage = ({ data }) => {
 
           <DetailsWrapper>
             <BusinessDetails>
-              <BusinessLogo src={businessLogo} />
+              <BusinessTypeIconWrapper>
+                <BusinessTypeIcon />
+              </BusinessTypeIconWrapper>
               <Details>
                 <BusinessName>{name}</BusinessName>
                 <BusinessLocation>
@@ -174,34 +156,30 @@ const BusinessDetailsPage = ({ data }) => {
                 </BusinessLocation>
               </Details>
             </BusinessDetails>
-            <ButtonLink to="/">Visit Website</ButtonLink>
+            <ButtonLink fullWidthMobile to="/">
+              Visit our Website
+            </ButtonLink>
           </DetailsWrapper>
         </Wrapper>
       </Container>
 
       <Container>
-        <DetailTitle>Products/Service</DetailTitle>
-        <Pill>Online store</Pill>
-        <Pill>Virtual consulting</Pill>
-        <Pill>Test3</Pill>
         <DetailBlock>
-          Current offering
-          <BlockContent>
+          <DetailTitle>Current Services</DetailTitle>
+          <div>
             {offerings.map(({ name, id }) => (
-              <OfferingItem key={id}>[x] {name}</OfferingItem>
+              <Pill key={id}>{name}</Pill>
             ))}
-          </BlockContent>
+          </div>
         </DetailBlock>
 
         <DetailBlock>
-          Details
+          <DetailTitle>Details</DetailTitle>
           {/* TODO: Make sure new lines/tabs display corectly */}
+          <BlockCallout>
+            Now doing interior design consultations via webcam
+          </BlockCallout>
           <BlockContent>{details}</BlockContent>
-        </DetailBlock>
-
-        <DetailTitle>About</DetailTitle>
-        <DetailBlock>
-          <BlockContent>{about}</BlockContent>
         </DetailBlock>
       </Container>
     </Page>
