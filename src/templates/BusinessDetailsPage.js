@@ -1,11 +1,13 @@
-import React from "react"
-import styled from "styled-components"
+import React from 'react'
+import styled from 'styled-components'
 
-import Page from "../components/Page"
-import Container from "../components/Container"
-import media from "../utils/media"
+import Page from '../components/Page'
+import Container from '../components/Container'
+import media from '../utils/media'
 
-import mockListing from "../../mockContent/listings"
+import mockListing from '../../mockContent/listings'
+
+import Pill from '../components/shared/Pill'
 
 const BusinessImage = styled.img`
   width: 100%;
@@ -179,6 +181,9 @@ const BusinessDetailsPage = ({ data }) => {
 
       <Container>
         <DetailTitle>Products/Service</DetailTitle>
+        <Pill>Online store</Pill>
+        <Pill>Virtual consulting</Pill>
+        <Pill>Test3</Pill>
         <DetailBlock>
           Current offering
           <BlockContent>
