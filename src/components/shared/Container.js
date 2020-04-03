@@ -1,6 +1,6 @@
-import styled, { css } from "styled-components"
+import styled, { css } from 'styled-components'
 
-import media from "../utils/media"
+import media from '../../utils/media'
 
 const Container = styled.div`
   max-width: ${({ theme }) => theme.maxWidth};

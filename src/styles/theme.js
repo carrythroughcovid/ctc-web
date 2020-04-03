@@ -11,7 +11,8 @@ const colour = {
 
   greyDark: '#1D1F24',
   grey: '#606265',
-  greyLight: '#ECEBED',
+  greyLight: '#a5a5a7',
+  greySuperLight: '#F2F2F2',
 }
 
 const theme = {

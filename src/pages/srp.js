@@ -1,13 +1,13 @@
-import React, { useState } from "react"
-import styled from "styled-components"
+import React, { useState } from 'react'
+import styled from 'styled-components'
 
-import Listing from "../components/Listing"
-import Container from "../components/Container"
-import Page from "../components/Page"
-import SelectGroup from "../components/SelectGroup"
+import Listing from '../components/Listing'
+import Container from '../components/shared/Container'
+import Page from '../components/Page'
+import SelectGroup from '../components/SelectGroup'
 
-import { offerings, categories, states } from "../utils/presets"
-import media from "../utils/media"
+import { offerings, categories, states } from '../utils/presets'
+import media from '../utils/media'
 
 const Form = styled.form`
   padding-top: 2rem;
@@ -33,15 +33,15 @@ const SearchResultsPage = ({ data }) => {
   const allBusinessesWithState = allBusinesses.map(({ node: business }) => ({
     node: {
       ...business,
-      state: "vic",
+      state: 'vic',
     },
   }))
 
   const [values, setValues] = useState({
-    searchInput: "",
-    offering: "",
-    category: "",
-    state: "",
+    searchInput: '',
+    offering: '',
+    category: '',
+    state: '',
     listings: allBusinessesWithState,
   })
 
@@ -52,7 +52,7 @@ const SearchResultsPage = ({ data }) => {
 
   const filteredListings = values.listings.filter(({ node: listing }) => {
     const { name, suburb, offerings, categories, state } = listing
-    const actualSuburb = suburb || ""
+    const actualSuburb = suburb || ''
     const searchValue = values.searchInput.toLowerCase()
     const selectedOffering = values.offering.toLowerCase()
     const selectedCategory = values.category.toLowerCase()
@@ -64,12 +64,12 @@ const SearchResultsPage = ({ data }) => {
       matchedName: name.toLowerCase().includes(searchValue),
       matchedOffering:
         offerings.map(o => o.name.toLowerCase()).includes(selectedOffering) ||
-        selectedOffering === "",
+        selectedOffering === '',
       matchedCategory:
         categories.map(c => c.name.toLowerCase()).includes(selectedCategory) ||
-        selectedCategory === "",
+        selectedCategory === '',
       matchedState:
-        state.toLowerCase().includes(selectedState) || selectedState === "",
+        state.toLowerCase().includes(selectedState) || selectedState === '',
     }
 
     return (
