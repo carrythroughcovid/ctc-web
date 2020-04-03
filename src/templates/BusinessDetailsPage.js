@@ -1,5 +1,4 @@
 import React from "react"
-import { Link } from "gatsby"
 import styled from "styled-components"
 
 import Page from "../components/Page"
@@ -154,7 +153,7 @@ const BusinessDetailsPage = ({ data }) => {
 
   console.log(data)
 
-  const { name, suburb, offerings, categories } = data.businesses
+  const { name, suburb, offerings } = data.businesses
 
   console.log(offerings)
 
