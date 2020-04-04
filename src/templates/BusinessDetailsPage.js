@@ -10,6 +10,7 @@ import Container from '../components/shared/Container'
 import Pill from '../components/shared/Pill'
 import { ButtonLink } from '../components/shared/Button'
 import BusinessTypeIcon from '../components/shared/BusinessTypeIcon'
+import DetailsTabs from '../components/BDP/DetailsTabs'
 
 const BusinessImage = styled.img`
   width: 100%;
@@ -129,10 +130,73 @@ const BusinessTypeIconWrapper = styled.div`
   `}
 `
 
+const UpdateTabBlock = ({ offerings, details, callout }) => (
+  <>
+    <DetailBlock>
+      <DetailTitle>Current Services</DetailTitle>
+      <>
+        {offerings.map(({ name, id }) => (
+          <Pill key={id}>{name}</Pill>
+        ))}
+      </>
+    </DetailBlock>
+
+    <DetailBlock>
+      <DetailTitle>Details</DetailTitle>
+      {/* TODO: Make sure new lines/tabs display corectly */}
+      <BlockCallout>{callout}</BlockCallout>
+      <BlockContent>{details}</BlockContent>
+    </DetailBlock>
+  </>
+)
+
+const AboutTabBlock = () => (
+  <>
+    <DetailBlock>
+      <DetailTitle>Out Background</DetailTitle>
+      <BlockCallout>
+        Differentiate Yourself And Attract More Attention, Sales, And Profits
+      </BlockCallout>
+      <BlockContent>
+        There is no denying that the success of an advertisement lies mostly in
+        the headline. The headline should catch the reader’s attention and make
+        him read the rest of the advertisement.{' '}
+      </BlockContent>
+    </DetailBlock>
+    <DetailBlock>
+      <DetailTitle>our ethos</DetailTitle>
+      <BlockCallout>
+        Differentiate Yourself And Attract More Attention, Sales, And Profits
+      </BlockCallout>
+      <BlockContent>
+        There is no denying that the success of an advertisement lies mostly in
+        the headline. The headline should catch the reader’s attention and make
+        him read the rest of the advertisement.{' '}
+      </BlockContent>
+    </DetailBlock>
+  </>
+)
+
 const BusinessDetailsPage = ({ data }) => {
-  // TODO hook up real data store
-  const { image, businessType, details, about } = mockListing[0]
+  const { image, businessType, details } = mockListing[0] // TODO hook up real data store
   const { name, suburb, offerings } = data.businesses
+
+  const tabContent = [
+    {
+      title: 'Updates',
+      content: () => (
+        <UpdateTabBlock
+          offerings={offerings}
+          details={details}
+          callout="Now doing interior design consultations via webcam"
+        />
+      ),
+    },
+    {
+      title: 'About us',
+      content: () => <AboutTabBlock />,
+    },
+  ]
 
   return (
     <Page>
@@ -163,25 +227,7 @@ const BusinessDetailsPage = ({ data }) => {
         </Wrapper>
       </Container>
 
-      <Container>
-        <DetailBlock>
-          <DetailTitle>Current Services</DetailTitle>
-          <div>
-            {offerings.map(({ name, id }) => (
-              <Pill key={id}>{name}</Pill>
-            ))}
-          </div>
-        </DetailBlock>
-
-        <DetailBlock>
-          <DetailTitle>Details</DetailTitle>
-          {/* TODO: Make sure new lines/tabs display corectly */}
-          <BlockCallout>
-            Now doing interior design consultations via webcam
-          </BlockCallout>
-          <BlockContent>{details}</BlockContent>
-        </DetailBlock>
-      </Container>
+      <DetailsTabs tabs={tabContent} />
     </Page>
   )
 }
