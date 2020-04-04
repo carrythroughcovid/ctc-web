@@ -1,6 +1,6 @@
-import { css } from "styled-components"
+import { css } from 'styled-components'
 
-import theme from "../styles/theme"
+import theme from '../styles/theme'
 
 const media = Object.keys(theme.media).reduce((acc, label) => {
   acc[label] = (...args) => css`

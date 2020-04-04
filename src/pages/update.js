@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-
 import CheckboxGroup from '../components/CheckboxGroup'
 
 const FormContainer = styled.form`

@@ -1,6 +1,6 @@
 module.exports = {
   //  Temporarily adding a path prefix whilst its hosted on GH pages
-  pathPrefix: "/ctc-web",
+  pathPrefix: '/ctc-web',
   siteMetadata: {
     title: `Gatsby Default Starter`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,

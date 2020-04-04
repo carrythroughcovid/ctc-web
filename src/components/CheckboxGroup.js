@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react"
-import Checkbox from "../components/Checkbox"
+import React, { useState, useEffect } from 'react'
+import Checkbox from '../components/Checkbox'
 
 const CheckboxGroup = ({ checkboxId, checkboxState, handleCheck }) => {
   const [values, setValues] = useState({
     checkboxId,
     checkboxState,
-    handleCheck
+    handleCheck,
   })
 
   const updateValues = ({ checkboxId, value, isChecked }) => {

@@ -1,7 +1,7 @@
-import React from "react"
-import styled from "styled-components"
-import { Link } from "gatsby"
-import media from "../utils/media"
+import React from 'react'
+import styled from 'styled-components'
+import { Link } from 'gatsby'
+import media from '../utils/media'
 
 const ListingImage = styled.img`
   width: 100%;
@@ -19,12 +19,12 @@ const BusinessName = styled.div`
   font-family: Lato;
   font-weight: bold;
   line-height: 2rem;
-  color: #1D1F24;
+  color: #1d1f24;
   margin-bottom: 1rem;
 `
 
 const BusinessDescription = styled.div`
-  color: #1D1F24;
+  color: #1d1f24;
   opacity: 0.7;
   padding-bottom: 1rem;
   line-height: 1rem;
@@ -84,13 +84,13 @@ const BaseLabel = styled.div`
 const SuburbLabel = styled(BaseLabel)`
   left: 1rem;
   top: 1rem;
-  background-color: #BE52F2;
+  background-color: #be52f2;
 `
 
 const CategoryLabel = styled(BaseLabel)`
   right: 1rem;
   top: 1rem;
-  background-color: #6CD4C4;
+  background-color: #6cd4c4;
 `
 
 const ImageContainer = styled.div`
@@ -99,7 +99,7 @@ const ImageContainer = styled.div`
 
 const Listing = ({ listing }) => {
   const { name, suburb, categories, slug } = listing
-  const category = categories.length === 0 ? "" : categories[0].name
+  const category = categories.length === 0 ? '' : categories[0].name
 
   return (
     <ListingContainer to={`business/${slug}`}>
@@ -107,10 +107,13 @@ const Listing = ({ listing }) => {
         <SuburbLabel>{suburb}</SuburbLabel>
         <CategoryLabel>{category}</CategoryLabel>
         <ListingImage src="https://images.unsplash.com/photo-1571204829887-3b8d69e4094d?w=800&q=80"></ListingImage>
-      </ImageContainer>    
+      </ImageContainer>
       <ListingDetailsContainer>
         <BusinessName>{name}</BusinessName>
-        <BusinessDescription>This is the description of the business and how they would like the puclic to reachout to help them in these strange times.</BusinessDescription>
+        <BusinessDescription>
+          This is the description of the business and how they would like the
+          puclic to reachout to help them in these strange times.
+        </BusinessDescription>
       </ListingDetailsContainer>
     </ListingContainer>
   )
