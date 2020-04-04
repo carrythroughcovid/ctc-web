@@ -60,15 +60,11 @@ const DetailsTabs = ({ tabs }) => {
           {titles.map((title, index) => (
             <StyledTab key={index}>{title}</StyledTab>
           ))}
-          {/* <StyledTab>Updates</StyledTab>
-          <StyledTab>About Us</StyledTab> */}
         </Container>
       </StyledTabList>
 
       <TabContentWrapper>
         <Container>
-          {/* <TabPanel>Any content 1</TabPanel>
-          <TabPanel>Any content 2</TabPanel> */}
           {content.map((content, index) => (
             <TabPanel key={index}>{content()}</TabPanel>
           ))}
