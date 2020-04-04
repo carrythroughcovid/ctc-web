@@ -179,7 +179,7 @@ const AboutTabBlock = () => (
 
 const BusinessDetailsPage = ({ data }) => {
   const { image, businessType, details } = mockListing[0] // TODO hook up real data store
-  const { name, suburb, offerings } = data.businesses
+  const { name, address, offerings } = data.businesses
 
   const tabContent = [
     {
@@ -216,7 +216,7 @@ const BusinessDetailsPage = ({ data }) => {
                 <BusinessName>{name}</BusinessName>
                 <BusinessLocation>
                   {businessType}
-                  <span> / {suburb}</span>
+                  <span> / {address.suburb}</span>
                 </BusinessLocation>
               </Details>
             </BusinessDetails>
@@ -247,7 +247,10 @@ export const query = graphql`
       }
       businessId
       slug
-      suburb
+      address {
+        id
+        suburb
+      }
     }
   }
 `
