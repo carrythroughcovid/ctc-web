@@ -1,10 +1,10 @@
 import React from 'react'
+import styled from 'styled-components'
 import { Link } from 'gatsby'
 
-import Page from '../components/Page'
+import Page from '../components/shared/Page'
 import Container from '../components/shared/Container'
 import Carousel from '../components/shared/Carousel'
-import styled from 'styled-components'
 
 const CapitalName = styled.div`
   text-transform: capitalize;

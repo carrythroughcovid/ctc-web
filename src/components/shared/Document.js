@@ -3,8 +3,8 @@ import { Normalize } from 'styled-normalize'
 import { ThemeProvider } from 'styled-components'
 import { Helmet } from 'react-helmet'
 
-import theme from '../styles/theme'
-import GlobalStyles from '../styles/GlobalStyles'
+import theme from '../../styles/theme'
+import GlobalStyles from '../../styles/GlobalStyles'
 
 const Document = ({ children }) => {
   return (

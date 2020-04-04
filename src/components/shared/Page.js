@@ -5,7 +5,7 @@ import Document from './Document'
 import Header from './Header'
 import Footer from './Footer'
 
-import media from '../utils/media'
+import media from '../../utils/media'
 
 const Wrapper = styled.div`
   display: flex;

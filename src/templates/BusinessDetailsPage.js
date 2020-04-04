@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import mockListing from '../../mockContent/listings'
 
 import media from '../utils/media'
-import Page from '../components/Page'
+import Page from '../components/shared/Page'
 import BackToSearch from '../components/BDP/BackToSearch'
 import Container from '../components/shared/Container'
 import Pill from '../components/shared/Pill'
@@ -17,6 +17,7 @@ const BusinessImage = styled.img`
   height: 15rem;
   object-fit: cover;
   object-position: center;
+  background-color: ${({ theme }) => theme.colour.black};
 
   ${media.md`
     height: 20.5rem;
@@ -178,8 +179,8 @@ const AboutTabBlock = () => (
 )
 
 const BusinessDetailsPage = ({ data }) => {
-  const { image, businessType, details } = mockListing[0] // TODO hook up real data store
-  const { name, address, offerings } = data.businesses
+  const { businessType, details } = mockListing[0] // TODO hook up real data store
+  const { name, address, offerings, image } = data.businesses
 
   const tabContent = [
     {
