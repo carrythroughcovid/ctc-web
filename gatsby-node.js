@@ -27,13 +27,65 @@ exports.sourceNodes = (
     })
     return nodeData
   }
-  
-  const apiUrl = `https://carrythroughcovid.herokuapp.com/api/businesses`
+
+  const processEntity = (entityName, entity, name) => {
+    const nodeId = createNodeId(`address-${entity.id}`)
+    const nodeContent = JSON.stringify(entity)
+    const nodeData = Object.assign({}, entity, {
+      id: nodeId,
+      name: name || '',
+      slug: `${slugify(name || '')}-${entity.id}`,
+      parent: null,
+      children: [],
+      internal: {
+        type: entityName,
+        content: nodeContent,
+        contentDigest: createContentDigest(entity),
+      },
+    })
+    return nodeData
+  }
+
+  const allBusinesses = `https://carrythroughcovid.herokuapp.com/api/businesses`
+  const allCategories = `https://carrythroughcovid.herokuapp.com/api/categories`
+  const allOfferings = `https://carrythroughcovid.herokuapp.com/api/offerings`
+  const allAddresses = `https://carrythroughcovid.herokuapp.com/api/addresses`
+
+  fetch(allCategories)
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(category => {
+        const nodeData = processEntity('Categories', category, category.name)
+        createNode(nodeData)
+      })
+    })
+
+  fetch(allOfferings)
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(offering => {
+        const nodeData = processEntity('Offerings', offering, offering.name)
+        createNode(nodeData)
+      })
+    })
+
+  fetch(allAddresses)
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(address => {
+        const nodeData = processEntity(
+          'Addresses',
+          address,
+          address.suburb || ''
+        )
+        createNode(nodeData)
+      })
+    })
 
   // Gatsby expects sourceNodes to return a promise
   return (
-    // Fetch a response from the apiUrl
-    fetch(apiUrl)
+    // Fetch a response from the allBusinesses
+    fetch(allBusinesses)
       // Parse the response as JSON
       .then(response => response.json())
       // Process the response data into a node
