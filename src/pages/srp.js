@@ -1,49 +1,47 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { Row, Col } from 'react-flexa'
 
 import Listing from '../components/Listing'
 import Container from '../components/shared/Container'
 import Page from '../components/Page'
-import SelectGroup from '../components/SelectGroup'
 import SearchBar from '../components/search/SearchBar'
+import SelectInput from '../components/shared/SelectInput'
 
-import { offerings, categories, states } from '../utils/presets'
+import { categories } from '../utils/presets'
 import media from '../utils/media'
 
-const Form = styled.form`
+const FormSection = styled.div`
   padding-top: 2rem;
-`
+  padding-bottom: 2rem;
 
-const FieldGroup = styled.div`
-  padding-bottom: 0.5rem;
-`
-
-const ListingsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
   ${media.sm`
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: flex;
   `}
+`
+const ListingsSection = styled.div``
+
+const LocationWrapper = styled.div`
+  padding-bottom: 1rem;
+
+  ${media.sm`
+  flex: 3;
+    padding-bottom: 0;
+    padding-right: 1rem;
+  `}
+`
+
+const CategoryWrapper = styled.div`
+  flex: 1;
 `
 
 const SearchResultsPage = ({ data }) => {
   const allBusinesses = data.allBusinesses.edges
-  console.log(allBusinesses)
-
-  const allBusinessesWithState = allBusinesses.map(({ node: business }) => ({
-    node: {
-      ...business,
-      state: 'vic',
-    },
-  }))
 
   const [values, setValues] = useState({
     searchInput: '',
-    offering: '',
-    category: '',
-    state: '',
-    listings: allBusinessesWithState,
+    categories: '',
+    listings: allBusinesses,
   })
 
   const handleInputChange = e => {
@@ -52,74 +50,60 @@ const SearchResultsPage = ({ data }) => {
   }
 
   const filteredListings = values.listings.filter(({ node: listing }) => {
-    const { name, address, offerings, categories, state } = listing
+    const { name, address, categories } = listing
     const actualSuburb = address.suburb || ''
     const searchValue = values.searchInput.toLowerCase()
-    const selectedOffering = values.offering.toLowerCase()
-    const selectedCategory = values.category.toLowerCase()
-    const selectedState = values.state.toLowerCase()
+    const selectedCategory = values.categories.toLowerCase()
 
     // TODO: look into this, this might not be performant at all
     const results = {
       matchedSuburb: actualSuburb.toLowerCase().includes(searchValue),
       matchedName: name.toLowerCase().includes(searchValue),
-      matchedOffering:
-        offerings.map(o => o.name.toLowerCase()).includes(selectedOffering) ||
-        selectedOffering === '',
       matchedCategory:
         categories.map(c => c.name.toLowerCase()).includes(selectedCategory) ||
         selectedCategory === '',
-      matchedState:
-        state.toLowerCase().includes(selectedState) || selectedState === '',
     }
 
     return (
-      (results.matchedSuburb || results.matchedName) &&
-      results.matchedOffering &&
-      results.matchedCategory &&
-      results.matchedState
+      (results.matchedSuburb || results.matchedName) && results.matchedCategory
     )
   })
 
   return (
     <Page>
       <Container>
-        <Form>
-          <FieldGroup>
+        <FormSection>
+          <LocationWrapper>
             <SearchBar
               name="searchInput"
               onChange={handleInputChange}
               value={values.searchInput}
             />
-          </FieldGroup>
-          <FieldGroup>
-            <SelectGroup
-              name="offering"
-              value={values.offering}
-              items={offerings}
-              onSelect={handleInputChange}
-            ></SelectGroup>
-            <SelectGroup
-              name="state"
-              value={values.state}
-              items={states}
-              onSelect={handleInputChange}
-            ></SelectGroup>
-            <SelectGroup
-              name="category"
-              value={values.category}
-              items={categories}
-              onSelect={handleInputChange}
-            ></SelectGroup>
-          </FieldGroup>
-        </Form>
+          </LocationWrapper>
 
-        <ListingsContainer>
-          {filteredListings.map(({ node: listing }, index) => (
-            <Listing key={index} listing={listing}></Listing>
-          ))}
-        </ListingsContainer>
+          <CategoryWrapper>
+            <SelectInput
+              name="categories"
+              value={values.category}
+              options={categories}
+              onChange={handleInputChange}
+              initialOption={() => <option value="">All Categories</option>}
+            />
+          </CategoryWrapper>
+        </FormSection>
       </Container>
+
+      <ListingsSection>
+        <Container>
+          <Row>
+            {filteredListings.map(({ node: listing }, index) => (
+              <Col display="flex" xs={12} sm={6} md={4} key={index}>
+                <Listing listing={listing}></Listing>
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </ListingsSection>
     </Page>
   )
 }

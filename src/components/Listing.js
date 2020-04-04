@@ -5,55 +5,36 @@ import media from '../utils/media'
 
 const ListingImage = styled.img`
   width: 100%;
-  height: 10rem;
-  ${media.sm`
-    height: 12rem;
-  `}
+  height: 7.75rem;
   object-fit: cover;
+  display: block;
   object-position: center;
 `
 
 const BusinessName = styled.div`
   text-align: center;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-family: Lato;
   font-weight: bold;
   line-height: 2rem;
   color: #1d1f24;
-  margin-bottom: 1rem;
+  padding-bottom: 1.5rem;
 `
 
 const BusinessDescription = styled.div`
-  color: #1d1f24;
-  opacity: 0.7;
+  color: #6c6f90;
   padding-bottom: 1rem;
-  line-height: 1rem;
-  max-height: 2rem;
-  overflow: hidden;
+  line-height: 1.625rem;
+  text-align: center;
 `
 
 const ListingContainer = styled(Link)`
-  margin: 1rem auto;
   display: block;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
   border-radius: 0.25rem;
-  height: 19rem;
-  width: 100%;
-
-  ${media.sm`
-    max-width: 16rem;
-    height: 24rem;
-  `}
-
-  ${media.md`
-    height: 24rem;
-    max-width: 20rem
-  `}
-
-  ${media.lg`
-    max-width: 20rem;
-    height: 24rem;
-  `}
+  overflow: hidden;
+  flex-grow: 1;
+  text-decoration: none;
 
   &:hover {
     text-decoration: none;
@@ -65,11 +46,17 @@ const ListingContainer = styled(Link)`
   }
 `
 
+const ListingCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-bottom: 1.5rem;
+`
+
 const ListingDetailsContainer = styled.div`
   background-color: #ffffff;
-  padding: 0rem 1rem 0rem 1rem;
+  padding: 1rem 1rem 1.5rem;
   margin-bottom: 0rem;
-  margin-top: 1rem;
 `
 
 const BaseLabel = styled.div`
@@ -97,25 +84,36 @@ const ImageContainer = styled.div`
   position: relative;
 `
 
+const truncateString = (str, num) => {
+  if (str.length <= num) {
+    return str
+  }
+  return str.slice(0, num) + '...'
+}
+
 const Listing = ({ listing }) => {
   const { name, address, categories, slug } = listing
   const category = categories.length === 0 ? '' : categories[0].name
 
   return (
-    <ListingContainer to={`business/${slug}`}>
-      <ImageContainer>
-        <SuburbLabel>{address.suburb}</SuburbLabel>
-        <CategoryLabel>{category}</CategoryLabel>
-        <ListingImage src="https://images.unsplash.com/photo-1571204829887-3b8d69e4094d?w=800&q=80"></ListingImage>
-      </ImageContainer>
-      <ListingDetailsContainer>
-        <BusinessName>{name}</BusinessName>
-        <BusinessDescription>
-          This is the description of the business and how they would like the
-          puclic to reachout to help them in these strange times.
-        </BusinessDescription>
-      </ListingDetailsContainer>
-    </ListingContainer>
+    <ListingCard>
+      <ListingContainer to={`business/${slug}`}>
+        <ImageContainer>
+          <SuburbLabel>{address.suburb}</SuburbLabel>
+          <CategoryLabel>{category}</CategoryLabel>
+          <ListingImage src="https://images.unsplash.com/photo-1571204829887-3b8d69e4094d?w=800&q=80"></ListingImage>
+        </ImageContainer>
+        <ListingDetailsContainer>
+          <BusinessName>{name}</BusinessName>
+          <BusinessDescription>
+            {truncateString(
+              'This is the description of the business and how they would like the puclic to reachout to help them in these strange times.',
+              60
+            )}
+          </BusinessDescription>
+        </ListingDetailsContainer>
+      </ListingContainer>
+    </ListingCard>
   )
 }
 
