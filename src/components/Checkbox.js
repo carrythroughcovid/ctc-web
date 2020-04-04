@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"
-import styled from "styled-components"
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 
 const CheckboxStyled = styled.div`
   list-style: none;
@@ -10,7 +10,10 @@ const Checkbox = ({ checkboxId, handleCheck, value, isChecked }) => {
   const [values, setValues] = useState({ checkboxId, handleCheck, isChecked })
 
   useEffect(() => {
-    values.handleCheck({ checkboxId: values.checkboxId, isChecked: values.isChecked })
+    values.handleCheck({
+      checkboxId: values.checkboxId,
+      isChecked: values.isChecked,
+    })
   }, [values])
 
   const updateIsChecked = _ => {
@@ -20,13 +23,13 @@ const Checkbox = ({ checkboxId, handleCheck, value, isChecked }) => {
   return (
     <CheckboxStyled>
       <input
-        style={{ fontSize: "2rem" }}
+        style={{ fontSize: '2rem' }}
         key={checkboxId}
         onChange={updateIsChecked}
         type="checkbox"
         checked={values.isChecked}
         value={value}
-      />{" "}
+      />{' '}
       {value}
     </CheckboxStyled>
   )

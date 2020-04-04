@@ -1,5 +1,5 @@
-const fetch = require("node-fetch")
-const slugify = require("slugify")
+const fetch = require('node-fetch')
+const slugify = require('slugify')
 
 exports.sourceNodes = (
   { actions, createNodeId, createContentDigest },

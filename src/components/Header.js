@@ -1,8 +1,8 @@
-import React from "react"
-import styled from "styled-components"
-import { Link } from "gatsby"
+import React from 'react'
+import styled from 'styled-components'
+import { Link } from 'gatsby'
 
-import Logo from "./Logo"
+import Logo from './Logo'
 
 const StyledHeader = styled.header`
   height: ${props => props.theme.headerHeight};
