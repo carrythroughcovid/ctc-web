@@ -5,6 +5,7 @@ import Listing from '../components/Listing'
 import Container from '../components/shared/Container'
 import Page from '../components/Page'
 import SelectGroup from '../components/SelectGroup'
+import SearchBar from '../components/search/SearchBar'
 
 import { offerings, categories, states } from '../utils/presets'
 import media from '../utils/media'
@@ -85,15 +86,11 @@ const SearchResultsPage = ({ data }) => {
       <Container>
         <Form>
           <FieldGroup>
-            <label>
-              Search by location or business name: &nbsp;
-              <input
-                type="text"
-                name="searchInput"
-                onChange={handleInputChange}
-                value={values.searchInput}
-              />
-            </label>
+            <SearchBar
+              name="searchInput"
+              onChange={handleInputChange}
+              value={values.searchInput}
+            />
           </FieldGroup>
           <FieldGroup>
             <SelectGroup
