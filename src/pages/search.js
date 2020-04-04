@@ -4,7 +4,7 @@ import { Row, Col } from 'react-flexa'
 
 import Listing from '../components/Listing'
 import Container from '../components/shared/Container'
-import Page from '../components/Page'
+import Page from '../components/shared/Page'
 import SearchBar from '../components/search/SearchBar'
 import SelectInput from '../components/shared/SelectInput'
 
@@ -36,6 +36,7 @@ const CategoryWrapper = styled.div`
 `
 
 const SearchResultsPage = ({ data }) => {
+  console.log('🚓', data)
   const allBusinesses = data.allBusinesses.edges
 
   const [values, setValues] = useState({
