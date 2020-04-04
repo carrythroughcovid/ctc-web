@@ -8,6 +8,7 @@ import {
   Button,
   Select,
   CheckBox,
+  TextArea,
 } from 'grommet'
 
 const businessOptions = ['Hospitality', 'Retail', 'Services', 'Other']
@@ -49,7 +50,8 @@ const FormContainer = styled.div`
   border: 1px solid #9060eb;
   border-radius: 3px;
   padding: 2rem;
-  width: 100%;
+  max-width: 50%;
+  margin: 0 auto;
 `
 
 const StyledForm = styled(GrommetForm)`
@@ -65,8 +67,12 @@ const StyledFormField = styled(FormField)`
   margin-top: 1rem;
 `
 
+const StyledTextAreaField = styled(TextArea)`
+  margin-top: 1rem;
+`
+
 const FormInputs = styled.div`
-  max-width: 18rem;
+  padding: 1rem;
 `
 
 const ButtonContainer = styled.div`
@@ -126,6 +132,24 @@ const Form = () => {
               control={control}
               rules={{
                 maxLength: { value: 200, message: 'Business name is too long' },
+              }}
+            />
+            <Controller
+              as={
+                <StyledFormField
+                  name="owner_name"
+                  label="Your Name"
+                  error={errors.owner_name && errors.owner_name.message}
+                  required="true"
+                />
+              }
+              name="owner_name"
+              control={control}
+              rules={{
+                maxLength: {
+                  value: 100,
+                  message: 'Name is too long',
+                },
               }}
             />
             <Controller
@@ -191,8 +215,23 @@ const Form = () => {
                 }}
               />
             )}
+            <Controller
+              as={
+                <StyledFormField
+                  name="headline"
+                  label="Business 1-Liner"
+                  error={errors.headline && errors.headline.message}
+                  required="true"
+                />
+              }
+              name="headline"
+              control={control}
+              rules={{
+                maxLength: { value: 200, message: 'Headline is too long' },
+              }}
+            />
             <SelectContainer>
-              <BorderlessFormField label="Offering" pad="true">
+              <BorderlessFormField label="Product Updates" pad="true">
                 {offeringOptions.map((offering, i) => (
                   <Controller
                     as={<CheckBox name="offeringType" label={offering.label} />}
@@ -227,8 +266,104 @@ const Form = () => {
                 }}
               />
             )}
+            <StyledFormField
+              name="product_details"
+              label="Product/Service Details"
+            >
+              <Controller
+                as={
+                  <StyledTextAreaField
+                    name="product_details"
+                    error={
+                      errors.product_details && errors.product_details.message
+                    }
+                    required="true"
+                  />
+                }
+                name="product_details"
+                control={control}
+                rules={{
+                  maxLength: {
+                    value: 700,
+                    message: 'Product details is too long',
+                  },
+                }}
+              />
+            </StyledFormField>
+            <StyledFormField
+              name="business_details"
+              label="Business Details / Your Story"
+            >
+              <Controller
+                as={
+                  <StyledTextAreaField
+                    name="business_details"
+                    error={
+                      errors.business_details && errors.business_details.message
+                    }
+                    required="true"
+                  />
+                }
+                name="business_details"
+                control={control}
+                rules={{
+                  maxLength: {
+                    value: 700,
+                    message: 'Business details is too long',
+                  },
+                }}
+              />
+            </StyledFormField>
             <Controller
-              as={<StyledFormField name="suburb" label="Suburb (optional)" />}
+              as={
+                <StyledFormField
+                  name="primaryUrl"
+                  label="Website URL"
+                  error={errors.primaryUrl && errors.primaryUrl.message}
+                />
+              }
+              name="primaryUrl"
+              control={control}
+              rules={{
+                maxLength: { value: 500, message: 'Website is too long' },
+              }}
+            />
+            <Controller
+              as={
+                <StyledFormField
+                  name="secondaryUrl"
+                  label="Ordering/Online Store URL (e.g. to Menulog) (optional)"
+                  error={errors.secondaryUrl && errors.secondaryUrl.message}
+                />
+              }
+              name="secondaryUrl"
+              control={control}
+              rules={{
+                maxLength: { value: 500, message: 'Ordering URL is too long' },
+              }}
+            />
+            <Controller
+              as={
+                <StyledFormField
+                  name="businessPhone"
+                  label="Business Phone (displayed on website)  (optional)"
+                  error={errors.businessPhone && errors.businessPhone.message}
+                />
+              }
+              name="secondaryUrl"
+              control={control}
+              rules={{
+                maxLength: { value: 15, message: 'Phone is too long' },
+              }}
+            />
+            <Controller
+              as={
+                <StyledFormField
+                  name="suburb"
+                  label="Suburb (please still enter even if you are online only)"
+                  required="true"
+                />
+              }
               name="suburb"
               control={control}
               rules={{
@@ -239,7 +374,7 @@ const Form = () => {
               as={
                 <StyledFormField
                   name="mobile"
-                  label="Mobile Number (optional)"
+                  label="Contact Number (just for us if we need it)"
                 />
               }
               name="mobile"
