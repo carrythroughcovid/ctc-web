@@ -8,7 +8,7 @@ const HorizontalScroll = styled.div`
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
-  padding: 30px 0;
+  padding: 1rem 0;
   display: flex;
   margin: 0 auto;
   width: 100%;
@@ -22,6 +22,7 @@ const Carousel = ({ cards }) => {
   return (
     <HorizontalScroll>
       {cards.map((card, index) => {
+        console.log(card)
         return (
           <Card
             key={index}
