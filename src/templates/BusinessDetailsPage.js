@@ -222,7 +222,7 @@ const BusinessDetailsPage = ({ data }) => {
               </Details>
             </BusinessDetails>
             <ButtonLink fullWidthMobile to="/">
-              Visit our Website
+              Visit our website
             </ButtonLink>
           </DetailsWrapper>
         </Wrapper>

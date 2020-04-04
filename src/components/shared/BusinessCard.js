@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
-import media from '../../utils/media'
+
+import Badge from './Badge'
 
 const ListingImage = styled.img`
   width: 100%;
@@ -59,26 +60,17 @@ const ListingDetailsContainer = styled.div`
   margin-bottom: 0rem;
 `
 
-const BaseLabel = styled.div`
-  border-radius: 0.25rem;
-  position: absolute;
-  padding: 0.25rem;
-  color: #ffffff;
-  font-size: 0.75rem;
-  display: block;
-`
-
-const SuburbLabel = styled(BaseLabel)`
+const SuburbLabel = styled.div`
   left: 1rem;
   top: 1rem;
-  background-color: #be52f2;
+  position: absolute;
 `
 
-const CategoryLabel = styled(BaseLabel)`
+const CategoryLabel = styled.div`
   right: 1rem;
   top: 1rem;
   text-transform: capitalize;
-  background-color: #6cd4c4;
+  position: absolute;
 `
 
 const ImageContainer = styled.div`
@@ -100,8 +92,16 @@ const Listing = ({ listing }) => {
     <ListingCard>
       <ListingContainer to={`business/${slug}`}>
         <ImageContainer>
-          {address.suburb && <SuburbLabel>{address.suburb}</SuburbLabel>}
-          {category && <CategoryLabel>{category}</CategoryLabel>}
+          {address.suburb && (
+            <SuburbLabel>
+              <Badge primary>{address.suburb}</Badge>
+            </SuburbLabel>
+          )}
+          {category && (
+            <CategoryLabel>
+              <Badge secondary>{category}</Badge>
+            </CategoryLabel>
+          )}
           <ListingImage src={image}></ListingImage>
         </ImageContainer>
         <ListingDetailsContainer>

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Row, Col } from 'react-flexa'
 
-import Listing from '../components/shared/Listing'
+import BusinessCard from '../components/shared/BusinessCard'
 import Container from '../components/shared/Container'
 import Page from '../components/shared/Page'
 import SearchBar from '../components/search/SearchBar'
@@ -99,7 +99,7 @@ const SearchResultsPage = ({ data }) => {
           <Row>
             {filteredListings.map(({ node: listing }, index) => (
               <Col display="flex" xs={12} sm={6} md={4} key={index}>
-                <Listing listing={listing}></Listing>
+                <BusinessCard listing={listing}></BusinessCard>
               </Col>
             ))}
           </Row>
