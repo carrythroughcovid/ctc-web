@@ -27,8 +27,8 @@ exports.sourceNodes = (
     })
     return nodeData
   }
-
-  const apiUrl = `https://carrythroughcovid.herokuapp.com/api/v1/business`
+  
+  const apiUrl = `https://carrythroughcovid.herokuapp.com/api/businesses`
 
   // Gatsby expects sourceNodes to return a promise
   return (

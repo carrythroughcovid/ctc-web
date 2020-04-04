@@ -98,13 +98,13 @@ const ImageContainer = styled.div`
 `
 
 const Listing = ({ listing }) => {
-  const { name, suburb, categories, slug } = listing
+  const { name, address, categories, slug } = listing
   const category = categories.length === 0 ? '' : categories[0].name
 
   return (
     <ListingContainer to={`business/${slug}`}>
       <ImageContainer>
-        <SuburbLabel>{suburb}</SuburbLabel>
+        <SuburbLabel>{address.suburb}</SuburbLabel>
         <CategoryLabel>{category}</CategoryLabel>
         <ListingImage src="https://images.unsplash.com/photo-1571204829887-3b8d69e4094d?w=800&q=80"></ListingImage>
       </ImageContainer>
