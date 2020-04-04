@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
-import media from '../utils/media'
+import media from '../../utils/media'
 
 const ListingImage = styled.img`
   width: 100%;
@@ -9,6 +9,7 @@ const ListingImage = styled.img`
   object-fit: cover;
   display: block;
   object-position: center;
+  background-color: ${({ theme }) => theme.colour.black};
 `
 
 const BusinessName = styled.div`
@@ -16,15 +17,14 @@ const BusinessName = styled.div`
   font-size: 1.5rem;
   font-family: Lato;
   font-weight: bold;
-  line-height: 2rem;
+  line-height: 1;
   color: #1d1f24;
   padding-bottom: 1.5rem;
 `
 
 const BusinessDescription = styled.div`
   color: #6c6f90;
-  padding-bottom: 1rem;
-  line-height: 1.625rem;
+  line-height: 1;
   text-align: center;
 `
 
@@ -77,6 +77,7 @@ const SuburbLabel = styled(BaseLabel)`
 const CategoryLabel = styled(BaseLabel)`
   right: 1rem;
   top: 1rem;
+  text-transform: capitalize;
   background-color: #6cd4c4;
 `
 
@@ -92,7 +93,7 @@ const truncateString = (str, num) => {
 }
 
 const Listing = ({ listing }) => {
-  const { name, address, categories, slug } = listing
+  const { name, address, categories, slug, image } = listing
   const category = categories.length === 0 ? '' : categories[0].name
 
   return (
@@ -101,7 +102,7 @@ const Listing = ({ listing }) => {
         <ImageContainer>
           <SuburbLabel>{address.suburb}</SuburbLabel>
           <CategoryLabel>{category}</CategoryLabel>
-          <ListingImage src="https://images.unsplash.com/photo-1571204829887-3b8d69e4094d?w=800&q=80"></ListingImage>
+          <ListingImage src={image}></ListingImage>
         </ImageContainer>
         <ListingDetailsContainer>
           <BusinessName>{name}</BusinessName>

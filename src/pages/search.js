@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Row, Col } from 'react-flexa'
 
-import Listing from '../components/Listing'
+import Listing from '../components/shared/Listing'
 import Container from '../components/shared/Container'
 import Page from '../components/shared/Page'
 import SearchBar from '../components/search/SearchBar'
