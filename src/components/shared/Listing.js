@@ -100,8 +100,8 @@ const Listing = ({ listing }) => {
     <ListingCard>
       <ListingContainer to={`business/${slug}`}>
         <ImageContainer>
-          <SuburbLabel>{address.suburb}</SuburbLabel>
-          <CategoryLabel>{category}</CategoryLabel>
+          {address.suburb && <SuburbLabel>{address.suburb}</SuburbLabel>}
+          {category && <CategoryLabel>{category}</CategoryLabel>}
           <ListingImage src={image}></ListingImage>
         </ImageContainer>
         <ListingDetailsContainer>
