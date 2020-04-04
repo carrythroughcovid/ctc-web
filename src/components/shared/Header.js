@@ -6,7 +6,8 @@ import Logo from './Logo'
 
 const StyledHeader = styled.header`
   height: ${props => props.theme.headerHeight};
-  background-color: #f2f2f2;
+  background-color: white;
+  border-bottom: 1px solid #cccccc;
   display: flex;
   align-items: center;
   padding-left: ${({ theme }) => theme.containerGutter};
