@@ -126,7 +126,6 @@ export const query = graphql`
             id
             name
           }
-          businessId
           slug
           address {
             id

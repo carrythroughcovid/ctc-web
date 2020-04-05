@@ -7,7 +7,7 @@ const buttonStyles = css`
   text-align: center;
   background-color: ${({ theme }) => theme.colour.violet};
   color: white;
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1rem;
   border-radius: 0.5rem;
 
   &:hover {
@@ -26,6 +26,12 @@ const buttonStyles = css`
         display: inline;
         width: max-content;
       `}
+    `}
+
+  ${props =>
+    props.large &&
+    css`
+      padding: 1rem 1.5rem;
     `}
 `
 

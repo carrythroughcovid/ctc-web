@@ -45,25 +45,11 @@ exports.sourceNodes = (
       })
     })
 
-  fetch(`${apiEndpoint}/addresses`)
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(address => {
-        const nodeData = processEntity('Addresses', address)
-        createNode(nodeData)
-      })
-    })
-
   return fetch(`${apiEndpoint}/businesses`)
     .then(response => response.json())
     .then(data => {
       data.forEach(business => {
-        const enrichedBusiness = {
-          ...business,
-          businessId: business.id,
-          slug: `${slugify(business.name)}-${business.id}`,
-        }
-        const nodeData = processEntity(`Businesses`, enrichedBusiness)
+        const nodeData = processEntity(`Businesses`, business)
         createNode(nodeData)
       })
     })
@@ -75,7 +61,6 @@ exports.createPages = async function({ actions, graphql }) {
       allBusinesses {
         edges {
           node {
-            businessId
             name
             id
             slug

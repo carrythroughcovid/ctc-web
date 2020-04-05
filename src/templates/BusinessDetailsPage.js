@@ -221,7 +221,7 @@ const BusinessDetailsPage = ({ data }) => {
                 </BusinessLocation>
               </Details>
             </BusinessDetails>
-            <ButtonLink fullWidthMobile to="/">
+            <ButtonLink fullWidthMobile large href="/">
               Visit our website
             </ButtonLink>
           </DetailsWrapper>
@@ -246,7 +246,6 @@ export const query = graphql`
         id
         name
       }
-      businessId
       slug
       address {
         id
