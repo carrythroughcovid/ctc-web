@@ -85,16 +85,16 @@ const truncateString = (str, num) => {
 }
 
 const Listing = ({ listing }) => {
-  const { name, address, categories, slug, image } = listing
+  const { name, suburb, categories, slug, image } = listing
   const category = categories.length === 0 ? '' : categories[0].name
 
   return (
     <ListingCard>
       <ListingContainer to={`business/${slug}`}>
         <ImageContainer>
-          {address.suburb && (
+          {suburb && (
             <SuburbLabel>
-              <Badge primary>{address.suburb}</Badge>
+              <Badge primary>{suburb}</Badge>
             </SuburbLabel>
           )}
           {category && (

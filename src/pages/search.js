@@ -51,8 +51,8 @@ const SearchResultsPage = ({ data }) => {
   }
 
   const filteredListings = values.listings.filter(({ node: listing }) => {
-    const { name, address, categories } = listing
-    const actualSuburb = address.suburb || ''
+    const { name, suburb, categories } = listing
+    const actualSuburb = suburb || ''
     const searchValue = values.searchInput.toLowerCase()
     const selectedCategory = values.categories.toLowerCase()
 
@@ -127,10 +127,7 @@ export const query = graphql`
             name
           }
           slug
-          address {
-            id
-            suburb
-          }
+          suburb
         }
       }
     }

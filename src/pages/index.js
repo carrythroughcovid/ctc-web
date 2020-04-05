@@ -22,10 +22,7 @@ export const query = graphql`
             name
           }
           slug
-          address {
-            id
-            suburb
-          }
+          suburb
         }
       }
     }
