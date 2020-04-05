@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'gatsby'
 
 import Badge from './Badge'
+import { Highlight } from 'react-instantsearch-dom';
 
 const ListingImage = styled.img`
   width: 100%;
@@ -85,16 +86,16 @@ const truncateString = (str, num) => {
 }
 
 const Listing = ({ listing }) => {
-  const { name, suburb, categories, slug, image } = listing
+  const { name, location, categories, slug, image } = listing
   const category = categories.length === 0 ? '' : categories[0].name
 
   return (
     <ListingCard>
       <ListingContainer to={`business/${slug}`}>
         <ImageContainer>
-          {suburb && (
+          {location && location.suburb && (
             <SuburbLabel>
-              <Badge primary>{suburb}</Badge>
+              <Badge primary>{location.suburb}</Badge>
             </SuburbLabel>
           )}
           {category && (
@@ -105,7 +106,7 @@ const Listing = ({ listing }) => {
           <ListingImage src={image}></ListingImage>
         </ImageContainer>
         <ListingDetailsContainer>
-          <BusinessName>{name}</BusinessName>
+          <BusinessName><Highlight attribute="name" hit={listing} /></BusinessName>
           <BusinessDescription>
             {truncateString(
               'This is the description of the business and how they would like the puclic to reachout to help them in these strange times.',
