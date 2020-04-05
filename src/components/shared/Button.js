@@ -11,7 +11,12 @@ const buttonStyles = css`
   border-radius: 0.5rem;
 
   &:hover {
-    box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 0px 20rem inset;
+    ${props =>
+      !props.disabled &&
+      css`
+        cursor: pointer;
+        box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 0px 20rem inset;
+      `}
   }
 
   &:active {
@@ -33,6 +38,13 @@ const buttonStyles = css`
     css`
       padding: 1rem 1.5rem;
     `}
+
+  ${props =>
+    props.disabled &&
+    css`
+      cursor: not-allowed;
+      box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 0px 20rem inset;
+    `}
 `
 
 export const ButtonLink = styled.a`
@@ -43,4 +55,8 @@ export const ButtonLink = styled.a`
   }
 `
 
-// TODO export default regular button
+const Button = styled.button`
+  ${buttonStyles}
+`
+
+export default Button

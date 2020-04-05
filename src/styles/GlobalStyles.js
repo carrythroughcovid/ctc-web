@@ -29,6 +29,11 @@ const GlobalStyles = createGlobalStyle`
     background-color: ${({ theme }) => theme.colour.primary};
     color: white;
   }
+
+  .ais-Highlight-highlighted {
+    font-style: normal;
+    color: ${({ theme }) => theme.colour.primary};
+  }
 `
 
 export default GlobalStyles
