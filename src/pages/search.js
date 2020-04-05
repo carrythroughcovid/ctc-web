@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Row, Col } from 'react-flexa'
 import algoliasearch from 'algoliasearch/lite'
@@ -6,15 +6,18 @@ import algoliasearch from 'algoliasearch/lite'
 import {
   InstantSearch,
   SearchBox,
-  Highlight,
   connectInfiniteHits,
-  Panel,
-  MenuSelect
+  connectMenu,
+  connectSearchBox,
+  MenuSelect,
 } from 'react-instantsearch-dom'
 
 import BusinessCard from '../components/shared/BusinessCard'
 import Container from '../components/shared/Container'
+import SearchBar from '../components/search/SearchBar'
+import SearchMenu from '../components/search/SearchMenu'
 import Page from '../components/shared/Page'
+import Button from '../components/shared/Button'
 import media from '../utils/media'
 
 const FormSection = styled.div`
@@ -31,10 +34,23 @@ const LocationWrapper = styled.div`
   padding-bottom: 1rem;
 
   ${media.sm`
-  flex: 3;
+  flex: 2;
     padding-bottom: 0;
     padding-right: 1rem;
   `}
+`
+
+const CategoryWrapper = styled.div`
+  flex: 1;
+  display: flex;
+
+  & > label {
+    flex: 1;
+  }
+
+  & > label:not(:last-of-type) {
+    margin-right: 1rem;
+  }
 `
 
 const searchClient = algoliasearch(
@@ -42,14 +58,8 @@ const searchClient = algoliasearch(
   '859c34030d228a6188c83731bb6e456f'
 )
 
-const InfiniteHits = ({
-  hits,
-  hasPrevious,
-  refinePrevious,
-  hasMore,
-  refineNext,
-}) => (
-  <div>
+const InfiniteHits = ({ hits, hasMore, refineNext }) => (
+  <>
     <Row>
       {hits.map((hit, index) => (
         <Col display="flex" xs={12} sm={6} md={4} key={index}>
@@ -58,35 +68,45 @@ const InfiniteHits = ({
       ))}
     </Row>
 
-      <button disabled={!hasMore} onClick={refineNext}>
-      Show more results
-    </button>
-  </div>
-);
+    {hasMore && (
+      <Button fullWidthMobile disabled={!hasMore} onClick={refineNext}>
+        {hasMore ? 'Show more results' : 'No more results'}
+      </Button>
+    )}
+  </>
+)
 
-const CustomHits = connectInfiniteHits(InfiniteHits);
+const CustomHits = connectInfiniteHits(InfiniteHits)
+const CustomSearchBox = connectSearchBox(SearchBar)
+const CustomMenu = connectMenu(SearchMenu)
 
 const SearchResultsPage = ({ data }) => {
   return (
     <Page>
-    <InstantSearch searchClient={searchClient} indexName="prod_business">
-      <Container>
-        <FormSection>
-          <LocationWrapper>
-          <SearchBox />
-          <div style={{display: 'flex'}}>
-            <MenuSelect attribute='location.state'></MenuSelect>
-            <MenuSelect attribute='categories.name'></MenuSelect>
-            <MenuSelect attribute='offerings.name'></MenuSelect>
-          </div>
-          </LocationWrapper>
-        </FormSection>
-      </Container>
-      <ListingsSection>
+      <InstantSearch searchClient={searchClient} indexName="prod_business">
         <Container>
-          <CustomHits/>
+          <FormSection>
+            <LocationWrapper>
+              <CustomSearchBox />
+            </LocationWrapper>
+            <CategoryWrapper>
+              <CustomMenu
+                attribute="location.state"
+                resourceName="states"
+              ></CustomMenu>
+              <CustomMenu
+                attribute="categories.name"
+                resourceName="categories"
+              ></CustomMenu>
+            </CategoryWrapper>
+          </FormSection>
         </Container>
-      </ListingsSection>
+
+        <ListingsSection>
+          <Container>
+            <CustomHits />
+          </Container>
+        </ListingsSection>
       </InstantSearch>
     </Page>
   )
