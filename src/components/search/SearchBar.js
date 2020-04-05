@@ -23,6 +23,7 @@ const SearchInput = styled.input`
   border: none;
   height: 100%;
   padding-left: 2.5rem;
+  padding-right: 1rem;
   border-radius: 6px;
   outline: 0;
   border: 0;

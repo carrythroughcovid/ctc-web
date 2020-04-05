@@ -5,11 +5,12 @@ import algoliasearch from 'algoliasearch/lite'
 
 import {
   InstantSearch,
-  SearchBox,
   connectInfiniteHits,
+  connectStateResults,
   connectMenu,
+  connectCurrentRefinements,
   connectSearchBox,
-  MenuSelect,
+  ClearRefinements,
 } from 'react-instantsearch-dom'
 
 import BusinessCard from '../components/shared/BusinessCard'
@@ -53,6 +54,11 @@ const CategoryWrapper = styled.div`
   }
 `
 
+const NoResults = styled.div`
+  font-size: 1.25rem;
+  color: ${({ theme }) => theme.colour.grey};
+`
+
 const searchClient = algoliasearch(
   'TGPZX7CMYY',
   '859c34030d228a6188c83731bb6e456f'
@@ -68,6 +74,8 @@ const InfiniteHits = ({ hits, hasMore, refineNext }) => (
       ))}
     </Row>
 
+    {hits.length === 0 && <NoResults>No Results found</NoResults>}
+
     {hasMore && (
       <Button fullWidthMobile disabled={!hasMore} onClick={refineNext}>
         {hasMore ? 'Show more results' : 'No more results'}
@@ -76,9 +84,28 @@ const InfiniteHits = ({ hits, hasMore, refineNext }) => (
   </>
 )
 
+const ClearButton = ({ items, refine }) => (
+  <Button onClick={() => refine(items)} fullWidthMobile>
+    Clear search
+  </Button>
+)
+
+const ClearClearButton = connectCurrentRefinements(ClearButton)
 const CustomHits = connectInfiniteHits(InfiniteHits)
 const CustomSearchBox = connectSearchBox(SearchBar)
 const CustomMenu = connectMenu(SearchMenu)
+
+const Results = connectStateResults(
+  ({ searchState, searchResults, children }) =>
+    searchResults && searchResults.nbHits !== 0 ? (
+      children
+    ) : (
+      <>
+        <p>No results have been found for "{searchState.query}"</p>
+        <ClearClearButton clearsQuery />
+      </>
+    )
+)
 
 const SearchResultsPage = ({ data }) => {
   return (
@@ -104,7 +131,9 @@ const SearchResultsPage = ({ data }) => {
 
         <ListingsSection>
           <Container>
-            <CustomHits />
+            <Results>
+              <CustomHits />
+            </Results>
           </Container>
         </ListingsSection>
       </InstantSearch>
