@@ -424,6 +424,36 @@ const Form = () => {
                 maxLength: { value: 15, message: 'Phone is too long' },
               }}
             />
+            <Controller
+              as={
+                <StyledFormField name="mainImage" label="Main Image">
+                  <input type="file" />
+                </StyledFormField>
+              }
+              name="mainImage"
+              control={control}
+            />
+            <Controller
+              as={
+                <StyledFormField name="logo" label="Logo">
+                  <input type="file" />
+                </StyledFormField>
+              }
+              name="logo"
+              control={control}
+            />
+            <Controller
+              as={
+                <StyledFormField
+                  name="businessOwnerImage"
+                  label="Your Headshot"
+                >
+                  <input type="file" />
+                </StyledFormField>
+              }
+              name="businessOwnerImage"
+              control={control}
+            />
           </FormInputs>
           <ButtonContainer>
             <Button type="submit" label="Submit" />
