@@ -1,6 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Row, Col } from 'react-flexa'
+import algoliasearch from 'algoliasearch/lite'
+import {
+  InstantSearch,
+  SearchBox,
+  Hits,
+  InfiniteHits,
+  Highlight,
+} from 'react-instantsearch-dom'
 
 import BusinessCard from '../components/shared/BusinessCard'
 import Container from '../components/shared/Container'
@@ -35,8 +43,19 @@ const CategoryWrapper = styled.div`
   flex: 1;
 `
 
+const searchClient = algoliasearch(
+  'TGPZX7CMYY',
+  '859c34030d228a6188c83731bb6e456f'
+)
+
+const Hit = ({ hit, ...rest }) =>
+  console.log(hit, rest) || (
+    <p>
+      <Highlight attribute="name" hit={hit} tagName="mark" />
+    </p>
+  )
+
 const SearchResultsPage = ({ data }) => {
-  console.log('🚓', data)
   const allBusinesses = data.allBusinesses.edges
 
   const [values, setValues] = useState({
@@ -73,6 +92,10 @@ const SearchResultsPage = ({ data }) => {
   return (
     <Page>
       <Container>
+        <InstantSearch searchClient={searchClient} indexName="prod_business">
+          <SearchBox />
+          <InfiniteHits hitComponent={Hit} />
+        </InstantSearch>
         <FormSection>
           <LocationWrapper>
             <SearchBar

@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "algoliasearch": "^4.1.0",
     "gatsby": "^2.19.45",
     "gatsby-image": "^2.2.44",
     "gatsby-plugin-manifest": "^2.2.48",
@@ -21,6 +22,7 @@
     "react-flexa": "^0.9.1",
     "react-helmet": "^5.2.1",
     "react-icons": "^3.9.0",
+    "react-instantsearch-dom": "^6.4.0",
     "react-tabs": "^3.1.0",
     "slugify": "^1.4.0",
     "styled-components": "^5.0.1",
