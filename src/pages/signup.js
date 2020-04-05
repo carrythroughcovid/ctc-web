@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useCallback } from 'react'
 import styled from 'styled-components'
 import { useForm, Controller } from 'react-hook-form'
 import {
@@ -100,13 +100,39 @@ const BorderlessFormField = styled(FormField)`
 
 const Form = () => {
   const formRef = useRef(null)
-  const { handleSubmit, control, errors } = useForm()
+  const {
+    handleSubmit,
+    control,
+    errors,
+    getValues,
+    triggerValidation,
+    formState,
+  } = useForm()
   const [businessType, setBusinessType] = useState('')
   const [otherOfferingChecked, setOtherOfferingChecked] = useState(false)
+  const [offeringsChecked, setOfferingsChecked] = useState(0)
+
+  const validateOfferings = _ => {
+    const values = getValues({ nest: true })
+
+    return (
+      Object.keys(values.offeringType).filter(v =>
+        Boolean(values.offeringType[v])
+      ).length >= 1 || 'Select at least 1 offering.'
+    )
+  }
 
   const onSubmit = (_, e) => {
     formRef.current.submit()
   }
+
+  const handleCheckboxChange = useCallback(
+    evt => {
+      const { name } = evt.target
+      triggerValidation({ name })
+    },
+    [formState.touched, triggerValidation]
+  )
 
   return (
     <Grommet plain>
@@ -115,7 +141,7 @@ const Form = () => {
           ref={formRef}
           name="businessForm"
           method="post"
-          action="/submitted_business"
+          action="/"
           onSubmit={handleSubmit(onSubmit)}
         >
           <FormInputs>
@@ -125,12 +151,12 @@ const Form = () => {
                   name="businessName"
                   label="Business Name"
                   error={errors.businessName && errors.businessName.message}
-                  required="true"
                 />
               }
               name="businessName"
               control={control}
               rules={{
+                required: { value: true, message: 'Business name is required' },
                 maxLength: { value: 200, message: 'Business name is too long' },
               }}
             />
@@ -140,12 +166,12 @@ const Form = () => {
                   name="owner_name"
                   label="Your Name"
                   error={errors.owner_name && errors.owner_name.message}
-                  required="true"
                 />
               }
               name="owner_name"
               control={control}
               rules={{
+                required: { value: true, message: 'Name is required' },
                 maxLength: {
                   value: 100,
                   message: 'Name is too long',
@@ -221,12 +247,12 @@ const Form = () => {
                   name="headline"
                   label="Business 1-Liner"
                   error={errors.headline && errors.headline.message}
-                  required="true"
                 />
               }
               name="headline"
               control={control}
               rules={{
+                required: { value: true, message: 'Headline is required' },
                 maxLength: { value: 200, message: 'Headline is too long' },
               }}
             />
@@ -235,18 +261,29 @@ const Form = () => {
                 {offeringOptions.map((offering, i) => (
                   <Controller
                     as={<CheckBox name="offeringType" label={offering.label} />}
-                    name={`offeringType-${offering.value}`}
+                    name={`offeringType[${offering.value}]`}
                     control={control}
                     onChange={selected => {
+                      handleCheckboxChange(selected[0])
                       const { currentTarget: current } = selected[0]
+                      console.log(current.value)
+                      current.value === 'true'
+                        ? setOfferingsChecked(offeringsChecked - 1)
+                        : setOfferingsChecked(offeringsChecked + 1)
                       if (current.name.match(/offeringType.+other/g)) {
                         setOtherOfferingChecked(current.checked)
                       }
                       return `${current.checked}`
                     }}
+                    rules={{
+                      validate: validateOfferings,
+                    }}
                   />
                 ))}
               </BorderlessFormField>
+              {formState.isSubmitted && offeringsChecked === 0 && (
+                <ErrorMessage>Please select at least one product</ErrorMessage>
+              )}
             </SelectContainer>
             {otherOfferingChecked && (
               <Controller
@@ -269,20 +306,17 @@ const Form = () => {
             <StyledFormField
               name="product_details"
               label="Product/Service Details"
+              error={errors.product_details && errors.product_details.message}
             >
               <Controller
-                as={
-                  <StyledTextAreaField
-                    name="product_details"
-                    error={
-                      errors.product_details && errors.product_details.message
-                    }
-                    required="true"
-                  />
-                }
+                as={<StyledTextAreaField name="product_details" />}
                 name="product_details"
                 control={control}
                 rules={{
+                  required: {
+                    value: true,
+                    message: 'These details are required',
+                  },
                   maxLength: {
                     value: 700,
                     message: 'Product details is too long',
@@ -293,20 +327,17 @@ const Form = () => {
             <StyledFormField
               name="business_details"
               label="Business Details / Your Story"
+              error={errors.business_details && errors.business_details.message}
             >
               <Controller
-                as={
-                  <StyledTextAreaField
-                    name="business_details"
-                    error={
-                      errors.business_details && errors.business_details.message
-                    }
-                    required="true"
-                  />
-                }
+                as={<StyledTextAreaField name="business_details" />}
                 name="business_details"
                 control={control}
                 rules={{
+                  required: {
+                    value: true,
+                    message: 'These details are required',
+                  },
                   maxLength: {
                     value: 700,
                     message: 'Business details is too long',
@@ -317,8 +348,45 @@ const Form = () => {
             <Controller
               as={
                 <StyledFormField
+                  name="suburb"
+                  label="Suburb"
+                  error={errors.suburb && errors.suburb.message}
+                />
+              }
+              name="suburb"
+              control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message:
+                    'Suburb is required. Please still enter one if you are an online store.',
+                },
+                maxLength: { value: 50, message: 'Suburb is too long' },
+              }}
+            />
+            <Controller
+              as={
+                <StyledFormField
+                  name="contactNumber"
+                  label="Contact Number (only for our records)"
+                  error={errors.contactNumber && errors.contactNumber.message}
+                />
+              }
+              name="contactNumber"
+              control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: 'Contact number is required.',
+                },
+                maxLength: { value: 15, message: 'Contact Number is too long' },
+              }}
+            />
+            <Controller
+              as={
+                <StyledFormField
                   name="primaryUrl"
-                  label="Website URL"
+                  label="Website URL (optional)"
                   error={errors.primaryUrl && errors.primaryUrl.message}
                 />
               }
@@ -354,33 +422,6 @@ const Form = () => {
               control={control}
               rules={{
                 maxLength: { value: 15, message: 'Phone is too long' },
-              }}
-            />
-            <Controller
-              as={
-                <StyledFormField
-                  name="suburb"
-                  label="Suburb (please still enter even if you are online only)"
-                  required="true"
-                />
-              }
-              name="suburb"
-              control={control}
-              rules={{
-                maxLength: { value: 50, message: 'Suburb is too long' },
-              }}
-            />
-            <Controller
-              as={
-                <StyledFormField
-                  name="mobile"
-                  label="Contact Number (just for us if we need it)"
-                />
-              }
-              name="mobile"
-              control={control}
-              rules={{
-                maxLength: { value: 15, message: 'Mobile is too long' },
               }}
             />
           </FormInputs>
