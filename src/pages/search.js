@@ -20,6 +20,7 @@ import SearchMenu from '../components/search/SearchMenu'
 import Page from '../components/shared/Page'
 import Button from '../components/shared/Button'
 import media from '../utils/media'
+import Toast from '../components/shared/Toast'
 
 const FormSection = styled.div`
   padding-top: 2rem;
@@ -107,11 +108,12 @@ const Results = connectStateResults(
     )
 )
 
-const SearchResultsPage = ({ data }) => {
+const SearchResultsPage = () => {
   return (
     <Page>
       <InstantSearch searchClient={searchClient} indexName="prod_business">
         <Container>
+          <Toast msg="Keen to jump on board? Tap the signup link above!"></Toast>
           <FormSection>
             <LocationWrapper>
               <CustomSearchBox />
