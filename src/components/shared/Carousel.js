@@ -22,7 +22,6 @@ const Carousel = ({ cards }) => {
   return (
     <HorizontalScroll>
       {cards.map((card, index) => {
-        console.log(card)
         return (
           <Card
             key={index}
