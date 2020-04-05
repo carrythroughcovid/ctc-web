@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'gatsby'
 
 import Badge from './Badge'
-import { Highlight } from 'react-instantsearch-dom';
+import { Highlight } from 'react-instantsearch-dom'
 
 const ListingImage = styled.img`
   width: 100%;
@@ -106,7 +106,9 @@ const Listing = ({ listing }) => {
           <ListingImage src={image}></ListingImage>
         </ImageContainer>
         <ListingDetailsContainer>
-          <BusinessName><Highlight attribute="name" hit={listing} /></BusinessName>
+          <BusinessName>
+            <Highlight attribute="name" hit={listing} />
+          </BusinessName>
           <BusinessDescription>
             {truncateString(
               'This is the description of the business and how they would like the puclic to reachout to help them in these strange times.',
