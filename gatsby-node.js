@@ -27,24 +27,6 @@ exports.sourceNodes = (
 
   const apiEndpoint = 'https://carrythroughcovid.herokuapp.com/api'
 
-  fetch(`${apiEndpoint}/categories`)
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(category => {
-        const nodeData = processEntity('Categories', category)
-        createNode(nodeData)
-      })
-    })
-
-  fetch(`${apiEndpoint}/offerings`)
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(offering => {
-        const nodeData = processEntity('Offerings', offering)
-        createNode(nodeData)
-      })
-    })
-
   return fetch(`${apiEndpoint}/businesses`)
     .then(response => response.json())
     .then(data => {
