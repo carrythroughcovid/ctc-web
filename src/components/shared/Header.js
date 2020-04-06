@@ -16,18 +16,11 @@ const StyledHeader = styled.header`
   padding-right: ${({ theme }) => theme.containerGutter};
 `
 
-const HeaderLink = styled(Link)`
-  &:hover,
-  &:active {
-    text-decoration: none;
-  }
-`
-
 const Header = () => (
   <StyledHeader>
-    <HeaderLink to={`/`}>
-      <Logo />
-    </HeaderLink>
+    <Link to={`/`}>
+      <Logo light />
+    </Link>
     <Button to="/signup">Sign up</Button>
   </StyledHeader>
 )

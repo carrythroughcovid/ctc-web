@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import Document from './Document'
 import Header from './Header'
+import HomeHeader from '../home/HomeHeader'
 import Footer from './Footer'
 
 import media from '../../utils/media'
@@ -23,10 +24,10 @@ const Main = styled.main`
   `}
 `
 
-const Page = ({ children }) => (
+const Page = ({ children, homeHeader }) => (
   <Document>
     <Wrapper>
-      <Header title="Carry through Covid" />
+      {!homeHeader ? <Header /> : <HomeHeader />}
       <Main>{children}</Main>
       <Footer />
     </Wrapper>
