@@ -28,7 +28,7 @@ const Header = () => (
     <HeaderLink to={`/`}>
       <Logo />
     </HeaderLink>
-    <Button href="/signup">Sign up</Button>
+    <Button to="/signup">Sign up</Button>
   </StyledHeader>
 )
 
