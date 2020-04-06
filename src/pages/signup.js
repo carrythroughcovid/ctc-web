@@ -112,6 +112,10 @@ const Form = () => {
   const [otherOfferingChecked, setOtherOfferingChecked] = useState(false)
   const [offeringsChecked, setOfferingsChecked] = useState(0)
 
+  const headerImageRef = useRef(null)
+  const businessOwnerImageRef = useRef(null)
+  const logoRef = useRef(null)
+
   const validateOfferings = _ => {
     const values = getValues({ nest: true })
 
@@ -123,14 +127,17 @@ const Form = () => {
   }
 
   const onSubmit = data => {
-    console.log(data)
-    console.log(JSON.stringify(data))
+    const formData = new FormData()
+    Object.keys(data).forEach(key => formData.append(key, data[key]))
+    formData.append('header_image', headerImageRef.current.files[0])
+    formData.append('logo', logoRef.current.files[0])
+    formData.append(
+      'business_owner_image',
+      businessOwnerImageRef.current.files[0]
+    )
     fetch('http://localhost:3000/api/businesses', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+      body: formData,
     }).then(() => alert('done'))
   }
 
@@ -439,7 +446,7 @@ const Form = () => {
             <Controller
               as={
                 <StyledFormField name="header_image" label="Main Image">
-                  <input type="file" />
+                  <input type="file" ref={headerImageRef} />
                 </StyledFormField>
               }
               name="header_image"
@@ -448,7 +455,7 @@ const Form = () => {
             <Controller
               as={
                 <StyledFormField name="logo" label="Logo">
-                  <input type="file" />
+                  <input type="file" ref={logoRef} />
                 </StyledFormField>
               }
               name="logo"
@@ -460,7 +467,7 @@ const Form = () => {
                   name="business_owner_image"
                   label="Your Headshot"
                 >
-                  <input type="file" />
+                  <input type="file" ref={businessOwnerImageRef} />
                 </StyledFormField>
               }
               name="business_owner_image"
