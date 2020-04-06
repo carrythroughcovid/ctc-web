@@ -10,6 +10,7 @@ const buttonStyles = css`
   color: white;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
+  border: 0;
 
   &:hover {
     ${props =>
@@ -23,6 +24,12 @@ const buttonStyles = css`
   &:active {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 0px 20rem inset;
   }
+
+  ${props =>
+    props.fullWidth &&
+    css`
+      width: 100%;
+    `}
 
   ${props =>
     props.fullWidthMobile &&
@@ -46,6 +53,12 @@ const buttonStyles = css`
       cursor: not-allowed;
       box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 0px 20rem inset;
     `}
+
+    ${props =>
+      props.secondary &&
+      css`
+        background-color: ${({ theme }) => theme.colour.accent2};
+      `}
 `
 
 export const ButtonLink = styled.a`

@@ -21,7 +21,6 @@ import SearchMenu from '../components/search/SearchMenu'
 import Page from '../components/shared/Page'
 import Button from '../components/shared/Button'
 import media from '../utils/media'
-import Toast from '../components/shared/Toast'
 import Spinner from '../components/shared/Spinner'
 
 const FormSection = styled.div`
@@ -137,12 +136,9 @@ const CTALink = styled(Link)`
 
 const SearchResultsPage = () => {
   return (
-    <Page>
+    <Page homeHeader>
       <InstantSearch searchClient={searchClient} indexName="prod_business">
         <Container>
-          <Toast>
-            Keen to jump on board? <CTALink to="/signup">Signup here.</CTALink>
-          </Toast>
           <FormSection>
             <LocationWrapper>
               <CustomSearchBox showLoadingIndicator={true} />
@@ -160,7 +156,7 @@ const SearchResultsPage = () => {
           </FormSection>
         </Container>
 
-        <ListingsSection>
+        <ListingsSection id="explore">
           <Container>
             <Results>
               <CustomHits />
