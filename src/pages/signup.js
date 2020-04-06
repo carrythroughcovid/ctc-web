@@ -13,6 +13,11 @@ import {
 
 import Page from '../components/shared/Page'
 
+const API_HOST =
+  process.env.NODE_ENV === 'production'
+    ? 'https://carrythroughcovid.herokuapp.com/'
+    : 'http://localhost:3000/'
+
 const businessOptions = ['Hospitality', 'Retail', 'Services', 'Other']
 const offeringOptions = [
   {
@@ -142,7 +147,7 @@ const Form = () => {
       'business_owner_image',
       businessOwnerImageRef.current.files[0]
     )
-    fetch('http://localhost:3000/api/businesses', {
+    fetch(`${API_HOST}api/businesses`, {
       method: 'POST',
       body: formData,
     }).then(() => alert('done'))
