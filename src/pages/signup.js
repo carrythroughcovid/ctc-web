@@ -137,7 +137,11 @@ const Form = () => {
 
   const onSubmit = data => {
     const formData = new FormData()
-    Object.keys(data).forEach(key => formData.append(key, data[key]))
+    Object.keys(data).forEach(key => {
+      if (data[key] !== undefined) {
+        formData.append(key, data[key])
+      }
+    })
     const offeringObj = data['offering_type']
     Object.keys(offeringObj).forEach(key =>
       formData.append(`offering_${key}`, offeringObj[key])
