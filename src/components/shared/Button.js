@@ -54,6 +54,13 @@ export const ButtonLink = styled.a`
     text-decoration: none;
   }
 `
+export const ButtonInternalLink = styled.a`
+  ${buttonStyles}
+
+  &:hover {
+    text-decoration: none;
+  }
+`
 
 const Button = styled.button`
   ${buttonStyles}

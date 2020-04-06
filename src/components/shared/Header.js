@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'gatsby'
 
 import Logo from './Logo'
-import { ButtonLink } from './Button'
+import { ButtonInternalLink as Button } from './Button'
 
 const StyledHeader = styled.header`
   height: ${props => props.theme.headerHeight};
@@ -28,7 +28,7 @@ const Header = () => (
     <HeaderLink to={`/`}>
       <Logo />
     </HeaderLink>
-    <ButtonLink href="/signup">Sign up</ButtonLink>
+    <Button href="/signup">Sign up</Button>
   </StyledHeader>
 )
 
