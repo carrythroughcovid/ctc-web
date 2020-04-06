@@ -129,6 +129,10 @@ const Form = () => {
   const onSubmit = data => {
     const formData = new FormData()
     Object.keys(data).forEach(key => formData.append(key, data[key]))
+    const offeringObj = data['offering_type']
+    Object.keys(offeringObj).forEach(key =>
+      formData.append(`offering_${key}`, offeringObj[key])
+    )
     formData.append('header_image', headerImageRef.current.files[0])
     formData.append('logo', logoRef.current.files[0])
     formData.append(
