@@ -137,12 +137,13 @@ const Form = () => {
   const [businessType, setBusinessType] = useState('')
   const [otherOfferingChecked, setOtherOfferingChecked] = useState(false)
   const [offeringsChecked, setOfferingsChecked] = useState(0)
-  const [location, setLocation] = useState({})
 
   const headerImageRef = useRef(null)
   const businessOwnerImageRef = useRef(null)
   const logoRef = useRef(null)
-  const addressRef = useRef(null)
+  const suburbRef = useRef(null)
+  const stateRef = useRef(null)
+  const postcodeRef = useRef(null)
 
   const validateOfferings = _ => {
     const values = getValues({ nest: true })
@@ -155,39 +156,22 @@ const Form = () => {
   }
 
   const Autocomplete = ({ hits, currentRefinement, refine }) => (
-    <>
-      <Select
-        placeholder="Suburb"
-        options={hits}
-        value={currentRefinement.suburb}
-        onSearch={input => {
-          refine(input)
-        }}
-        onChange={({ option }) => {
-          return option
-        }}
-        name="suburb_auto"
-        labelKey={hit => `${hit.suburb} ${hit.state} ${hit.postcode}`}
-        // valueKey={'suburb'}
-      />
-      {/* <Select
-        placeholder="Suburb"
-        options={hits}
-        value={location ? location.suburb : undefined}
-        onSearch={input => {
-          console.log('input', input)
-          refine(input)
-          return input
-        }}
-        onChange={({ option }) => {
-          console.log('option', option)
-          setLocation(option)
-        }}
-        name="suburb_auto"
-        labelKey={hit => `${hit.suburb} ${hit.state} ${hit.postcode}`}
-        valueKey={'suburb'}
-      /> */}
-    </>
+    <Select
+      placeholder="Suburb"
+      options={hits}
+      value={currentRefinement.suburb}
+      onSearch={input => {
+        refine(input)
+      }}
+      onChange={({ option }) => {
+        suburbRef.current = option.suburb
+        stateRef.current = option.state
+        postcodeRef.current = option.postcode
+        return option
+      }}
+      name="suburb_auto"
+      labelKey={hit => `${hit.suburb} ${hit.state} ${hit.postcode}`}
+    />
   )
 
   const CustomAutocomplete = connectAutoComplete(Autocomplete)
@@ -204,6 +188,9 @@ const Form = () => {
     Object.keys(offeringObj).forEach(key =>
       formData.append(`offering_${key}`, offeringObj[key])
     )
+    formData.append('suburb', suburbRef.current)
+    formData.append('state', stateRef.current)
+    formData.append('postcode', postcodeRef.current)
     formData.append('header_image', headerImageRef.current.files[0])
     formData.append('logo', logoRef.current.files[0])
     formData.append(
@@ -234,11 +221,18 @@ const Form = () => {
       ) : (
         <Grommet plain>
           <FormContainer>
+            <InstantSearch
+              searchClient={searchClient}
+              indexName="prod_suburb_centroid"
+            >
+              <CustomAutocomplete />
+            </InstantSearch>
             <StyledForm
               ref={formRef}
               name="businessForm"
               onSubmit={handleSubmit(onSubmit)}
             >
+              <input type="hidden" ref={suburbRef} />
               <FormInputs>
                 <Controller
                   as={
@@ -252,7 +246,7 @@ const Form = () => {
                   control={control}
                   rules={{
                     required: {
-                      value: true,
+                      value: false,
                       message: 'Business name is required',
                     },
                     maxLength: {
@@ -272,7 +266,7 @@ const Form = () => {
                   name="owner_name"
                   control={control}
                   rules={{
-                    required: { value: true, message: 'Name is required' },
+                    required: { value: false, message: 'Name is required' },
                     maxLength: {
                       value: 100,
                       message: 'Name is too long',
@@ -290,7 +284,7 @@ const Form = () => {
                   name="email"
                   control={control}
                   rules={{
-                    required: { value: true, message: 'Email is required' },
+                    required: { value: false, message: 'Email is required' },
                     pattern: {
                       value: EMAIL_REGEX,
                       message: 'Please enter a valid email',
@@ -315,7 +309,7 @@ const Form = () => {
                     }}
                     rules={{
                       required: {
-                        value: true,
+                        value: false,
                         message: 'Please select a business type',
                       },
                     }}
@@ -342,12 +336,6 @@ const Form = () => {
                     }}
                   />
                 )}
-                <InstantSearch
-                  searchClient={searchClient}
-                  indexName="prod_suburb_centroid"
-                >
-                  <CustomAutocomplete />
-                </InstantSearch>
                 <Controller
                   as={
                     <StyledFormField
@@ -359,7 +347,7 @@ const Form = () => {
                   name="headline"
                   control={control}
                   rules={{
-                    required: { value: true, message: 'Headline is required' },
+                    required: { value: false, message: 'Headline is required' },
                     maxLength: { value: 200, message: 'Headline is too long' },
                   }}
                 />
@@ -430,7 +418,7 @@ const Form = () => {
                     control={control}
                     rules={{
                       required: {
-                        value: true,
+                        value: false,
                         message: 'These details are required',
                       },
                       maxLength: {
@@ -453,7 +441,7 @@ const Form = () => {
                     control={control}
                     rules={{
                       required: {
-                        value: true,
+                        value: false,
                         message: 'These details are required',
                       },
                       maxLength: {
@@ -475,7 +463,7 @@ const Form = () => {
                   control={control}
                   rules={{
                     required: {
-                      value: true,
+                      value: false,
                       message:
                         'Suburb is required. Please still enter one if you are an online store.',
                     },
@@ -496,7 +484,7 @@ const Form = () => {
                   control={control}
                   rules={{
                     required: {
-                      value: true,
+                      value: false,
                       message: 'Contact number is required.',
                     },
                     maxLength: {
