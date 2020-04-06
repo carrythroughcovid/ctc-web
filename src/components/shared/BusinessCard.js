@@ -40,6 +40,7 @@ const ListingContainer = styled(Link)`
 
   &:hover {
     text-decoration: none;
+    transform: scale(1.05);
     /* box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 0px 20rem inset; */
   }
 

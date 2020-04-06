@@ -21,6 +21,7 @@ import Page from '../components/shared/Page'
 import Button from '../components/shared/Button'
 import media from '../utils/media'
 import Toast from '../components/shared/Toast'
+import Spinner from '../components/shared/Spinner'
 
 const FormSection = styled.div`
   padding-top: 2rem;
@@ -65,25 +66,34 @@ const searchClient = algoliasearch(
   '859c34030d228a6188c83731bb6e456f'
 )
 
-const InfiniteHits = ({ hits, hasMore, refineNext }) => (
-  <>
-    <Row>
-      {hits.map((hit, index) => (
-        <Col display="flex" xs={12} sm={6} md={4} key={index}>
-          <BusinessCard listing={hit}></BusinessCard>
-        </Col>
-      ))}
-    </Row>
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+`
 
-    {hits.length === 0 && <NoResults>No Results found</NoResults>}
+const InfiniteHits = ({ hits, hasMore, refineNext }) => {
+  return (
+    <>
+      <Row>
+        {hits.map((hit, index) => (
+          <Col display="flex" xs={12} sm={6} md={4} key={index}>
+            <BusinessCard listing={hit}></BusinessCard>
+          </Col>
+        ))}
+      </Row>
 
-    {hasMore && (
-      <Button fullWidthMobile disabled={!hasMore} onClick={refineNext}>
-        {hasMore ? 'Show more results' : 'No more results'}
-      </Button>
-    )}
-  </>
-)
+      {hits.length === 0 && <NoResults>No Results found</NoResults>}
+
+      {hasMore && (
+        <Button fullWidthMobile disabled={!hasMore} onClick={refineNext}>
+          {hasMore ? 'Show more results' : 'No more results'}
+        </Button>
+      )}
+    </>
+  )
+}
 
 const ClearButton = ({ items, refine }) => (
   <Button onClick={() => refine(items)} fullWidthMobile>
@@ -97,15 +107,26 @@ const CustomSearchBox = connectSearchBox(SearchBar)
 const CustomMenu = connectMenu(SearchMenu)
 
 const Results = connectStateResults(
-  ({ searchState, searchResults, children }) =>
-    searchResults && searchResults.nbHits !== 0 ? (
-      children
-    ) : (
-      <>
-        <p>No results have been found for "{searchState.query}"</p>
-        <ClearClearButton clearsQuery />
-      </>
-    )
+  ({ searching, searchState, searchResults, children }) => {
+    if (searchResults && searchResults.nbHits !== 0) {
+      return children
+    } else {
+      if (searching) {
+        return (
+          <LoadingContainer>
+            <Spinner display></Spinner>
+          </LoadingContainer>
+        )
+      } else {
+        return (
+          <>
+            <p>No results have been found for "{searchState.query}"</p>
+            <ClearClearButton clearsQuery />
+          </>
+        )
+      }
+    }
+  }
 )
 
 const SearchResultsPage = () => {
@@ -116,7 +137,7 @@ const SearchResultsPage = () => {
           <Toast msg="Keen to jump on board? Tap the signup link above!"></Toast>
           <FormSection>
             <LocationWrapper>
-              <CustomSearchBox />
+              <CustomSearchBox showLoadingIndicator={true} />
             </LocationWrapper>
             <CategoryWrapper>
               <CustomMenu
