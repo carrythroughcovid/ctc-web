@@ -114,7 +114,7 @@ const Results = connectStateResults(
       if (searching) {
         return (
           <LoadingContainer>
-            <Spinner display></Spinner>
+            <Spinner></Spinner>
           </LoadingContainer>
         )
       } else {
