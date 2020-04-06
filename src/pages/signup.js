@@ -11,6 +11,8 @@ import {
   CheckBox,
   TextArea,
 } from 'grommet'
+import algoliasearch from 'algoliasearch/lite'
+import { InstantSearch, connectAutoComplete } from 'react-instantsearch-dom'
 
 import Page from '../components/shared/Page'
 import Spinner from '../components/shared/Spinner'
@@ -51,6 +53,11 @@ const offeringOptions = [
     value: 'other',
   },
 ]
+
+const searchClient = algoliasearch(
+  'TGPZX7CMYY',
+  '859c34030d228a6188c83731bb6e456f'
+)
 
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
 
@@ -130,10 +137,12 @@ const Form = () => {
   const [businessType, setBusinessType] = useState('')
   const [otherOfferingChecked, setOtherOfferingChecked] = useState(false)
   const [offeringsChecked, setOfferingsChecked] = useState(0)
+  const [location, setLocation] = useState({})
 
   const headerImageRef = useRef(null)
   const businessOwnerImageRef = useRef(null)
   const logoRef = useRef(null)
+  const addressRef = useRef(null)
 
   const validateOfferings = _ => {
     const values = getValues({ nest: true })
@@ -144,6 +153,44 @@ const Form = () => {
       ).length >= 1 || 'Select at least 1 offering.'
     )
   }
+
+  const Autocomplete = ({ hits, currentRefinement, refine }) => (
+    <>
+      <Select
+        placeholder="Suburb"
+        options={hits}
+        value={currentRefinement.suburb}
+        onSearch={input => {
+          refine(input)
+        }}
+        onChange={({ option }) => {
+          return option
+        }}
+        name="suburb_auto"
+        labelKey={hit => `${hit.suburb} ${hit.state} ${hit.postcode}`}
+        // valueKey={'suburb'}
+      />
+      {/* <Select
+        placeholder="Suburb"
+        options={hits}
+        value={location ? location.suburb : undefined}
+        onSearch={input => {
+          console.log('input', input)
+          refine(input)
+          return input
+        }}
+        onChange={({ option }) => {
+          console.log('option', option)
+          setLocation(option)
+        }}
+        name="suburb_auto"
+        labelKey={hit => `${hit.suburb} ${hit.state} ${hit.postcode}`}
+        valueKey={'suburb'}
+      /> */}
+    </>
+  )
+
+  const CustomAutocomplete = connectAutoComplete(Autocomplete)
 
   const onSubmit = data => {
     setButtonDisabled(true)
@@ -295,6 +342,12 @@ const Form = () => {
                     }}
                   />
                 )}
+                <InstantSearch
+                  searchClient={searchClient}
+                  indexName="prod_suburb_centroid"
+                >
+                  <CustomAutocomplete />
+                </InstantSearch>
                 <Controller
                   as={
                     <StyledFormField
