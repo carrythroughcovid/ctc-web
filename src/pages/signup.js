@@ -1,4 +1,5 @@
 import React, { useRef, useState, useCallback } from 'react'
+import { navigate } from 'gatsby'
 import styled from 'styled-components'
 import { useForm, Controller } from 'react-hook-form'
 import {
@@ -150,7 +151,7 @@ const Form = () => {
     fetch(`${API_HOST}api/businesses`, {
       method: 'POST',
       body: formData,
-    }).then(() => alert('done'))
+    }).then(() => navigate('/'))
   }
 
   const handleCheckboxChange = useCallback(
