@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { Link } from 'gatsby'
 
 import media from '../../utils/media'
 
@@ -54,7 +55,7 @@ export const ButtonLink = styled.a`
     text-decoration: none;
   }
 `
-export const ButtonInternalLink = styled.a`
+export const ButtonInternalLink = styled(Link)`
   ${buttonStyles}
 
   &:hover {

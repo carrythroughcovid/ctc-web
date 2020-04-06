@@ -10,6 +10,7 @@ const StyledToast = styled.div`
   margin-top: 1rem;
   display: flex;
   justify-content: space-between;
+  border-radius: 0.25rem;
 
   ${props =>
     !props.display &&
@@ -43,7 +44,7 @@ const Text = styled.div`
   `}
 `
 
-const Toast = ({ msg }) => {
+const Toast = ({ children }) => {
   const handleClick = () => {
     setValues({ display: false })
   }
@@ -52,7 +53,7 @@ const Toast = ({ msg }) => {
 
   return (
     <StyledToast display={values.display}>
-      <Text href="/signup">{msg}</Text>
+      <Text href="/signup">{children}</Text>
       <Cross onClick={handleClick}>x</Cross>
     </StyledToast>
   )

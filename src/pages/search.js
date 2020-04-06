@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Row, Col } from 'react-flexa'
+import { Link } from 'gatsby'
 import algoliasearch from 'algoliasearch/lite'
 
 import {
@@ -129,12 +130,19 @@ const Results = connectStateResults(
   }
 )
 
+const CTALink = styled(Link)`
+  color: white;
+  text-decoration: underline;
+`
+
 const SearchResultsPage = () => {
   return (
     <Page>
       <InstantSearch searchClient={searchClient} indexName="prod_business">
         <Container>
-          <Toast msg="Keen to jump on board? Tap the signup link above!"></Toast>
+          <Toast>
+            Keen to jump on board? <CTALink to="/signup">Signup here.</CTALink>
+          </Toast>
           <FormSection>
             <LocationWrapper>
               <CustomSearchBox showLoadingIndicator={true} />
