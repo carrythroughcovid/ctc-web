@@ -116,14 +116,22 @@ const Form = () => {
     const values = getValues({ nest: true })
 
     return (
-      Object.keys(values.offeringType).filter(v =>
-        Boolean(values.offeringType[v])
+      Object.keys(values.offering_type).filter(v =>
+        Boolean(values.offering_type[v])
       ).length >= 1 || 'Select at least 1 offering.'
     )
   }
 
-  const onSubmit = (_, e) => {
-    formRef.current.submit()
+  const onSubmit = data => {
+    console.log(data)
+    console.log(JSON.stringify(data))
+    fetch('http://localhost:3000/api/businesses', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(() => alert('done'))
   }
 
   const handleCheckboxChange = useCallback(
@@ -140,20 +148,18 @@ const Form = () => {
         <StyledForm
           ref={formRef}
           name="businessForm"
-          method="post"
-          action="/"
           onSubmit={handleSubmit(onSubmit)}
         >
           <FormInputs>
             <Controller
               as={
                 <StyledFormField
-                  name="businessName"
+                  name="name"
                   label="Business Name"
-                  error={errors.businessName && errors.businessName.message}
+                  error={errors.name && errors.name.message}
                 />
               }
-              name="businessName"
+              name="name"
               control={control}
               rules={{
                 required: { value: true, message: 'Business name is required' },
@@ -203,10 +209,10 @@ const Form = () => {
                   <Select
                     placeholder="Type of Business"
                     options={businessOptions}
-                    name="businessType"
+                    name="business_type"
                   />
                 }
-                name="businessType"
+                name="business_type"
                 control={control}
                 onChange={selected => {
                   setBusinessType(selected[0].value)
@@ -219,19 +225,19 @@ const Form = () => {
                   },
                 }}
               />
-              {errors.businessType && (
-                <ErrorMessage>{errors.businessType.message}</ErrorMessage>
+              {errors.business_type && (
+                <ErrorMessage>{errors.business_type.message}</ErrorMessage>
               )}
             </SelectContainer>
             {businessType === 'Other' && (
               <Controller
                 as={
                   <StyledFormField
-                    name="businessTypeOther"
+                    name="business_type_other"
                     placeholder="Type of Business"
                   />
                 }
-                name="businessTypeOther"
+                name="business_type_other"
                 control={control}
                 rules={{
                   maxLength: {
@@ -260,8 +266,10 @@ const Form = () => {
               <BorderlessFormField label="Product Updates" pad="true">
                 {offeringOptions.map((offering, i) => (
                   <Controller
-                    as={<CheckBox name="offeringType" label={offering.label} />}
-                    name={`offeringType[${offering.value}]`}
+                    as={
+                      <CheckBox name="offering_type" label={offering.label} />
+                    }
+                    name={`offering_type[${offering.value}]`}
                     control={control}
                     onChange={selected => {
                       handleCheckboxChange(selected[0])
@@ -270,7 +278,7 @@ const Form = () => {
                       current.value === 'true'
                         ? setOfferingsChecked(offeringsChecked - 1)
                         : setOfferingsChecked(offeringsChecked + 1)
-                      if (current.name.match(/offeringType.+other/g)) {
+                      if (current.name.match(/offering_type.+other/g)) {
                         setOtherOfferingChecked(current.checked)
                       }
                       return `${current.checked}`
@@ -289,11 +297,11 @@ const Form = () => {
               <Controller
                 as={
                   <FormField
-                    name="offeringTypeOther"
+                    name="offering_type_other"
                     placeholder="Other offering"
                   />
                 }
-                name="offeringTypeOther"
+                name="offering_type_other"
                 control={control}
                 rules={{
                   maxLength: {
@@ -367,12 +375,12 @@ const Form = () => {
             <Controller
               as={
                 <StyledFormField
-                  name="contactNumber"
+                  name="contact_number"
                   label="Contact Number (only for our records)"
-                  error={errors.contactNumber && errors.contactNumber.message}
+                  error={errors.contact_number && errors.contact_number.message}
                 />
               }
-              name="contactNumber"
+              name="contact_number"
               control={control}
               rules={{
                 required: {
@@ -385,12 +393,12 @@ const Form = () => {
             <Controller
               as={
                 <StyledFormField
-                  name="primaryUrl"
+                  name="website"
                   label="Website URL (optional)"
-                  error={errors.primaryUrl && errors.primaryUrl.message}
+                  error={errors.website && errors.website.message}
                 />
               }
-              name="primaryUrl"
+              name="website"
               control={control}
               rules={{
                 maxLength: { value: 500, message: 'Website is too long' },
@@ -399,12 +407,14 @@ const Form = () => {
             <Controller
               as={
                 <StyledFormField
-                  name="secondaryUrl"
+                  name="website_secondary"
                   label="Ordering/Online Store URL (e.g. to Menulog) (optional)"
-                  error={errors.secondaryUrl && errors.secondaryUrl.message}
+                  error={
+                    errors.website_secondary && errors.website_secondary.message
+                  }
                 />
               }
-              name="secondaryUrl"
+              name="website_secondary"
               control={control}
               rules={{
                 maxLength: { value: 500, message: 'Ordering URL is too long' },
@@ -413,12 +423,14 @@ const Form = () => {
             <Controller
               as={
                 <StyledFormField
-                  name="businessPhone"
+                  name="business_number"
                   label="Business Phone (displayed on website)  (optional)"
-                  error={errors.businessPhone && errors.businessPhone.message}
+                  error={
+                    errors.business_number && errors.business_number.message
+                  }
                 />
               }
-              name="secondaryUrl"
+              name="business_number"
               control={control}
               rules={{
                 maxLength: { value: 15, message: 'Phone is too long' },
@@ -426,11 +438,11 @@ const Form = () => {
             />
             <Controller
               as={
-                <StyledFormField name="mainImage" label="Main Image">
+                <StyledFormField name="header_image" label="Main Image">
                   <input type="file" />
                 </StyledFormField>
               }
-              name="mainImage"
+              name="header_image"
               control={control}
             />
             <Controller
@@ -445,13 +457,13 @@ const Form = () => {
             <Controller
               as={
                 <StyledFormField
-                  name="businessOwnerImage"
+                  name="business_owner_image"
                   label="Your Headshot"
                 >
                   <input type="file" />
                 </StyledFormField>
               }
-              name="businessOwnerImage"
+              name="business_owner_image"
               control={control}
             />
           </FormInputs>
