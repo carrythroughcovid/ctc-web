@@ -13,6 +13,8 @@ import {
 } from 'grommet'
 import algoliasearch from 'algoliasearch/lite'
 import { InstantSearch, connectAutoComplete } from 'react-instantsearch-dom'
+import AsyncSelect from 'react-select/async'
+import ReactSelect from 'react-select'
 
 import Page from '../components/shared/Page'
 import Spinner from '../components/shared/Spinner'
@@ -155,24 +157,50 @@ const Form = () => {
     )
   }
 
-  const Autocomplete = ({ hits, currentRefinement, refine }) => (
-    <Select
-      placeholder="Suburb"
-      options={hits}
-      value={currentRefinement.suburb}
-      onSearch={input => {
-        refine(input)
-      }}
-      onChange={({ option }) => {
-        suburbRef.current = option.suburb
-        stateRef.current = option.state
-        postcodeRef.current = option.postcode
-        return option
-      }}
-      name="suburb_auto"
-      labelKey={hit => `${hit.suburb} ${hit.state} ${hit.postcode}`}
-    />
-  )
+  const Autocomplete = ({ hits, currentRefinement, refine }) => {
+    // <Select
+    //   placeholder="Suburb"
+    //   options={hits}
+    //   value={currentRefinement.suburb}
+    //   onSearch={input => {
+    //     refine(input)
+    //   }}
+    //   onChange={({ option }) => {
+    //     suburbRef.current = option.suburb
+    //     stateRef.current = option.state
+    //     postcodeRef.current = option.postcode
+    //     return option
+    //   }}
+    //   name="suburb_auto"
+    //   labelKey={hit => `${hit.suburb} ${hit.state} ${hit.postcode}`}
+    // />
+    const loadOptions = (_, callback) => {
+      console.log('load called')
+      callback(hits)
+    }
+
+    const handleInputChange = input => {
+      console.log('handle input called')
+      console.log(input)
+      refine(input)
+    }
+
+    return (
+      <AsyncSelect
+        defaultOptions={hits}
+        loadOptions={loadOptions}
+        onInputChange={handleInputChange}
+        onChange={handleInputChange}
+        formatOptionLabel={o => (
+          <span>
+            {o.suburb} {o.state} {o.postcode}
+          </span>
+        )}
+        data={data => console.log(data)}
+        selectOption={o => console.log(o)}
+      />
+    )
+  }
 
   const CustomAutocomplete = connectAutoComplete(Autocomplete)
 
