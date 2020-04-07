@@ -1,59 +1,15 @@
 import React, { useRef, useState, useCallback } from 'react'
-import { navigate } from 'gatsby'
 import styled from 'styled-components'
+import { navigate } from 'gatsby'
 import { useForm, Controller } from 'react-hook-form'
-import {
-  Grommet,
-  Form as GrommetForm,
-  FormField,
-  Button,
-  Select,
-  CheckBox,
-  TextArea,
-  TextInput,
-} from 'grommet'
+import { Grommet, Form as GrommetForm, CheckBox } from 'grommet'
 
 import Page from '../components/shared/Page'
 import Spinner from '../components/shared/Spinner'
-
-const API_HOST =
-  process.env.NODE_ENV === 'production'
-    ? 'https://carrythroughcovid.herokuapp.com/'
-    : 'http://localhost:3000/'
-
-const businessOptions = ['Hospitality', 'Retail', 'Services', 'Other']
-const offeringOptions = [
-  {
-    label: 'Online Store',
-    value: 'online',
-  },
-  {
-    label: 'Takeaway',
-    value: 'takeaway',
-  },
-  {
-    label: 'Delivery',
-    value: 'delivery',
-  },
-  {
-    label: 'Discounts',
-    value: 'discounts',
-  },
-  {
-    label: 'Virtual Services',
-    value: 'virtual',
-  },
-  {
-    label: 'Pre-purchased Store Credit',
-    value: 'credit',
-  },
-  {
-    label: 'Other',
-    value: 'other',
-  },
-]
-
-const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+import { offeringOptions } from '../components/signup/presets'
+import { API_HOST } from '../utils/constants'
+import { validationRules } from '../components/signup/validationRules'
+import { signupFields } from '../components/signup/signupFields'
 
 const LoadingContainer = styled.div`
   display: flex;
@@ -63,44 +19,11 @@ const LoadingContainer = styled.div`
 `
 
 const FormContainer = styled.div`
-  box-shadow: 0px 6px 12px rgba(125, 76, 219, 0.3);
-  border: 1px solid #9060eb;
-  border-radius: 3px;
   padding: 1rem;
   margin: 0 auto;
 `
 
-const StyledForm = styled(GrommetForm)`
-  display: flex;
-  flex-direction: column;
-
-  span {
-    font-size: 0.75rem;
-  }
-`
-
-const StyledFormField = styled(FormField)`
-  margin-top: 1rem;
-`
-
-const StyledTextAreaField = styled(TextArea)`
-  margin-top: 1rem;
-`
-
-const FormInputs = styled.div`
-  padding: 1rem;
-`
-
-const ButtonContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 5rem;
-`
-
 const SelectContainer = styled.div`
-  margin-top: 2rem;
-
   button {
     width: 100%;
   }
@@ -112,53 +35,33 @@ const ErrorMessage = styled.p`
   font-size: 0.75rem;
 `
 
-const BorderlessFormField = styled(FormField)`
-  > div {
-    border: none;
-  }
-`
-
 const SectionTitle = styled.h3`
   color: #6979f8;
   text-transform: uppercase;
 `
 
-const TextInputContainer = styled.div`
-  /* display: flex; */
-`
+const Loading = () => (
+  <LoadingContainer>
+    <Spinner display />
+  </LoadingContainer>
+)
 
-const TextInputField = ({ errorMsg, label, ...rest }) => {
-  const [active, setActive] = useState(false)
+const Section = ({ title, children }) => (
+  <>
+    <SectionTitle>{title}</SectionTitle>
+    {children}
+  </>
+)
 
-  const onFocus = () => setActive(true)
-  const onBlur = () => setActive(false)
+const withError = (component, error) => React.cloneElement(component, { error })
 
-  return (
-    <TextInputContainer>
-      {active && label}
-      <TextInput {...rest} onFocus={onFocus} onBlur={onBlur} />
-      {errorMsg && <p>errorMsg</p>}
-    </TextInputContainer>
-  )
-}
+const getErrorMessage = (field, errors) =>
+  errors[field] && errors[field].message
 
-const TextAreaField = ({ errorMsg, label, ...rest }) => {
-  const [active, setActive] = useState(false)
-
-  const onFocus = () => setActive(true)
-  const onBlur = () => setActive(false)
-
-  return (
-    <TextInputContainer>
-      {active && label}
-      <TextArea {...rest} onFocus={onFocus} onBlur={onBlur} />
-      {errorMsg && <p>errorMsg</p>}
-    </TextInputContainer>
-  )
-}
+const renderField = (field, errors) =>
+  withError(signupFields[field], getErrorMessage(field, errors))
 
 const Form = () => {
-  const formRef = useRef(null)
   const [loading, setLoading] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(false)
   const {
@@ -168,7 +71,10 @@ const Form = () => {
     getValues,
     triggerValidation,
     formState,
+    watch,
   } = useForm()
+
+  const locationResult = watch('location_search')
 
   const [businessType, setBusinessType] = useState('')
   const [otherOfferingChecked, setOtherOfferingChecked] = useState(false)
@@ -180,13 +86,22 @@ const Form = () => {
 
   const validateOfferings = _ => {
     const values = getValues({ nest: true })
-
     return (
       Object.keys(values.offering_type).filter(v =>
         Boolean(values.offering_type[v])
       ).length >= 1 || 'Select at least 1 offering.'
     )
   }
+
+  const renderControlledField = (fieldName, { ...rest }) => (
+    <Controller
+      as={renderField(fieldName, errors)}
+      name={fieldName}
+      control={control}
+      rules={validationRules[fieldName]}
+      {...rest}
+    />
+  )
 
   const onSubmit = data => {
     setButtonDisabled(true)
@@ -200,6 +115,11 @@ const Form = () => {
     Object.keys(offeringObj).forEach(key =>
       formData.append(`offering_${key}`, offeringObj[key])
     )
+    Object.keys(locationResult).forEach(key =>
+      formData.append(key, locationResult[key])
+    )
+    formData.append('latitude', locationResult['_geoloc'].lat)
+    formData.append('longitude', locationResult._geoloc.lng)
     formData.append('header_image', headerImageRef.current.files[0])
     formData.append('logo', logoRef.current.files[0])
     formData.append(
@@ -224,384 +144,143 @@ const Form = () => {
   return (
     <Page>
       {loading ? (
-        <LoadingContainer>
-          <Spinner display />
-        </LoadingContainer>
+        <Loading />
       ) : (
         <Grommet plain>
           <FormContainer>
-            <StyledForm
-              ref={formRef}
-              name="businessForm"
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <FormInputs>
-                <SectionTitle>Personal Details</SectionTitle>
-                <Controller
-                  as={
-                    <TextInputField
-                      name="owner_name"
-                      label="Your Name"
-                      placeholder="Full Name"
-                      error={errors.owner_name && errors.owner_name.message}
-                    />
-                  }
-                  name="owner_name"
-                  control={control}
-                  rules={{
-                    required: { value: true, message: 'Name is required' },
-                    maxLength: {
-                      value: 100,
-                      message: 'Name is too long',
-                    },
-                  }}
-                />
-                <Controller
-                  as={
-                    <TextInputField
-                      name="email"
-                      label="Email"
-                      placeholder="Your Email"
-                      error={errors.email && errors.email.message}
-                    />
-                  }
-                  name="email"
-                  control={control}
-                  rules={{
-                    required: { value: true, message: 'Email is required' },
-                    pattern: {
-                      value: EMAIL_REGEX,
-                      message: 'Please enter a valid email',
-                    },
-                    maxLength: { value: 200, message: 'Email is too long' },
-                  }}
-                />
-                <Controller
-                  as={
-                    <TextInputField
-                      name="contact_number"
-                      label="Phone Number"
-                      placeholder="Your Phone Number"
-                      error={
-                        errors.contact_number && errors.contact_number.message
-                      }
-                    />
-                  }
-                  name="contact_number"
-                  control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: 'Contact number is required.',
-                    },
-                    maxLength: {
-                      value: 15,
-                      message: 'Contact Number is too long',
-                    },
-                  }}
-                />
-                <SectionTitle>Business Summary</SectionTitle>
-                <Controller
-                  as={
-                    <TextInputField
-                      name="name"
-                      label="Business Name"
-                      placeholder="Your Business Name"
-                      errorMsg={errors.name && errors.name.message}
-                    />
-                  }
-                  name="name"
-                  control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: 'Business name is required',
-                    },
-                    maxLength: {
-                      value: 200,
-                      message: 'Business name is too long',
-                    },
-                  }}
-                />
+            <GrommetForm name="businessForm" onSubmit={handleSubmit(onSubmit)}>
+              <Section title="Personal Details">
+                {renderControlledField('owner_name')}
+                {renderControlledField('email')}
+                {renderControlledField('contact_number')}
+              </Section>
+
+              <Section title="Business Summary">
+                {renderControlledField('name')}
                 <SelectContainer>
-                  <Controller
-                    as={
-                      <Select
-                        placeholder="Select business type"
-                        options={businessOptions}
-                        name="business_type"
-                      />
-                    }
-                    name="business_type"
-                    control={control}
-                    onChange={selected => {
+                  {renderControlledField('business_type', {
+                    onChange: selected => {
                       setBusinessType(selected[0].value)
                       return selected[0].value
-                    }}
-                    rules={{
-                      required: {
-                        value: true,
-                        message: 'Please select a business type',
-                      },
-                    }}
-                  />
+                    },
+                  })}
                   {errors.business_type && (
                     <ErrorMessage>{errors.business_type.message}</ErrorMessage>
                   )}
                 </SelectContainer>
-                {businessType === 'Other' && (
-                  <Controller
-                    as={
-                      <StyledFormField
-                        name="business_type_other"
-                        placeholder="Type of Business"
-                      />
-                    }
-                    name="business_type_other"
-                    control={control}
-                    rules={{
-                      maxLength: {
-                        value: 200,
-                        message: 'Business type is too long',
-                      },
-                    }}
-                  />
-                )}
-                <Controller
-                  as={
-                    <TextInputField
-                      name="suburb"
-                      label="Your Suburb"
-                      placeholder="Suburb"
-                      error={errors.suburb && errors.suburb.message}
-                    />
-                  }
-                  name="suburb"
-                  control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message:
-                        'Suburb is required. Please still enter one if you are an online store.',
-                    },
-                    maxLength: { value: 50, message: 'Suburb is too long' },
-                  }}
-                />
-                <SectionTitle>Brand Story</SectionTitle>
-                <Controller
-                  as={
-                    <TextInputField
-                      name="headline"
-                      label="What is your business headline?"
-                      placeholder="Describe your business in 25 characters or less."
-                      error={errors.headline && errors.headline.message}
-                    />
-                  }
-                  name="headline"
-                  control={control}
-                  rules={{
-                    required: { value: true, message: 'Headline is required' },
-                    maxLength: { value: 200, message: 'Headline is too long' },
-                  }}
-                />
-                <Controller
-                  as={
-                    <TextAreaField
-                      name="product_details"
-                      label="Product/Service Details"
-                      placeholder="Tell us a bit about your business"
-                      error={
-                        errors.product_details && errors.product_details.message
-                      }
-                    />
-                  }
-                  name="product_details"
-                  control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: 'These details are required',
-                    },
-                    maxLength: {
-                      value: 700,
-                      message: 'Product details is too long',
-                    },
-                  }}
-                />
-                <Controller
-                  as={
-                    <TextAreaField
-                      name="business_details"
-                      label="Business Details / Your Story"
-                      placeholder="Tell us a bit about your background"
-                      error={
-                        errors.business_details &&
-                        errors.business_details.message
-                      }
-                    />
-                  }
-                  name="business_details"
-                  control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: 'These details are required',
-                    },
-                    maxLength: {
-                      value: 700,
-                      message: 'Business details is too long',
-                    },
-                  }}
-                />
-                <SectionTitle>Your New Services</SectionTitle>
+                {businessType === 'Other' &&
+                  renderControlledField('business_type_other')}
+                {renderControlledField('location_search', {
+                  currentOption: locationResult,
+                })}
+              </Section>
+
+              <Section title="Brand Story">
+                {renderControlledField('business_type_other')}
+                {renderControlledField('product_details')}
+                {renderControlledField('business_details')}
+              </Section>
+
+              <Section title="Your New Services">
                 <SelectContainer>
-                  <BorderlessFormField label="Product Updates" pad="true">
-                    {offeringOptions.map((offering, i) => (
-                      <Controller
-                        as={
-                          <CheckBox
-                            name="offering_type"
-                            label={offering.label}
-                          />
+                  {offeringOptions.map((offering, i) => (
+                    <Controller
+                      as={
+                        <CheckBox name="offering_type" label={offering.label} />
+                      }
+                      name={`offering_type[${offering.value}]`}
+                      control={control}
+                      onChange={selected => {
+                        handleCheckboxChange(selected[0])
+                        const { currentTarget: current } = selected[0]
+                        console.log(current.value)
+                        current.value === 'true'
+                          ? setOfferingsChecked(offeringsChecked - 1)
+                          : setOfferingsChecked(offeringsChecked + 1)
+                        if (current.name.match(/offering_type.+other/g)) {
+                          setOtherOfferingChecked(current.checked)
                         }
-                        name={`offering_type[${offering.value}]`}
-                        control={control}
-                        onChange={selected => {
-                          handleCheckboxChange(selected[0])
-                          const { currentTarget: current } = selected[0]
-                          console.log(current.value)
-                          current.value === 'true'
-                            ? setOfferingsChecked(offeringsChecked - 1)
-                            : setOfferingsChecked(offeringsChecked + 1)
-                          if (current.name.match(/offering_type.+other/g)) {
-                            setOtherOfferingChecked(current.checked)
-                          }
-                          return `${current.checked}`
-                        }}
-                        rules={{
-                          validate: validateOfferings,
-                        }}
-                      />
-                    ))}
-                  </BorderlessFormField>
+                        return `${current.checked}`
+                      }}
+                      rules={{
+                        validate: validateOfferings,
+                      }}
+                    />
+                  ))}
                   {formState.isSubmitted && offeringsChecked === 0 && (
                     <ErrorMessage>
                       Please select at least one product
                     </ErrorMessage>
                   )}
                 </SelectContainer>
-                {otherOfferingChecked && (
-                  <Controller
-                    as={
-                      <FormField
-                        name="offering_type_other"
-                        placeholder="Other offering"
-                      />
-                    }
-                    name="offering_type_other"
-                    control={control}
-                    rules={{
-                      maxLength: {
-                        value: 200,
-                        message: 'Offering type is too long',
-                      },
-                    }}
-                  />
-                )}
-                <SectionTitle>Display Images</SectionTitle>
+                {otherOfferingChecked &&
+                  renderControlledField('offering_type_other')}
+              </Section>
+
+              <Section title="Display Images">
                 <Controller
                   as={
-                    <StyledFormField name="header_image" label="Main Image">
-                      <input type="file" ref={headerImageRef} />
-                    </StyledFormField>
+                    <>
+                      <input
+                        name="header_image"
+                        id="header_image"
+                        type="file"
+                        ref={headerImageRef}
+                        style={{ display: 'none' }}
+                      />
+                      <label htmlFor="header_image">Upload hero image</label>
+                    </>
                   }
                   name="header_image"
                   control={control}
                 />
                 <Controller
                   as={
-                    <StyledFormField name="logo" label="Logo">
-                      <input type="file" ref={logoRef} />
-                    </StyledFormField>
+                    <>
+                      <input
+                        name="logo"
+                        id="logo"
+                        type="file"
+                        ref={headerImageRef}
+                        style={{ display: 'none' }}
+                      />
+                      <label htmlFor="logo">Upload logo</label>
+                    </>
                   }
                   name="logo"
                   control={control}
                 />
                 <Controller
                   as={
-                    <StyledFormField
-                      name="business_owner_image"
-                      label="Your Headshot"
-                    >
-                      <input type="file" ref={businessOwnerImageRef} />
-                    </StyledFormField>
+                    <>
+                      <input
+                        name="business_owner_image"
+                        id="business_owner_image"
+                        type="file"
+                        ref={headerImageRef}
+                        style={{ display: 'none' }}
+                      />
+                      <label htmlFor="business_owner_image">
+                        Upload profile photo
+                      </label>
+                    </>
                   }
                   name="business_owner_image"
                   control={control}
                 />
-                <SectionTitle>Optional Information</SectionTitle>
-                <Controller
-                  as={
-                    <TextInputField
-                      name="website"
-                      label="Your website"
-                      placeholder="Website URL"
-                      error={errors.website && errors.website.message}
-                    />
-                  }
-                  name="website"
-                  control={control}
-                  rules={{
-                    maxLength: { value: 500, message: 'Website is too long' },
-                  }}
-                />
-                <Controller
-                  as={
-                    <TextInputField
-                      name="website_secondary"
-                      label="Link to an ordering/online store"
-                      placeholder="Ordering/online store URL"
-                      error={
-                        errors.website_secondary &&
-                        errors.website_secondary.message
-                      }
-                    />
-                  }
-                  name="website_secondary"
-                  control={control}
-                  rules={{
-                    maxLength: {
-                      value: 500,
-                      message: 'Ordering URL is too long',
-                    },
-                  }}
-                />
-                <Controller
-                  as={
-                    <TextInputField
-                      name="business_number"
-                      label="Phone number to display on website"
-                      placeholder="Business phone number"
-                      error={
-                        errors.business_number && errors.business_number.message
-                      }
-                    />
-                  }
-                  name="business_number"
-                  control={control}
-                  rules={{
-                    maxLength: { value: 15, message: 'Phone is too long' },
-                  }}
-                />
-              </FormInputs>
-              <ButtonContainer>
-                <Button
-                  type="submit"
-                  label="Submit"
-                  disabled={buttonDisabled}
-                />
-              </ButtonContainer>
-            </StyledForm>
+                z
+              </Section>
+
+              <Section title="Optional Information">
+                {renderControlledField('website')}
+                {renderControlledField('website_secondary')}
+                {renderControlledField('business_number')}
+              </Section>
+
+              <button type="submit" disabled={buttonDisabled}>
+                Submit
+              </button>
+            </GrommetForm>
           </FormContainer>
         </Grommet>
       )}
