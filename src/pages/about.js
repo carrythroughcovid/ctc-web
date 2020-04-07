@@ -1,10 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import Container from '../components/shared/Container'
 import Page from '../components/shared/Page'
 import MissionImage from '../images/about-mission.png'
 import WhoWeAreImage from '../images/about-who-we-are.png'
-import AboutMobileImage from '../images/about-mobile.png'
 import MobileDown from '../images/mobile-down.png'
 import MobileUp from '../images/mobile-up.png'
 
@@ -13,7 +11,7 @@ import { ButtonInternalLink as Button } from '../components/shared/Button'
 
 const LeftSection = styled.div`
   height: 400px;
-  background-color: ${({theme}) => theme.colour.violet};
+  background-color: ${({ theme }) => theme.colour.violet};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,7 +22,7 @@ const LeftSection = styled.div`
 
 const RightSection = styled.div`
   height: 400px;
-  background-color: #EEF0F8;
+  background-color: #eef0f8;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,7 +34,7 @@ const RightSection = styled.div`
 const LargeSection = styled.div`
   background-color: white;
   overflow: hidden;
-  
+
   display: none;
   ${media.md`
   width: 100%;
@@ -67,16 +65,14 @@ const LeftSectionDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
 `
 
 const RightSectionDetailContainer = styled.div`
   width: 300px;
-  color: ${({theme}) => theme.colour.violet};
+  color: ${({ theme }) => theme.colour.violet};
   display: flex;
   flex-direction: column;
   align-items: center;
-
 `
 
 const SectionTitle = styled.div`
@@ -85,7 +81,6 @@ const SectionTitle = styled.div`
 
 const LeftSectionDetails = styled.div`
   text-align: center;
-
 `
 
 const RightSectionDetails = styled.div`
@@ -95,8 +90,6 @@ const RightSectionDetails = styled.div`
 const LeftSectionImage = styled.img`
   width: 60px;
   margin-bottom: 1rem;
-
-
 `
 
 const RightSectionImage = styled.img`
@@ -104,32 +97,9 @@ const RightSectionImage = styled.img`
   margin-bottom: 1rem;
 `
 
-const LargeSectionLeft = styled.div`
-  display: none;
-  flex: 1;
-  ${media.md`
-    display: block;
-  `}
-`
-
-const LargeSectionRight = styled.div`
-  display: flex;
-  flex: 1;
-
-  justify-content: center;
-  align-items: center;
-`
-
 const NumberTotal = styled.div`
   font-size: 5rem;
-  color: ${({theme}) => theme.colour.violet};
-`
-
-const JoinUsSection = styled.div`
-  height: 400px;
-  display: flex;
-  align-items: center;
-  background-color: ${({theme}) => theme.colour.violet};
+  color: ${({ theme }) => theme.colour.violet};
 `
 
 const JoinUsLeftContainer = styled.div`
@@ -141,37 +111,21 @@ const JoinUsLeftContainer = styled.div`
 `
 
 const WhatNextContainer = styled.div`
-  background-color: ${({theme}) => theme.colour.red};
-  height: 300px;
+  background-color: ${({ theme }) => theme.colour.red};
+  height: 400px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-
+  ${media.md`
+    flex-direction: row;
+    height: 300px;
+  `}
 `
 
 const WhatsUpDetails = styled.div`
   color: white;
   width: 300px;
-`
-
-const LargeSectionRightDetails = styled.div`
-  width: 350px;
-`
-
-const MobileImage = styled.img`
-  position: absolute;
-  top: -1rem;
-  width: 400px;
-
-  ${media.md`
-    width: 400px;
-    right: -2rem;
-  `}
-  ${media.lg`
-    width: 450px;
-    right: -7em;
-  `}
-
 `
 
 const MobileImageContainer = styled.div`
@@ -182,8 +136,13 @@ const GotQuestionsSection = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
-  justify-content: center;
-  height: 300px;
+  justify-content: space-around;
+  flex-direction: column;
+  height: 500px;
+  ${media.md`
+    flex-direction: row;
+    height: 300px;
+  `}
 `
 
 const SectionLeft = styled.div`
@@ -196,50 +155,54 @@ const SectionRight = styled.div`
   display: flex;
   flex-direction: column;
   width: 300px;
-
 `
 
 const MobileDownImage = styled.img`
-width: 500px;
-position: absolute;
-top: 0;
-right: 0;
+  width: 500px;
+  position: absolute;
+  top: 0;
+  right: 0;
 `
 
 const MobileUpImage = styled.img`
-width: 500px;
-position: absolute;
-bottom: 0;
-left: 0;
-
+  width: 500px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 `
 const JoinUsRightContainer = styled.div`
-flex: 1;
-justify-content: center;
-display: flex;
-flex-direction: column;
-align-items: center;
+  flex: 1;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 
-const About = ({data}) => {
-  const listingsTotal = data.allBusinesses.edges.length;
+const About = ({ data }) => {
+  const listingsTotal = data.allBusinesses.edges.length
   return (
     <Page>
       <AboutContainer>
-      <LeftSection>
-        <LeftSectionDetailContainer>
-          <LeftSectionImage src={MissionImage}></LeftSectionImage>
-          <SectionTitle>OUR MISSION</SectionTitle>
-          <LeftSectionDetails>We want to help keep small businesses afloat and enable community support through technology.</LeftSectionDetails>
+        <LeftSection>
+          <LeftSectionDetailContainer>
+            <LeftSectionImage src={MissionImage}></LeftSectionImage>
+            <SectionTitle>OUR MISSION</SectionTitle>
+            <LeftSectionDetails>
+              We want to help keep small businesses afloat and enable community
+              support through technology.
+            </LeftSectionDetails>
           </LeftSectionDetailContainer>
-      </LeftSection>
-      <RightSection>
-        <RightSectionDetailContainer>
-        <RightSectionImage src={WhoWeAreImage}></RightSectionImage>
-        <SectionTitle>WHO WE ARE</SectionTitle>
-          <RightSectionDetails>A group of volunteers and our service is completely FREE of charge.</RightSectionDetails>
-        </RightSectionDetailContainer>
-      </RightSection>
+        </LeftSection>
+        <RightSection>
+          <RightSectionDetailContainer>
+            <RightSectionImage src={WhoWeAreImage}></RightSectionImage>
+            <SectionTitle>WHO WE ARE</SectionTitle>
+            <RightSectionDetails>
+              A group of volunteers and our service is completely FREE of
+              charge.
+            </RightSectionDetails>
+          </RightSectionDetailContainer>
+        </RightSection>
       </AboutContainer>
       <LargeSection>
         <LargeSectionContainer>
@@ -247,36 +210,41 @@ const About = ({data}) => {
           <MobileDownImage src={MobileDown}></MobileDownImage>
         </LargeSectionContainer>
       </LargeSection>
-    <WhatNextContainer>
-    <JoinUsLeftContainer>
-            <NumberTotal>{listingsTotal}</NumberTotal>
-            <p>HELP EXPAND THE COMMUNITY</p>
-            <p>{listingsTotal} local businesses have signed up already</p>
-          </JoinUsLeftContainer>
+      <WhatNextContainer>
+        <JoinUsLeftContainer>
+          <NumberTotal>{listingsTotal}</NumberTotal>
+          <p>HELP EXPAND THE COMMUNITY</p>
+          <p>{listingsTotal} local businesses have signed up already</p>
+        </JoinUsLeftContainer>
         <JoinUsRightContainer>
-        <div style={{color: 'white', marginBottom: '1rem'}}>PROMOTE YOUR NEW SERVICES</div>
-          <WhatsUpDetails> Get your business into the pockets of the community.</WhatsUpDetails>
+          <div style={{ color: 'white', marginBottom: '1rem' }}>
+            PROMOTE YOUR NEW SERVICES
+          </div>
+          <WhatsUpDetails>
+            {' '}
+            Get your business into the pockets of the community.
+          </WhatsUpDetails>
         </JoinUsRightContainer>
+      </WhatNextContainer>
 
-    </WhatNextContainer>
-  
-        <GotQuestionsSection>
-          <SectionLeft>
-
-            <div>If you are looking to inform  your loyal customers or make new connections  then we can help promote any of your new services without any fee.</div>
-            <Button href="">Sign up now!</Button>
-
-
-          </SectionLeft>
-          <SectionRight>
-            <SectionTitle>HAVE A QUESTION FOR US?</SectionTitle>
-            <div style={{marginBottom: '2rem'}}>Still not sure if this is for you, or have a few questions?  Our team will be happy to help!</div>
-            <Button href="">Contact our team</Button>
-          </SectionRight> 
-        </GotQuestionsSection> 
-
-        <Button href="">Sign up now</Button>
-
+      <GotQuestionsSection>
+        <SectionLeft>
+          <div style={{ marginBottom: '2rem' }}>
+            If you are looking to inform your loyal customers or make new
+            connections then we can help promote any of your new services
+            without any fee.
+          </div>
+          <Button href="">Sign up now!</Button>
+        </SectionLeft>
+        <SectionRight>
+          <SectionTitle>HAVE A QUESTION FOR US?</SectionTitle>
+          <div style={{ marginBottom: '2rem' }}>
+            Still not sure if this is for you, or have a few questions?  Our
+            team will be happy to help!
+          </div>
+          <Button href="">Contact our team</Button>
+        </SectionRight>
+      </GotQuestionsSection>
     </Page>
   )
 }
@@ -285,7 +253,7 @@ export const query = graphql`
   query {
     allBusinesses {
       edges {
-       node {
+        node {
           id
         }
       }
@@ -293,4 +261,4 @@ export const query = graphql`
   }
 `
 
-export default About;
+export default About
