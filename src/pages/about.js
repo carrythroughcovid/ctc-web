@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import Page from '../components/shared/Page'
 import AboutHeader from '../components/about/AboutHeader'
 import { ButtonInternalLink as Button } from '../components/shared/Button'
+import { ButtonLink } from '../components/shared/Button'
 import MissionImage from '../images/about-mission.png'
 import WhoWeAreImage from '../images/about-who-we-are.png'
 import MobileDown from '../images/mobile-down.png'
@@ -144,8 +145,8 @@ const About = ({ data }) => {
       <SectionContainer color={theme.colour.red}>
         <ColumnSection>
           <NumberTotal>{listingsTotal}</NumberTotal>
-          <p>HELP EXPAND THE COMMUNITY</p>
-          <p>{listingsTotal} local businesses have signed up already</p>
+          <p style={{color: 'white'}}>HELP EXPAND THE COMMUNITY</p>
+          <p style={{color: 'white'}}>{listingsTotal} local businesses have signed up already</p>
         </ColumnSection>
         <ColumnSection>
           <div style={{ color: 'white', marginBottom: '1rem' }}>
@@ -165,7 +166,7 @@ const About = ({ data }) => {
             connections then we can help promote any of your new services
             without any fee.
           </div>
-          <Button href="">Sign up now!</Button>
+          <Button to="/signup">Sign up now!</Button>
         </ColumnSection>
         <ColumnSection width='300px'>
           <SectionTitle>HAVE A QUESTION FOR US?</SectionTitle>
@@ -173,7 +174,7 @@ const About = ({ data }) => {
             Still not sure if this is for you, or have a few questions?  Our
             team will be happy to help!
           </div>
-          <Button href="">Contact our team</Button>
+          <ButtonLink href="mailto:contact@carrythroughcovid.com">Contact our team</ButtonLink>
         </ColumnSection>
       </SectionContainer>
     </Page>
