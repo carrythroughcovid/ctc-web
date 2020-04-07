@@ -18,6 +18,7 @@ import AsyncSelect from 'react-select/async'
 
 import Page from '../components/shared/Page'
 import Spinner from '../components/shared/Spinner'
+import { businessOptions, offeringOptions } from '../components/signup/presets'
 
 const searchClient = algoliasearch(
   'TGPZX7CMYY',
@@ -28,38 +29,6 @@ const API_HOST =
   process.env.NODE_ENV === 'production'
     ? 'https://carrythroughcovid.herokuapp.com/'
     : 'http://localhost:3000/'
-
-const businessOptions = ['Hospitality', 'Retail', 'Services', 'Other']
-const offeringOptions = [
-  {
-    label: 'Online Store',
-    value: 'online',
-  },
-  {
-    label: 'Takeaway',
-    value: 'takeaway',
-  },
-  {
-    label: 'Delivery',
-    value: 'delivery',
-  },
-  {
-    label: 'Discounts',
-    value: 'discounts',
-  },
-  {
-    label: 'Virtual Services',
-    value: 'virtual',
-  },
-  {
-    label: 'Pre-purchased Store Credit',
-    value: 'credit',
-  },
-  {
-    label: 'Other',
-    value: 'other',
-  },
-]
 
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
 
