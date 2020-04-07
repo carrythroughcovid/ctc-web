@@ -254,6 +254,11 @@ const Form = () => {
     Object.keys(offeringObj).forEach(key =>
       formData.append(`offering_${key}`, offeringObj[key])
     )
+    Object.keys(locationResult).forEach(key =>
+      formData.append(key, locationResult[key])
+    )
+    formData.append('latitude', locationResult['_geoloc'].lat)
+    formData.append('longitude', locationResult._geoloc.lng)
     formData.append('header_image', headerImageRef.current.files[0])
     formData.append('logo', logoRef.current.files[0])
     formData.append(
