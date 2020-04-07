@@ -4,7 +4,7 @@ import { Link } from 'gatsby'
 import media from '../../utils/media'
 
 const buttonStyles = css`
-  display: block;
+  display: inline-block;
   text-align: center;
   background-color: ${({ theme }) => theme.colour.violet};
   color: white;
@@ -32,6 +32,17 @@ const buttonStyles = css`
     `}
 
   ${props =>
+    props.fixedWidth &&
+    css`
+      max-width: 12.25rem;
+      width: 100%;
+
+      ${media.sm`
+        max-width: 12.25rem;
+      `}
+    `}
+
+  ${props =>
     props.fullWidthMobile &&
     css`
       width: 100%;
@@ -45,6 +56,7 @@ const buttonStyles = css`
     props.large &&
     css`
       padding: 1rem 1.5rem;
+      font-size: 1.125rem;
     `}
 
   ${props =>

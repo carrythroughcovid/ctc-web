@@ -22,6 +22,7 @@ import Page from '../components/shared/Page'
 import Button from '../components/shared/Button'
 import media from '../utils/media'
 import Spinner from '../components/shared/Spinner'
+import HomeHeader from '../components/home/HomeHeader'
 
 const FormSection = styled.div`
   padding-top: 2rem;
@@ -129,14 +130,9 @@ const Results = connectStateResults(
   }
 )
 
-const CTALink = styled(Link)`
-  color: white;
-  text-decoration: underline;
-`
-
 const SearchResultsPage = () => {
   return (
-    <Page homeHeader>
+    <Page customHeader={() => <HomeHeader />}>
       <InstantSearch searchClient={searchClient} indexName="prod_business">
         <Container>
           <FormSection>

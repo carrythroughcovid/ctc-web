@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import Document from './Document'
 import Header from './Header'
-import HomeHeader from '../home/HomeHeader'
 import Footer from './Footer'
 
 import media from '../../utils/media'
@@ -24,10 +23,10 @@ const Main = styled.main`
   `}
 `
 
-const Page = ({ children, homeHeader }) => (
+const Page = ({ children, customHeader }) => (
   <Document>
     <Wrapper>
-      {!homeHeader ? <Header /> : <HomeHeader />}
+      {!customHeader ? <Header /> : customHeader()}
       <Main>{children}</Main>
       <Footer />
     </Wrapper>
