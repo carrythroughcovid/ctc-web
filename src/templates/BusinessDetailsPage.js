@@ -151,20 +151,18 @@ const UpdateTabBlock = ({ offerings, details, callout }) => (
   </>
 )
 
-const AboutTabBlock = () => (
+const AboutTabBlock = ({details, headline}) => (
   <>
     <DetailBlock>
-      <DetailTitle>Out Background</DetailTitle>
+      <DetailTitle>Our Background</DetailTitle>
       <BlockCallout>
-        Differentiate Yourself And Attract More Attention, Sales, And Profits
+        {headline}
       </BlockCallout>
       <BlockContent>
-        There is no denying that the success of an advertisement lies mostly in
-        the headline. The headline should catch the reader’s attention and make
-        him read the rest of the advertisement.{' '}
+        {details}
       </BlockContent>
     </DetailBlock>
-    <DetailBlock>
+    {/* <DetailBlock>
       <DetailTitle>our ethos</DetailTitle>
       <BlockCallout>
         Differentiate Yourself And Attract More Attention, Sales, And Profits
@@ -174,13 +172,13 @@ const AboutTabBlock = () => (
         the headline. The headline should catch the reader’s attention and make
         him read the rest of the advertisement.{' '}
       </BlockContent>
-    </DetailBlock>
+    </DetailBlock> */}
   </>
 )
 
 const BusinessDetailsPage = ({ data }) => {
   const { businessType, details } = mockListing[0] // TODO hook up real data store
-  const { name, suburb, offerings, image } = data.businesses
+  const { name, suburb, offerings, images, business_details, product_details, headline, website } = data.businesses
 
   const tabContent = [
     {
@@ -188,14 +186,14 @@ const BusinessDetailsPage = ({ data }) => {
       content: () => (
         <UpdateTabBlock
           offerings={offerings}
-          details={details}
-          callout="Now doing interior design consultations via webcam"
+          details={product_details}
+          callout={headline}
         />
       ),
     },
     {
       title: 'About us',
-      content: () => <AboutTabBlock />,
+      content: () => <AboutTabBlock details={business_details} headline={headline}/>,
     },
   ]
 
@@ -205,7 +203,7 @@ const BusinessDetailsPage = ({ data }) => {
       <Container fullWidth>
         <Wrapper>
           <ImageWrapper>
-            <BusinessImage src={image} />
+            <BusinessImage src={images.header_image} alt="The businesses header image" />
           </ImageWrapper>
 
           <DetailsWrapper>
@@ -221,7 +219,7 @@ const BusinessDetailsPage = ({ data }) => {
                 </BusinessLocation>
               </Details>
             </BusinessDetails>
-            <ButtonLink fullWidthMobile large href="/">
+            <ButtonLink fullWidthMobile large href={website} target='_blank'>
               Visit our website
             </ButtonLink>
           </DetailsWrapper>
@@ -238,6 +236,10 @@ export const query = graphql`
     businesses(slug: { eq: $slug }) {
       id
       name
+      business_details
+      product_details
+      website
+      headline
       offerings {
         id
         name
@@ -248,6 +250,9 @@ export const query = graphql`
       }
       slug
       suburb
+      images {
+        header_image
+      }
     }
   }
 `
