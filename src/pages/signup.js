@@ -122,6 +122,50 @@ const BorderlessFormField = styled(FormField)`
   }
 `
 
+const Autocomplete = ({
+  onChange,
+  currentOption,
+  hits,
+  currentRefinement,
+  refine,
+}) => {
+  const loadOptions = (_, callback) => {
+    callback(hits)
+  }
+  const handleInputChange = input => {
+    if (input) {
+      refine(input)
+    }
+  }
+  const handleChoose = input => {
+    refine(input)
+    onChange(input)
+  }
+  return (
+    <AsyncSelect
+      value={currentOption}
+      defaultOptions
+      loadOptions={loadOptions}
+      onInputChange={handleInputChange}
+      onChange={handleChoose}
+      formatOptionLabel={option => (
+        <span>
+          {option.suburb} {option.state} {option.postcode}
+        </span>
+      )}
+    />
+  )
+}
+
+const ChonkyBoi = ({ onChange, currentOption }) => {
+  const CustomAutocomplete = connectAutoComplete(Autocomplete)
+  return (
+    <InstantSearch searchClient={searchClient} indexName="prod_suburb_centroid">
+      <CustomAutocomplete onChange={onChange} currentOption={currentOption} />
+    </InstantSearch>
+  )
+}
+
 const Form = () => {
   const formRef = useRef(null)
   const [loading, setLoading] = useState(false)
@@ -133,11 +177,13 @@ const Form = () => {
     getValues,
     triggerValidation,
     formState,
+    watch,
   } = useForm()
 
   const [businessType, setBusinessType] = useState('')
   const [otherOfferingChecked, setOtherOfferingChecked] = useState(false)
   const [offeringsChecked, setOfferingsChecked] = useState(0)
+  const searchResult = watch('customSearch')
 
   const headerImageRef = useRef(null)
   const businessOwnerImageRef = useRef(null)
@@ -152,50 +198,6 @@ const Form = () => {
       ).length >= 1 || 'Select at least 1 offering.'
     )
   }
-
-  const Autocomplete = ({ hits, currentRefinement, refine }) => {
-    // USING GROMMET SELECT
-    // <Select
-    //   placeholder="Suburb"
-    //   options={hits}
-    //   value={currentRefinement.suburb}
-    //   onSearch={input => {
-    //     refine(input)
-    //   }}
-    //   onChange={({ option }) => {
-    //     return option
-    //   }}
-    //   name="suburb_auto"
-    //   labelKey={hit => `${hit.suburb} ${hit.state} ${hit.postcode}`}
-    // />
-
-    // USING REACT-SELECT
-    const loadOptions = (_, callback) => {
-      callback(hits)
-    }
-
-    const handleInputChange = input => {
-      refine(input)
-    }
-
-    return (
-      <AsyncSelect
-        defaultOptions={hits}
-        loadOptions={loadOptions}
-        onInputChange={handleInputChange}
-        onChange={handleInputChange}
-        formatOptionLabel={o => (
-          <span>
-            {o.suburb} {o.state} {o.postcode}
-          </span>
-        )}
-        data={data => console.log(data)}
-        selectOption={o => console.log(o)}
-      />
-    )
-  }
-
-  const CustomAutocomplete = connectAutoComplete(Autocomplete)
 
   const onSubmit = data => {
     setButtonDisabled(true)
@@ -254,16 +256,10 @@ const Form = () => {
             >
               <FormInputs>
                 <Controller
-                  as={
-                    <InstantSearch
-                      searchClient={searchClient}
-                      indexName="prod_suburb_centroid"
-                    >
-                      <CustomAutocomplete />
-                    </InstantSearch>
-                  }
-                  name="autocomplete"
+                  as={ChonkyBoi}
                   control={control}
+                  currentOption={searchResult}
+                  name="customSearch"
                 />
                 <Controller
                   as={

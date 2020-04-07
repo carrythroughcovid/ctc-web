@@ -4,54 +4,57 @@ import { InstantSearch, connectAutoComplete } from 'react-instantsearch-dom'
 import AsyncSelect from 'react-select/async'
 import { useForm, Controller } from 'react-hook-form'
 import { Grommet, Form as GrommetForm, FormField, Button } from 'grommet'
-
 import Page from '../components/shared/Page'
-
 const searchClient = algoliasearch(
   'TGPZX7CMYY',
   '859c34030d228a6188c83731bb6e456f'
 )
-
-const Test = () => {
-  const testRef = useRef(null)
-  const { handleSubmit, control } = useForm()
-
-  const Autocomplete = ({ hits, currentRefinement, refine }) => {
-    const loadOptions = (_, callback) => {
-      callback(hits)
-    }
-
-    const handleInputChange = input => {
-      if (input) {
-        refine(input)
-      }
-    }
-
-    const handleChoose = input => {
+const Autocomplete = ({
+  onChange,
+  currentOption,
+  hits,
+  currentRefinement,
+  refine,
+}) => {
+  const loadOptions = (_, callback) => {
+    callback(hits)
+  }
+  const handleInputChange = input => {
+    if (input) {
       refine(input)
     }
-
-    return (
-      <AsyncSelect
-        value={currentRefinement}
-        defaultOptions
-        loadOptions={loadOptions}
-        onInputChange={handleInputChange}
-        onChange={handleChoose}
-        ref={testRef}
-        formatOptionLabel={option => (
-          <span>
-            {option.suburb} {option.state} {option.postcode}
-          </span>
-        )}
-      />
-    )
   }
-
+  const handleChoose = input => {
+    refine(input)
+    onChange(input)
+  }
+  return (
+    <AsyncSelect
+      value={currentOption}
+      defaultOptions
+      loadOptions={loadOptions}
+      onInputChange={handleInputChange}
+      onChange={handleChoose}
+      formatOptionLabel={option => (
+        <span>
+          {option.suburb} {option.state} {option.postcode}
+        </span>
+      )}
+    />
+  )
+}
+const ChonkyBoi = ({ onChange, currentOption }) => {
   const CustomAutocomplete = connectAutoComplete(Autocomplete)
-
+  return (
+    <InstantSearch searchClient={searchClient} indexName="prod_suburb_centroid">
+      <CustomAutocomplete onChange={onChange} currentOption={currentOption} />
+    </InstantSearch>
+  )
+}
+const Test = () => {
+  const { handleSubmit, control, watch } = useForm()
   const onSubmit = data => console.log(data)
-
+  const searchResult = watch('customSearch')
   return (
     <Page>
       <Grommet plain>
@@ -67,32 +70,20 @@ const Test = () => {
             control={control}
           />
           <Controller
-            as={
-              <InstantSearch
-                searchClient={searchClient}
-                indexName="prod_suburb_centroid"
-              >
-                <CustomAutocomplete />
-              </InstantSearch>
-            }
+            as={ChonkyBoi}
             control={control}
+            currentOption={searchResult}
             name="customSearch"
           />
-
           <Controller
             as={<FormField name="test2" label="Test Input 3" />}
             name="test2"
             control={control}
           />
-          <Button
-            type="submit"
-            onClick={() => console.log(testRef.current.props.value)}
-            label="Submit"
-          />
+          <Button type="submit" label="Submit" />
         </GrommetForm>
       </Grommet>
     </Page>
   )
 }
-
 export default Test
