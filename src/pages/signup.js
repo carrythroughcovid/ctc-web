@@ -93,13 +93,14 @@ const Form = () => {
     )
   }
 
-  const renderControlledField = (fieldName, { ...rest }) => (
+  const renderControlledField = (fieldName, rest = null) => (
     <Controller
       as={renderField(fieldName, errors)}
       name={fieldName}
       control={control}
       rules={validationRules[fieldName]}
-      {...rest}
+      onChange={rest ? rest.onChange : null}
+      currentOption={rest ? rest.currentOption : null}
     />
   )
 
