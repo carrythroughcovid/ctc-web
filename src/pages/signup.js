@@ -134,12 +134,13 @@ const Form = () => {
   const renderField = field =>
     withError(signupFields[field], getErrorMessage(field, errors))
 
-  const renderControlledField = fieldName => (
+  const renderControlledField = (fieldName, onChange = null) => (
     <Controller
       as={renderField(fieldName)}
       name={fieldName}
       control={control}
       rules={validationRules.fieldName}
+      onChange={onChange}
     />
   )
 
@@ -153,117 +154,23 @@ const Form = () => {
             <GrommetForm name="businessForm" onSubmit={handleSubmit(onSubmit)}>
               <SectionTitle>Personal Details</SectionTitle>
               {renderControlledField('owner_name')}
-              <Controller
-                as={
-                  <TextFormField
-                    name="email"
-                    label="Email"
-                    placeholder="Your Email"
-                    error={errors.email && errors.email.message}
-                  />
-                }
-                name="email"
-                control={control}
-                rules={{
-                  required: { value: true, message: 'Email is required' },
-                  pattern: {
-                    value: EMAIL_REGEX,
-                    message: 'Please enter a valid email',
-                  },
-                  maxLength: { value: 200, message: 'Email is too long' },
-                }}
-              />
-              <Controller
-                as={
-                  <TextFormField
-                    name="contact_number"
-                    label="Phone Number"
-                    placeholder="Your Phone Number"
-                    error={
-                      errors.contact_number && errors.contact_number.message
-                    }
-                  />
-                }
-                name="contact_number"
-                control={control}
-                rules={{
-                  required: {
-                    value: true,
-                    message: 'Contact number is required.',
-                  },
-                  maxLength: {
-                    value: 15,
-                    message: 'Contact Number is too long',
-                  },
-                }}
-              />
+              {renderControlledField('email')}
+              {renderControlledField('contact_number')}
+
               <SectionTitle>Business Summary</SectionTitle>
-              <Controller
-                as={
-                  <TextFormField
-                    name="name"
-                    label="Business Name"
-                    placeholder="Your Business Name"
-                    errorMsg={errors.name && errors.name.message}
-                  />
-                }
-                name="name"
-                control={control}
-                rules={{
-                  required: {
-                    value: true,
-                    message: 'Business name is required',
-                  },
-                  maxLength: {
-                    value: 200,
-                    message: 'Business name is too long',
-                  },
-                }}
-              />
+
+              {renderControlledField('name')}
               <SelectContainer>
-                <Controller
-                  as={
-                    <Select
-                      placeholder="Select business type"
-                      options={businessOptions}
-                      name="business_type"
-                    />
-                  }
-                  name="business_type"
-                  control={control}
-                  onChange={selected => {
-                    setBusinessType(selected[0].value)
-                    return selected[0].value
-                  }}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: 'Please select a business type',
-                    },
-                  }}
-                />
+                {renderControlledField('business_type', selected => {
+                  setBusinessType(selected[0].value)
+                  return selected[0].value
+                })}
                 {errors.business_type && (
                   <ErrorMessage>{errors.business_type.message}</ErrorMessage>
                 )}
               </SelectContainer>
-              {businessType === 'Other' && (
-                <Controller
-                  as={
-                    <TextFormField
-                      name="business_type_other"
-                      placeholder="Other type of Business"
-                    />
-                  }
-                  name="business_type_other"
-                  control={control}
-                  rules={{
-                    maxLength: {
-                      value: 200,
-                      message: 'Business type is too long',
-                    },
-                  }}
-                />
-              )}
+              {businessType === 'Other' &&
+                renderControlledField('business_type_other')}
               <Controller
                 as={LocationSearch}
                 control={control}
