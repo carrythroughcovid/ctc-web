@@ -78,7 +78,7 @@ const InfiniteHits = ({ hits, hasMore, refineNext }) => {
     <>
       <Row>
         {hits.map((hit, index) => (
-          <Col display="flex" xs={12} sm={6} md={4} key={index}>
+          <Col display="flex" xs={12} sm={6} md={4} lg={3} key={index}>
             <BusinessCard listing={hit}></BusinessCard>
           </Col>
         ))}
