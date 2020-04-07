@@ -98,7 +98,7 @@ const Footer = () => {
             <Logo />
           </Link>
           <div>
-            <FooterLink to="/about-us">About us</FooterLink>
+            <FooterLink to="/about">About us</FooterLink>
             <FooterLink to="/#explore">Explore offerings</FooterLink>
             <FooterLink to="/terms">Terms</FooterLink>
             <CTALink>

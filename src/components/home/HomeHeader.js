@@ -19,7 +19,7 @@ const Actions = () => (
     <Button to="/signup" secondary large fixedWidth>
       Sign up now
     </Button>
-    <Button to="/aboutus" large fixedWidth>
+    <Button to="/about" large fixedWidth>
       About us
     </Button>
   </>
