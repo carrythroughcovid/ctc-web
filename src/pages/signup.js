@@ -48,7 +48,7 @@ const SectionTitle = styled.h3`
 
 const TextInputContainer = styled.div``
 
-const TextInputField = ({ errorMsg, label, ...rest }) => {
+const TextField = ({ errorMsg, label, component = <TextInput />, ...rest }) => {
   const [active, setActive] = useState(false)
 
   const onFocus = () => setActive(true)
@@ -57,22 +57,7 @@ const TextInputField = ({ errorMsg, label, ...rest }) => {
   return (
     <TextInputContainer>
       {active && label}
-      <TextInput {...rest} onFocus={onFocus} onBlur={onBlur} />
-      {errorMsg && <p>errorMsg</p>}
-    </TextInputContainer>
-  )
-}
-
-const TextAreaField = ({ errorMsg, label, ...rest }) => {
-  const [active, setActive] = useState(false)
-
-  const onFocus = () => setActive(true)
-  const onBlur = () => setActive(false)
-
-  return (
-    <TextInputContainer>
-      {active && label}
-      <TextArea {...rest} onFocus={onFocus} onBlur={onBlur} />
+      {React.cloneElement(component, { onFocus, onBlur, ...rest })}
       {errorMsg && <p>errorMsg</p>}
     </TextInputContainer>
   )
@@ -167,7 +152,7 @@ const Form = () => {
               <SectionTitle>Personal Details</SectionTitle>
               <Controller
                 as={
-                  <TextInputField
+                  <TextField
                     name="owner_name"
                     label="Your Name"
                     placeholder="Full Name"
@@ -186,7 +171,7 @@ const Form = () => {
               />
               <Controller
                 as={
-                  <TextInputField
+                  <TextField
                     name="email"
                     label="Email"
                     placeholder="Your Email"
@@ -206,7 +191,7 @@ const Form = () => {
               />
               <Controller
                 as={
-                  <TextInputField
+                  <TextField
                     name="contact_number"
                     label="Phone Number"
                     placeholder="Your Phone Number"
@@ -231,7 +216,7 @@ const Form = () => {
               <SectionTitle>Business Summary</SectionTitle>
               <Controller
                 as={
-                  <TextInputField
+                  <TextField
                     name="name"
                     label="Business Name"
                     placeholder="Your Business Name"
@@ -280,7 +265,7 @@ const Form = () => {
               {businessType === 'Other' && (
                 <Controller
                   as={
-                    <TextInputField
+                    <TextField
                       name="business_type_other"
                       placeholder="Other type of Business"
                     />
@@ -304,7 +289,7 @@ const Form = () => {
               <SectionTitle>Brand Story</SectionTitle>
               <Controller
                 as={
-                  <TextInputField
+                  <TextField
                     name="headline"
                     label="What is your business headline?"
                     placeholder="Describe your business in 25 characters or less."
@@ -320,7 +305,8 @@ const Form = () => {
               />
               <Controller
                 as={
-                  <TextAreaField
+                  <TextField
+                    component={<TextArea />}
                     name="product_details"
                     label="Product/Service Details"
                     placeholder="Tell us a bit about your business"
@@ -344,7 +330,8 @@ const Form = () => {
               />
               <Controller
                 as={
-                  <TextAreaField
+                  <TextField
+                    component={<TextArea />}
                     name="business_details"
                     label="Business Details / Your Story"
                     placeholder="Tell us a bit about your background"
@@ -401,7 +388,7 @@ const Form = () => {
               {otherOfferingChecked && (
                 <Controller
                   as={
-                    <TextInputField
+                    <TextField
                       name="offering_type_other"
                       placeholder="Other type of offering"
                     />
@@ -470,7 +457,7 @@ const Form = () => {
               <SectionTitle>Optional Information</SectionTitle>
               <Controller
                 as={
-                  <TextInputField
+                  <TextField
                     name="website"
                     label="Your website"
                     placeholder="Website URL"
@@ -485,7 +472,7 @@ const Form = () => {
               />
               <Controller
                 as={
-                  <TextInputField
+                  <TextField
                     name="website_secondary"
                     label="Link to an ordering/online store"
                     placeholder="Ordering/online store URL"
@@ -506,7 +493,7 @@ const Form = () => {
               />
               <Controller
                 as={
-                  <TextInputField
+                  <TextField
                     name="business_number"
                     label="Phone number to display on website"
                     placeholder="Business phone number"
