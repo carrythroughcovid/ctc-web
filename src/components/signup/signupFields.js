@@ -63,4 +63,12 @@ export const signupFields = {
       placeholder="Tell us a bit about your business"
     />
   ),
+  business_details: (
+    <TextFormField
+      component={<TextArea />}
+      name="business_details"
+      label="Business Details / Your Story"
+      placeholder="Tell us a bit about your background"
+    />
+  ),
 }

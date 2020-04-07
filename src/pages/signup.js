@@ -54,6 +54,13 @@ const Loading = () => (
   </LoadingContainer>
 )
 
+const Section = ({ title, children }) => (
+  <>
+    <SectionTitle>{title}</SectionTitle>
+    {children}
+  </>
+)
+
 const Form = () => {
   const [loading, setLoading] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(false)
@@ -152,214 +159,198 @@ const Form = () => {
         <Grommet plain>
           <FormContainer>
             <GrommetForm name="businessForm" onSubmit={handleSubmit(onSubmit)}>
-              <SectionTitle>Personal Details</SectionTitle>
-              {renderControlledField('owner_name')}
-              {renderControlledField('email')}
-              {renderControlledField('contact_number')}
+              <Section title="Personal Details">
+                {renderControlledField('owner_name')}
+                {renderControlledField('email')}
+                {renderControlledField('contact_number')}
+              </Section>
 
-              <SectionTitle>Business Summary</SectionTitle>
-
-              {renderControlledField('name')}
-              <SelectContainer>
-                {renderControlledField('business_type', {
-                  onChange: selected => {
-                    setBusinessType(selected[0].value)
-                    return selected[0].value
-                  },
+              <Section title="Business Summary">
+                {renderControlledField('name')}
+                <SelectContainer>
+                  {renderControlledField('business_type', {
+                    onChange: selected => {
+                      setBusinessType(selected[0].value)
+                      return selected[0].value
+                    },
+                  })}
+                  {errors.business_type && (
+                    <ErrorMessage>{errors.business_type.message}</ErrorMessage>
+                  )}
+                </SelectContainer>
+                {businessType === 'Other' &&
+                  renderControlledField('business_type_other')}
+                {renderControlledField('location_search', {
+                  currentOption: locationResult,
                 })}
-                {errors.business_type && (
-                  <ErrorMessage>{errors.business_type.message}</ErrorMessage>
-                )}
-              </SelectContainer>
-              {businessType === 'Other' &&
-                renderControlledField('business_type_other')}
-              {renderControlledField('location_search', {
-                currentOption: locationResult,
-              })}
+              </Section>
 
-              <SectionTitle>Brand Story</SectionTitle>
-              {renderControlledField('business_type_other')}
-              {renderControlledField('product_details')}
-              <Controller
-                as={
-                  <TextFormField
-                    component={<TextArea />}
-                    name="business_details"
-                    label="Business Details / Your Story"
-                    placeholder="Tell us a bit about your background"
-                    error={
-                      errors.business_details && errors.business_details.message
-                    }
-                  />
-                }
-                name="business_details"
-                control={control}
-                rules={{
-                  required: {
-                    value: true,
-                    message: 'These details are required',
-                  },
-                  maxLength: {
-                    value: 700,
-                    message: 'Business details is too long',
-                  },
-                }}
-              />
-              <SectionTitle>Your New Services</SectionTitle>
-              <SelectContainer>
-                {offeringOptions.map((offering, i) => (
+              <Section title="Brand Story">
+                {renderControlledField('business_type_other')}
+                {renderControlledField('product_details')}
+                {renderControlledField('business_details')}
+              </Section>
+
+              <Section title="Your New Services">
+                <SelectContainer>
+                  {offeringOptions.map((offering, i) => (
+                    <Controller
+                      as={
+                        <CheckBox name="offering_type" label={offering.label} />
+                      }
+                      name={`offering_type[${offering.value}]`}
+                      control={control}
+                      onChange={selected => {
+                        handleCheckboxChange(selected[0])
+                        const { currentTarget: current } = selected[0]
+                        console.log(current.value)
+                        current.value === 'true'
+                          ? setOfferingsChecked(offeringsChecked - 1)
+                          : setOfferingsChecked(offeringsChecked + 1)
+                        if (current.name.match(/offering_type.+other/g)) {
+                          setOtherOfferingChecked(current.checked)
+                        }
+                        return `${current.checked}`
+                      }}
+                      rules={{
+                        validate: validateOfferings,
+                      }}
+                    />
+                  ))}
+                  {formState.isSubmitted && offeringsChecked === 0 && (
+                    <ErrorMessage>
+                      Please select at least one product
+                    </ErrorMessage>
+                  )}
+                </SelectContainer>
+                {otherOfferingChecked && (
                   <Controller
                     as={
-                      <CheckBox name="offering_type" label={offering.label} />
+                      <TextFormField
+                        name="offering_type_other"
+                        placeholder="Other type of offering"
+                      />
                     }
-                    name={`offering_type[${offering.value}]`}
+                    name="offering_type_other"
                     control={control}
-                    onChange={selected => {
-                      handleCheckboxChange(selected[0])
-                      const { currentTarget: current } = selected[0]
-                      console.log(current.value)
-                      current.value === 'true'
-                        ? setOfferingsChecked(offeringsChecked - 1)
-                        : setOfferingsChecked(offeringsChecked + 1)
-                      if (current.name.match(/offering_type.+other/g)) {
-                        setOtherOfferingChecked(current.checked)
-                      }
-                      return `${current.checked}`
-                    }}
                     rules={{
-                      validate: validateOfferings,
+                      maxLength: {
+                        value: 200,
+                        message: 'Offering type is too long',
+                      },
                     }}
                   />
-                ))}
-                {formState.isSubmitted && offeringsChecked === 0 && (
-                  <ErrorMessage>
-                    Please select at least one product
-                  </ErrorMessage>
                 )}
-              </SelectContainer>
-              {otherOfferingChecked && (
+              </Section>
+
+              <Section title="Display Images">
+                <Controller
+                  as={
+                    <>
+                      <input
+                        name="header_image"
+                        id="header_image"
+                        type="file"
+                        ref={headerImageRef}
+                        style={{ display: 'none' }}
+                      />
+                      <label htmlFor="header_image">Upload hero image</label>
+                    </>
+                  }
+                  name="header_image"
+                  control={control}
+                />
+                <Controller
+                  as={
+                    <>
+                      <input
+                        name="logo"
+                        id="logo"
+                        type="file"
+                        ref={headerImageRef}
+                        style={{ display: 'none' }}
+                      />
+                      <label htmlFor="logo">Upload logo</label>
+                    </>
+                  }
+                  name="logo"
+                  control={control}
+                />
+                <Controller
+                  as={
+                    <>
+                      <input
+                        name="business_owner_image"
+                        id="business_owner_image"
+                        type="file"
+                        ref={headerImageRef}
+                        style={{ display: 'none' }}
+                      />
+                      <label htmlFor="business_owner_image">
+                        Upload profile photo
+                      </label>
+                    </>
+                  }
+                  name="business_owner_image"
+                  control={control}
+                />
+                z
+              </Section>
+              <Section title="Optional Information">
                 <Controller
                   as={
                     <TextFormField
-                      name="offering_type_other"
-                      placeholder="Other type of offering"
+                      name="website"
+                      label="Your website"
+                      placeholder="Website URL"
+                      error={errors.website && errors.website.message}
                     />
                   }
-                  name="offering_type_other"
+                  name="website"
+                  control={control}
+                  rules={{
+                    maxLength: { value: 500, message: 'Website is too long' },
+                  }}
+                />
+                <Controller
+                  as={
+                    <TextFormField
+                      name="website_secondary"
+                      label="Link to an ordering/online store"
+                      placeholder="Ordering/online store URL"
+                      error={
+                        errors.website_secondary &&
+                        errors.website_secondary.message
+                      }
+                    />
+                  }
+                  name="website_secondary"
                   control={control}
                   rules={{
                     maxLength: {
-                      value: 200,
-                      message: 'Offering type is too long',
+                      value: 500,
+                      message: 'Ordering URL is too long',
                     },
                   }}
                 />
-              )}
-              <SectionTitle>Display Images</SectionTitle>
-              <Controller
-                as={
-                  <>
-                    <input
-                      name="header_image"
-                      id="header_image"
-                      type="file"
-                      ref={headerImageRef}
-                      style={{ display: 'none' }}
+                <Controller
+                  as={
+                    <TextFormField
+                      name="business_number"
+                      label="Phone number to display on website"
+                      placeholder="Business phone number"
+                      error={
+                        errors.business_number && errors.business_number.message
+                      }
                     />
-                    <label htmlFor="header_image">Upload hero image</label>
-                  </>
-                }
-                name="header_image"
-                control={control}
-              />
-              <Controller
-                as={
-                  <>
-                    <input
-                      name="logo"
-                      id="logo"
-                      type="file"
-                      ref={headerImageRef}
-                      style={{ display: 'none' }}
-                    />
-                    <label htmlFor="logo">Upload logo</label>
-                  </>
-                }
-                name="logo"
-                control={control}
-              />
-              <Controller
-                as={
-                  <>
-                    <input
-                      name="business_owner_image"
-                      id="business_owner_image"
-                      type="file"
-                      ref={headerImageRef}
-                      style={{ display: 'none' }}
-                    />
-                    <label htmlFor="business_owner_image">
-                      Upload profile photo
-                    </label>
-                  </>
-                }
-                name="business_owner_image"
-                control={control}
-              />
-              <SectionTitle>Optional Information</SectionTitle>
-              <Controller
-                as={
-                  <TextFormField
-                    name="website"
-                    label="Your website"
-                    placeholder="Website URL"
-                    error={errors.website && errors.website.message}
-                  />
-                }
-                name="website"
-                control={control}
-                rules={{
-                  maxLength: { value: 500, message: 'Website is too long' },
-                }}
-              />
-              <Controller
-                as={
-                  <TextFormField
-                    name="website_secondary"
-                    label="Link to an ordering/online store"
-                    placeholder="Ordering/online store URL"
-                    error={
-                      errors.website_secondary &&
-                      errors.website_secondary.message
-                    }
-                  />
-                }
-                name="website_secondary"
-                control={control}
-                rules={{
-                  maxLength: {
-                    value: 500,
-                    message: 'Ordering URL is too long',
-                  },
-                }}
-              />
-              <Controller
-                as={
-                  <TextFormField
-                    name="business_number"
-                    label="Phone number to display on website"
-                    placeholder="Business phone number"
-                    error={
-                      errors.business_number && errors.business_number.message
-                    }
-                  />
-                }
-                name="business_number"
-                control={control}
-                rules={{
-                  maxLength: { value: 15, message: 'Phone is too long' },
-                }}
-              />
+                  }
+                  name="business_number"
+                  control={control}
+                  rules={{
+                    maxLength: { value: 15, message: 'Phone is too long' },
+                  }}
+                />
+              </Section>
               <button type="submit" disabled={buttonDisabled}>
                 Submit
               </button>

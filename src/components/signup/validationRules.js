@@ -63,4 +63,14 @@ export const validationRules = {
       message: 'Product details is too long',
     },
   },
+  business_details: {
+    required: {
+      value: true,
+      message: 'These details are required',
+    },
+    maxLength: {
+      value: 700,
+      message: 'Business details is too long',
+    },
+  },
 }
