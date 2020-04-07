@@ -10,6 +10,7 @@ import { offeringOptions } from '../components/signup/presets'
 import { API_HOST } from '../utils/constants'
 import { validationRules } from '../components/signup/validationRules'
 import { signupFields } from '../components/signup/signupFields'
+import SignupHeader from '../components/signup/SignupHeader'
 
 const LoadingContainer = styled.div`
   display: flex;
@@ -143,7 +144,7 @@ const Form = () => {
   )
 
   return (
-    <Page>
+    <Page customHeader={() => <SignupHeader />}>
       {loading ? (
         <Loading />
       ) : (

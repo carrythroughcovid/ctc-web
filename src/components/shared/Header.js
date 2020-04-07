@@ -3,12 +3,10 @@ import styled from 'styled-components'
 import { Link } from 'gatsby'
 
 import Logo from './Logo'
-import { ButtonInternalLink as Button } from './Button'
 
 const StyledHeader = styled.header`
   height: ${props => props.theme.headerHeight};
-  background-color: white;
-  border-bottom: 1px solid #cccccc;
+  background-color: ${props => props.theme.colour.black};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -19,9 +17,8 @@ const StyledHeader = styled.header`
 const Header = () => (
   <StyledHeader>
     <Link to={`/`}>
-      <Logo light />
+      <Logo />
     </Link>
-    <Button to="/signup">Sign up</Button>
   </StyledHeader>
 )
 
