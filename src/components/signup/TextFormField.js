@@ -5,7 +5,7 @@ import { TextInput } from 'grommet'
 const TextInputContainer = styled.div``
 
 const TextFormField = ({
-  errorMsg,
+  error,
   label,
   component = <TextInput />,
   ...rest
@@ -19,7 +19,7 @@ const TextFormField = ({
     <TextInputContainer>
       {active && label}
       {React.cloneElement(component, { onFocus, onBlur, ...rest })}
-      {errorMsg && <p>errorMsg</p>}
+      {error && error}
     </TextInputContainer>
   )
 }

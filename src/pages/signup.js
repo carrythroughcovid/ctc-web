@@ -16,6 +16,8 @@ import LocationSearch from '../components/signup/LocationSearch'
 import TextFormField from '../components/signup/TextFormField'
 import { businessOptions, offeringOptions } from '../components/signup/presets'
 import { API_HOST, EMAIL_REGEX } from '../utils/constants'
+import { validationRules } from '../components/signup/validationRules'
+import { signupFields } from '../components/signup/signupFields'
 
 const LoadingContainer = styled.div`
   display: flex;
@@ -46,8 +48,13 @@ const SectionTitle = styled.h3`
   text-transform: uppercase;
 `
 
+const Loading = () => (
+  <LoadingContainer>
+    <Spinner display />
+  </LoadingContainer>
+)
+
 const Form = () => {
-  const formRef = useRef(null)
   const [loading, setLoading] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(false)
   const {
@@ -118,40 +125,34 @@ const Form = () => {
     [formState.touched, triggerValidation]
   )
 
+  const withError = (component, error) =>
+    React.cloneElement(component, { error })
+
+  const getErrorMessage = (field, errors) =>
+    errors[field] && errors[field].message
+
+  const renderField = field =>
+    withError(signupFields[field], getErrorMessage(field, errors))
+
+  const renderControlledField = fieldName => (
+    <Controller
+      as={renderField(fieldName)}
+      name={fieldName}
+      control={control}
+      rules={validationRules.fieldName}
+    />
+  )
+
   return (
     <Page>
       {loading ? (
-        <LoadingContainer>
-          <Spinner display />
-        </LoadingContainer>
+        <Loading />
       ) : (
         <Grommet plain>
           <FormContainer>
-            <GrommetForm
-              ref={formRef}
-              name="businessForm"
-              onSubmit={handleSubmit(onSubmit)}
-            >
+            <GrommetForm name="businessForm" onSubmit={handleSubmit(onSubmit)}>
               <SectionTitle>Personal Details</SectionTitle>
-              <Controller
-                as={
-                  <TextFormField
-                    name="owner_name"
-                    label="Your Name"
-                    placeholder="Full Name"
-                    error={errors.owner_name && errors.owner_name.message}
-                  />
-                }
-                name="owner_name"
-                control={control}
-                rules={{
-                  required: { value: true, message: 'Name is required' },
-                  maxLength: {
-                    value: 100,
-                    message: 'Name is too long',
-                  },
-                }}
-              />
+              {renderControlledField('owner_name')}
               <Controller
                 as={
                   <TextFormField
