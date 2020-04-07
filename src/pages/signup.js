@@ -53,6 +53,14 @@ const Section = ({ title, children }) => (
   </>
 )
 
+const withError = (component, error) => React.cloneElement(component, { error })
+
+const getErrorMessage = (field, errors) =>
+  errors[field] && errors[field].message
+
+const renderField = (field, errors) =>
+  withError(signupFields[field], getErrorMessage(field, errors))
+
 const Form = () => {
   const [loading, setLoading] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(false)
@@ -78,13 +86,22 @@ const Form = () => {
 
   const validateOfferings = _ => {
     const values = getValues({ nest: true })
-
     return (
       Object.keys(values.offering_type).filter(v =>
         Boolean(values.offering_type[v])
       ).length >= 1 || 'Select at least 1 offering.'
     )
   }
+
+  const renderControlledField = (fieldName, { ...rest }) => (
+    <Controller
+      as={renderField(fieldName, errors)}
+      name={fieldName}
+      control={control}
+      rules={validationRules[fieldName]}
+      {...rest}
+    />
+  )
 
   const onSubmit = data => {
     setButtonDisabled(true)
@@ -122,25 +139,6 @@ const Form = () => {
       triggerValidation({ name })
     },
     [formState.touched, triggerValidation]
-  )
-
-  const withError = (component, error) =>
-    React.cloneElement(component, { error })
-
-  const getErrorMessage = (field, errors) =>
-    errors[field] && errors[field].message
-
-  const renderField = field =>
-    withError(signupFields[field], getErrorMessage(field, errors))
-
-  const renderControlledField = (fieldName, { ...rest }) => (
-    <Controller
-      as={renderField(fieldName)}
-      name={fieldName}
-      control={control}
-      rules={validationRules[fieldName]}
-      {...rest}
-    />
   )
 
   return (
