@@ -185,7 +185,7 @@ const Form = () => {
                 </Section>
 
                 <Section title="Brand Story">
-                  {renderControlledField('business_type_other')}
+                  {renderControlledField('headline')}
                   {renderControlledField('product_details')}
                   {renderControlledField('business_details')}
                 </Section>
