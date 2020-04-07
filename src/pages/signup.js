@@ -119,8 +119,12 @@ const SectionTitle = styled.h3`
   text-transform: uppercase;
 `
 
-const Container = styled.div`
+const TextInputContainer = styled.div`
   /* display: flex; */
+`
+
+const StyledSelect = styled(Select)`
+  width: 100%;
 `
 
 const TextInputField = ({ errorMsg, label, ...rest }) => {
@@ -130,11 +134,11 @@ const TextInputField = ({ errorMsg, label, ...rest }) => {
   const onBlur = () => setActive(false)
 
   return (
-    <Container>
+    <TextInputContainer>
       {active && label}
       <TextInput {...rest} onFocus={onFocus} onBlur={onBlur} />
       {errorMsg && <p>errorMsg</p>}
-    </Container>
+    </TextInputContainer>
   )
 }
 
@@ -220,11 +224,74 @@ const Form = () => {
                 <SectionTitle>Personal Details</SectionTitle>
                 <Controller
                   as={
-                    // <StyledFormField
+                    <TextInputField
+                      name="owner_name"
+                      label="Your Name"
+                      placeholder="Full Name"
+                      error={errors.owner_name && errors.owner_name.message}
+                    />
+                  }
+                  name="owner_name"
+                  control={control}
+                  rules={{
+                    required: { value: true, message: 'Name is required' },
+                    maxLength: {
+                      value: 100,
+                      message: 'Name is too long',
+                    },
+                  }}
+                />
+                <Controller
+                  as={
+                    <TextInputField
+                      name="email"
+                      label="Email"
+                      placeholder="Your Email"
+                      error={errors.email && errors.email.message}
+                    />
+                  }
+                  name="email"
+                  control={control}
+                  rules={{
+                    required: { value: true, message: 'Email is required' },
+                    pattern: {
+                      value: EMAIL_REGEX,
+                      message: 'Please enter a valid email',
+                    },
+                    maxLength: { value: 200, message: 'Email is too long' },
+                  }}
+                />
+                <Controller
+                  as={
+                    <TextInputField
+                      name="contact_number"
+                      label="Phone Number"
+                      placeholder="Your Phone Number"
+                      error={
+                        errors.contact_number && errors.contact_number.message
+                      }
+                    />
+                  }
+                  name="contact_number"
+                  control={control}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: 'Contact number is required.',
+                    },
+                    maxLength: {
+                      value: 15,
+                      message: 'Contact Number is too long',
+                    },
+                  }}
+                />
+                <SectionTitle>Business Summary</SectionTitle>
+                <Controller
+                  as={
                     <TextInputField
                       name="name"
                       label="Business Name"
-                      placeholder="Business Name"
+                      placeholder="Your Business Name"
                       errorMsg={errors.name && errors.name.message}
                     />
                   }
@@ -241,48 +308,11 @@ const Form = () => {
                     },
                   }}
                 />
-                <Controller
-                  as={
-                    <StyledFormField
-                      name="owner_name"
-                      label="Your Name"
-                      error={errors.owner_name && errors.owner_name.message}
-                    />
-                  }
-                  name="owner_name"
-                  control={control}
-                  rules={{
-                    required: { value: true, message: 'Name is required' },
-                    maxLength: {
-                      value: 100,
-                      message: 'Name is too long',
-                    },
-                  }}
-                />
-                <Controller
-                  as={
-                    <StyledFormField
-                      name="email"
-                      label="Email"
-                      error={errors.email && errors.email.message}
-                    />
-                  }
-                  name="email"
-                  control={control}
-                  rules={{
-                    required: { value: true, message: 'Email is required' },
-                    pattern: {
-                      value: EMAIL_REGEX,
-                      message: 'Please enter a valid email',
-                    },
-                    maxLength: { value: 200, message: 'Email is too long' },
-                  }}
-                />
                 <SelectContainer>
                   <Controller
                     as={
-                      <Select
-                        placeholder="Type of Business"
+                      <StyledSelect
+                        placeholder="Select business type"
                         options={businessOptions}
                         name="business_type"
                       />
@@ -454,29 +484,6 @@ const Form = () => {
                         'Suburb is required. Please still enter one if you are an online store.',
                     },
                     maxLength: { value: 50, message: 'Suburb is too long' },
-                  }}
-                />
-                <Controller
-                  as={
-                    <StyledFormField
-                      name="contact_number"
-                      label="Contact Number (only for our records)"
-                      error={
-                        errors.contact_number && errors.contact_number.message
-                      }
-                    />
-                  }
-                  name="contact_number"
-                  control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: 'Contact number is required.',
-                    },
-                    maxLength: {
-                      value: 15,
-                      message: 'Contact Number is too long',
-                    },
                   }}
                 />
                 <Controller
