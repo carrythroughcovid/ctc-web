@@ -8,12 +8,12 @@ import {
   Select,
   CheckBox,
   TextArea,
-  TextInput,
 } from 'grommet'
 
 import Page from '../components/shared/Page'
 import Spinner from '../components/shared/Spinner'
 import LocationSearch from '../components/signup/LocationSearch'
+import TextFormField from '../components/signup/TextFormField'
 import { businessOptions, offeringOptions } from '../components/signup/presets'
 import { API_HOST, EMAIL_REGEX } from '../utils/constants'
 
@@ -45,23 +45,6 @@ const SectionTitle = styled.h3`
   color: #6979f8;
   text-transform: uppercase;
 `
-
-const TextInputContainer = styled.div``
-
-const TextField = ({ errorMsg, label, component = <TextInput />, ...rest }) => {
-  const [active, setActive] = useState(false)
-
-  const onFocus = () => setActive(true)
-  const onBlur = () => setActive(false)
-
-  return (
-    <TextInputContainer>
-      {active && label}
-      {React.cloneElement(component, { onFocus, onBlur, ...rest })}
-      {errorMsg && <p>errorMsg</p>}
-    </TextInputContainer>
-  )
-}
 
 const Form = () => {
   const formRef = useRef(null)
@@ -152,7 +135,7 @@ const Form = () => {
               <SectionTitle>Personal Details</SectionTitle>
               <Controller
                 as={
-                  <TextField
+                  <TextFormField
                     name="owner_name"
                     label="Your Name"
                     placeholder="Full Name"
@@ -171,7 +154,7 @@ const Form = () => {
               />
               <Controller
                 as={
-                  <TextField
+                  <TextFormField
                     name="email"
                     label="Email"
                     placeholder="Your Email"
@@ -191,7 +174,7 @@ const Form = () => {
               />
               <Controller
                 as={
-                  <TextField
+                  <TextFormField
                     name="contact_number"
                     label="Phone Number"
                     placeholder="Your Phone Number"
@@ -216,7 +199,7 @@ const Form = () => {
               <SectionTitle>Business Summary</SectionTitle>
               <Controller
                 as={
-                  <TextField
+                  <TextFormField
                     name="name"
                     label="Business Name"
                     placeholder="Your Business Name"
@@ -265,7 +248,7 @@ const Form = () => {
               {businessType === 'Other' && (
                 <Controller
                   as={
-                    <TextField
+                    <TextFormField
                       name="business_type_other"
                       placeholder="Other type of Business"
                     />
@@ -289,7 +272,7 @@ const Form = () => {
               <SectionTitle>Brand Story</SectionTitle>
               <Controller
                 as={
-                  <TextField
+                  <TextFormField
                     name="headline"
                     label="What is your business headline?"
                     placeholder="Describe your business in 25 characters or less."
@@ -305,7 +288,7 @@ const Form = () => {
               />
               <Controller
                 as={
-                  <TextField
+                  <TextFormField
                     component={<TextArea />}
                     name="product_details"
                     label="Product/Service Details"
@@ -330,7 +313,7 @@ const Form = () => {
               />
               <Controller
                 as={
-                  <TextField
+                  <TextFormField
                     component={<TextArea />}
                     name="business_details"
                     label="Business Details / Your Story"
@@ -388,7 +371,7 @@ const Form = () => {
               {otherOfferingChecked && (
                 <Controller
                   as={
-                    <TextField
+                    <TextFormField
                       name="offering_type_other"
                       placeholder="Other type of offering"
                     />
@@ -414,7 +397,7 @@ const Form = () => {
                       ref={headerImageRef}
                       style={{ display: 'none' }}
                     />
-                    <label for="header_image">Upload hero image</label>
+                    <label htmlFor="header_image">Upload hero image</label>
                   </>
                 }
                 name="header_image"
@@ -430,7 +413,7 @@ const Form = () => {
                       ref={headerImageRef}
                       style={{ display: 'none' }}
                     />
-                    <label for="logo">Upload logo</label>
+                    <label htmlFor="logo">Upload logo</label>
                   </>
                 }
                 name="logo"
@@ -446,7 +429,7 @@ const Form = () => {
                       ref={headerImageRef}
                       style={{ display: 'none' }}
                     />
-                    <label for="business_owner_image">
+                    <label htmlFor="business_owner_image">
                       Upload profile photo
                     </label>
                   </>
@@ -457,7 +440,7 @@ const Form = () => {
               <SectionTitle>Optional Information</SectionTitle>
               <Controller
                 as={
-                  <TextField
+                  <TextFormField
                     name="website"
                     label="Your website"
                     placeholder="Website URL"
@@ -472,7 +455,7 @@ const Form = () => {
               />
               <Controller
                 as={
-                  <TextField
+                  <TextFormField
                     name="website_secondary"
                     label="Link to an ordering/online store"
                     placeholder="Ordering/online store URL"
@@ -493,7 +476,7 @@ const Form = () => {
               />
               <Controller
                 as={
-                  <TextField
+                  <TextFormField
                     name="business_number"
                     label="Phone number to display on website"
                     placeholder="Business phone number"
