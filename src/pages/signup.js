@@ -146,7 +146,7 @@ const Form = () => {
       as={renderField(fieldName)}
       name={fieldName}
       control={control}
-      rules={validationRules.fieldName}
+      rules={validationRules[fieldName]}
       {...rest}
     />
   )
