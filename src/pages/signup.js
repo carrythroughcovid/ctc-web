@@ -204,7 +204,6 @@ const Form = () => {
                         onChange={selected => {
                           handleCheckboxChange(selected[0])
                           const { currentTarget: current } = selected[0]
-                          console.log(current.value)
                           current.value === 'true'
                             ? setOfferingsChecked(offeringsChecked - 1)
                             : setOfferingsChecked(offeringsChecked + 1)
@@ -231,7 +230,7 @@ const Form = () => {
                 <Section title="Display Images">
                   <ImageUploader
                     withIcon={true}
-                    onChange={setLogoImage}
+                    onChange={setHeaderImage}
                     imgExtension={['.jpg', '.png']}
                     buttonText="Upload hero image"
                     withPreview={true}
@@ -240,7 +239,7 @@ const Form = () => {
                   />
                   <ImageUploader
                     withIcon={true}
-                    onChange={setHeaderImage}
+                    onChange={setLogoImage}
                     imgExtension={['.jpg', '.png']}
                     buttonText="Upload logo"
                     withPreview={true}
