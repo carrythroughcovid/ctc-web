@@ -73,4 +73,22 @@ export const validationRules = {
       message: 'Business details is too long',
     },
   },
+  offering_type_other: {
+    maxLength: {
+      value: 200,
+      message: 'Offering type is too long',
+    },
+  },
+  website: {
+    maxLength: { value: 500, message: 'Website is too long' },
+  },
+  website_secondary: {
+    maxLength: {
+      value: 500,
+      message: 'Ordering URL is too long',
+    },
+  },
+  business_number: {
+    maxLength: { value: 15, message: 'Phone is too long' },
+  },
 }

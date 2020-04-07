@@ -223,24 +223,8 @@ const Form = () => {
                     </ErrorMessage>
                   )}
                 </SelectContainer>
-                {otherOfferingChecked && (
-                  <Controller
-                    as={
-                      <TextFormField
-                        name="offering_type_other"
-                        placeholder="Other type of offering"
-                      />
-                    }
-                    name="offering_type_other"
-                    control={control}
-                    rules={{
-                      maxLength: {
-                        value: 200,
-                        message: 'Offering type is too long',
-                      },
-                    }}
-                  />
-                )}
+                {otherOfferingChecked &&
+                  renderControlledField('offering_type_other')}
               </Section>
 
               <Section title="Display Images">
@@ -296,61 +280,13 @@ const Form = () => {
                 />
                 z
               </Section>
+
               <Section title="Optional Information">
-                <Controller
-                  as={
-                    <TextFormField
-                      name="website"
-                      label="Your website"
-                      placeholder="Website URL"
-                      error={errors.website && errors.website.message}
-                    />
-                  }
-                  name="website"
-                  control={control}
-                  rules={{
-                    maxLength: { value: 500, message: 'Website is too long' },
-                  }}
-                />
-                <Controller
-                  as={
-                    <TextFormField
-                      name="website_secondary"
-                      label="Link to an ordering/online store"
-                      placeholder="Ordering/online store URL"
-                      error={
-                        errors.website_secondary &&
-                        errors.website_secondary.message
-                      }
-                    />
-                  }
-                  name="website_secondary"
-                  control={control}
-                  rules={{
-                    maxLength: {
-                      value: 500,
-                      message: 'Ordering URL is too long',
-                    },
-                  }}
-                />
-                <Controller
-                  as={
-                    <TextFormField
-                      name="business_number"
-                      label="Phone number to display on website"
-                      placeholder="Business phone number"
-                      error={
-                        errors.business_number && errors.business_number.message
-                      }
-                    />
-                  }
-                  name="business_number"
-                  control={control}
-                  rules={{
-                    maxLength: { value: 15, message: 'Phone is too long' },
-                  }}
-                />
+                {renderControlledField('website')}
+                {renderControlledField('website_secondary')}
+                {renderControlledField('business_number')}
               </Section>
+
               <button type="submit" disabled={buttonDisabled}>
                 Submit
               </button>

@@ -71,4 +71,31 @@ export const signupFields = {
       placeholder="Tell us a bit about your background"
     />
   ),
+  offering_type_other: (
+    <TextFormField
+      name="offering_type_other"
+      placeholder="Other type of offering"
+    />
+  ),
+  website: (
+    <TextFormField
+      name="website"
+      label="Your website"
+      placeholder="Website URL"
+    />
+  ),
+  website_secondary: (
+    <TextFormField
+      name="website_secondary"
+      label="Link to an ordering/online store"
+      placeholder="Ordering/online store URL"
+    />
+  ),
+  business_number: (
+    <TextFormField
+      name="business_number"
+      label="Phone number to display on website"
+      placeholder="Business phone number"
+    />
+  ),
 }
