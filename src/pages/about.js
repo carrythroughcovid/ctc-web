@@ -1,13 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
+
 import Page from '../components/shared/Page'
+import AboutHeader from '../components/about/AboutHeader'
+import { ButtonInternalLink as Button } from '../components/shared/Button'
+import media from '../utils/media'
+
 import MissionImage from '../images/about-mission.png'
 import WhoWeAreImage from '../images/about-who-we-are.png'
 import MobileDown from '../images/mobile-down.png'
 import MobileUp from '../images/mobile-up.png'
-
-import media from '../utils/media'
-import { ButtonInternalLink as Button } from '../components/shared/Button'
 
 const LeftSection = styled.div`
   height: 400px;
@@ -181,7 +183,7 @@ const JoinUsRightContainer = styled.div`
 const About = ({ data }) => {
   const listingsTotal = data.allBusinesses.edges.length
   return (
-    <Page>
+    <Page customHeader={() => <AboutHeader />}>
       <AboutContainer>
         <LeftSection>
           <LeftSectionDetailContainer>
