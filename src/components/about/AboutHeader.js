@@ -34,7 +34,6 @@ const AboutHeader = () => (
     sub={() => <AltSub>Who we are</AltSub>}
     title={() => <Title />}
     actions={() => <Actions />}
-    large
   />
 )
 
