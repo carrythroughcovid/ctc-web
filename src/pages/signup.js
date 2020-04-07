@@ -100,6 +100,10 @@ const ButtonContainer = styled.div`
 
 const SelectContainer = styled.div`
   margin-top: 2rem;
+
+  button {
+    width: 100%;
+  }
 `
 
 const ErrorMessage = styled.p`
@@ -123,10 +127,6 @@ const TextInputContainer = styled.div`
   /* display: flex; */
 `
 
-const StyledSelect = styled(Select)`
-  width: 100%;
-`
-
 const TextInputField = ({ errorMsg, label, ...rest }) => {
   const [active, setActive] = useState(false)
 
@@ -137,6 +137,21 @@ const TextInputField = ({ errorMsg, label, ...rest }) => {
     <TextInputContainer>
       {active && label}
       <TextInput {...rest} onFocus={onFocus} onBlur={onBlur} />
+      {errorMsg && <p>errorMsg</p>}
+    </TextInputContainer>
+  )
+}
+
+const TextAreaField = ({ errorMsg, label, ...rest }) => {
+  const [active, setActive] = useState(false)
+
+  const onFocus = () => setActive(true)
+  const onBlur = () => setActive(false)
+
+  return (
+    <TextInputContainer>
+      {active && label}
+      <TextArea {...rest} onFocus={onFocus} onBlur={onBlur} />
       {errorMsg && <p>errorMsg</p>}
     </TextInputContainer>
   )
@@ -311,7 +326,7 @@ const Form = () => {
                 <SelectContainer>
                   <Controller
                     as={
-                      <StyledSelect
+                      <Select
                         placeholder="Select business type"
                         options={businessOptions}
                         name="business_type"
@@ -354,9 +369,31 @@ const Form = () => {
                 )}
                 <Controller
                   as={
-                    <StyledFormField
+                    <TextInputField
+                      name="suburb"
+                      label="Your Suburb"
+                      placeholder="Suburb"
+                      error={errors.suburb && errors.suburb.message}
+                    />
+                  }
+                  name="suburb"
+                  control={control}
+                  rules={{
+                    required: {
+                      value: true,
+                      message:
+                        'Suburb is required. Please still enter one if you are an online store.',
+                    },
+                    maxLength: { value: 50, message: 'Suburb is too long' },
+                  }}
+                />
+                <SectionTitle>Brand Story</SectionTitle>
+                <Controller
+                  as={
+                    <TextInputField
                       name="headline"
-                      label="Business 1-Liner"
+                      label="What is your business headline?"
+                      placeholder="Describe your business in 25 characters or less."
                       error={errors.headline && errors.headline.message}
                     />
                   }
@@ -367,6 +404,56 @@ const Form = () => {
                     maxLength: { value: 200, message: 'Headline is too long' },
                   }}
                 />
+                <Controller
+                  as={
+                    <TextAreaField
+                      name="product_details"
+                      label="Product/Service Details"
+                      placeholder="Tell us a bit about your business"
+                      error={
+                        errors.product_details && errors.product_details.message
+                      }
+                    />
+                  }
+                  name="product_details"
+                  control={control}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: 'These details are required',
+                    },
+                    maxLength: {
+                      value: 700,
+                      message: 'Product details is too long',
+                    },
+                  }}
+                />
+                <Controller
+                  as={
+                    <TextAreaField
+                      name="business_details"
+                      label="Business Details / Your Story"
+                      placeholder="Tell us a bit about your background"
+                      error={
+                        errors.business_details &&
+                        errors.business_details.message
+                      }
+                    />
+                  }
+                  name="business_details"
+                  control={control}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: 'These details are required',
+                    },
+                    maxLength: {
+                      value: 700,
+                      message: 'Business details is too long',
+                    },
+                  }}
+                />
+                <SectionTitle>Your New Services</SectionTitle>
                 <SelectContainer>
                   <BorderlessFormField label="Product Updates" pad="true">
                     {offeringOptions.map((offering, i) => (
@@ -421,121 +508,7 @@ const Form = () => {
                     }}
                   />
                 )}
-                <StyledFormField
-                  name="product_details"
-                  label="Product/Service Details"
-                  error={
-                    errors.product_details && errors.product_details.message
-                  }
-                >
-                  <Controller
-                    as={<StyledTextAreaField name="product_details" />}
-                    name="product_details"
-                    control={control}
-                    rules={{
-                      required: {
-                        value: true,
-                        message: 'These details are required',
-                      },
-                      maxLength: {
-                        value: 700,
-                        message: 'Product details is too long',
-                      },
-                    }}
-                  />
-                </StyledFormField>
-                <StyledFormField
-                  name="business_details"
-                  label="Business Details / Your Story"
-                  error={
-                    errors.business_details && errors.business_details.message
-                  }
-                >
-                  <Controller
-                    as={<StyledTextAreaField name="business_details" />}
-                    name="business_details"
-                    control={control}
-                    rules={{
-                      required: {
-                        value: true,
-                        message: 'These details are required',
-                      },
-                      maxLength: {
-                        value: 700,
-                        message: 'Business details is too long',
-                      },
-                    }}
-                  />
-                </StyledFormField>
-                <Controller
-                  as={
-                    <StyledFormField
-                      name="suburb"
-                      label="Suburb"
-                      error={errors.suburb && errors.suburb.message}
-                    />
-                  }
-                  name="suburb"
-                  control={control}
-                  rules={{
-                    required: {
-                      value: true,
-                      message:
-                        'Suburb is required. Please still enter one if you are an online store.',
-                    },
-                    maxLength: { value: 50, message: 'Suburb is too long' },
-                  }}
-                />
-                <Controller
-                  as={
-                    <StyledFormField
-                      name="website"
-                      label="Website URL (optional)"
-                      error={errors.website && errors.website.message}
-                    />
-                  }
-                  name="website"
-                  control={control}
-                  rules={{
-                    maxLength: { value: 500, message: 'Website is too long' },
-                  }}
-                />
-                <Controller
-                  as={
-                    <StyledFormField
-                      name="website_secondary"
-                      label="Ordering/Online Store URL (e.g. to Menulog) (optional)"
-                      error={
-                        errors.website_secondary &&
-                        errors.website_secondary.message
-                      }
-                    />
-                  }
-                  name="website_secondary"
-                  control={control}
-                  rules={{
-                    maxLength: {
-                      value: 500,
-                      message: 'Ordering URL is too long',
-                    },
-                  }}
-                />
-                <Controller
-                  as={
-                    <StyledFormField
-                      name="business_number"
-                      label="Business Phone (displayed on website)  (optional)"
-                      error={
-                        errors.business_number && errors.business_number.message
-                      }
-                    />
-                  }
-                  name="business_number"
-                  control={control}
-                  rules={{
-                    maxLength: { value: 15, message: 'Phone is too long' },
-                  }}
-                />
+                <SectionTitle>Display Images</SectionTitle>
                 <Controller
                   as={
                     <StyledFormField name="header_image" label="Main Image">
@@ -565,6 +538,60 @@ const Form = () => {
                   }
                   name="business_owner_image"
                   control={control}
+                />
+                <SectionTitle>Optional Information</SectionTitle>
+                <Controller
+                  as={
+                    <TextInputField
+                      name="website"
+                      label="Your website"
+                      placeholder="Website URL"
+                      error={errors.website && errors.website.message}
+                    />
+                  }
+                  name="website"
+                  control={control}
+                  rules={{
+                    maxLength: { value: 500, message: 'Website is too long' },
+                  }}
+                />
+                <Controller
+                  as={
+                    <TextInputField
+                      name="website_secondary"
+                      label="Link to an ordering/online store"
+                      placeholder="Ordering/online store URL"
+                      error={
+                        errors.website_secondary &&
+                        errors.website_secondary.message
+                      }
+                    />
+                  }
+                  name="website_secondary"
+                  control={control}
+                  rules={{
+                    maxLength: {
+                      value: 500,
+                      message: 'Ordering URL is too long',
+                    },
+                  }}
+                />
+                <Controller
+                  as={
+                    <TextInputField
+                      name="business_number"
+                      label="Phone number to display on website"
+                      placeholder="Business phone number"
+                      error={
+                        errors.business_number && errors.business_number.message
+                      }
+                    />
+                  }
+                  name="business_number"
+                  control={control}
+                  rules={{
+                    maxLength: { value: 15, message: 'Phone is too long' },
+                  }}
                 />
               </FormInputs>
               <ButtonContainer>
