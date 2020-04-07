@@ -14,7 +14,6 @@ import {
 import algoliasearch from 'algoliasearch/lite'
 import { InstantSearch, connectAutoComplete } from 'react-instantsearch-dom'
 import AsyncSelect from 'react-select/async'
-import ReactSelect from 'react-select'
 
 import Page from '../components/shared/Page'
 import Spinner from '../components/shared/Spinner'
@@ -143,9 +142,6 @@ const Form = () => {
   const headerImageRef = useRef(null)
   const businessOwnerImageRef = useRef(null)
   const logoRef = useRef(null)
-  const suburbRef = useRef(null)
-  const stateRef = useRef(null)
-  const postcodeRef = useRef(null)
 
   const validateOfferings = _ => {
     const values = getValues({ nest: true })
@@ -158,6 +154,7 @@ const Form = () => {
   }
 
   const Autocomplete = ({ hits, currentRefinement, refine }) => {
+    // USING GROMMET SELECT
     // <Select
     //   placeholder="Suburb"
     //   options={hits}
@@ -166,22 +163,18 @@ const Form = () => {
     //     refine(input)
     //   }}
     //   onChange={({ option }) => {
-    //     suburbRef.current = option.suburb
-    //     stateRef.current = option.state
-    //     postcodeRef.current = option.postcode
     //     return option
     //   }}
     //   name="suburb_auto"
     //   labelKey={hit => `${hit.suburb} ${hit.state} ${hit.postcode}`}
     // />
+
+    // USING REACT-SELECT
     const loadOptions = (_, callback) => {
-      console.log('load called')
       callback(hits)
     }
 
     const handleInputChange = input => {
-      console.log('handle input called')
-      console.log(input)
       refine(input)
     }
 
@@ -206,25 +199,29 @@ const Form = () => {
 
   const onSubmit = data => {
     setButtonDisabled(true)
+
+    // Generating form data to upload images
     const formData = new FormData()
     Object.keys(data).forEach(key => {
       if (data[key] !== undefined) {
         formData.append(key, data[key])
       }
     })
+
+    // Generate nested form data
     const offeringObj = data['offering_type']
     Object.keys(offeringObj).forEach(key =>
       formData.append(`offering_${key}`, offeringObj[key])
     )
-    formData.append('suburb', suburbRef.current)
-    formData.append('state', stateRef.current)
-    formData.append('postcode', postcodeRef.current)
+
+    // Add images
     formData.append('header_image', headerImageRef.current.files[0])
     formData.append('logo', logoRef.current.files[0])
     formData.append(
       'business_owner_image',
       businessOwnerImageRef.current.files[0]
     )
+
     setLoading(true)
     fetch(`${API_HOST}api/businesses`, {
       method: 'POST',
@@ -232,6 +229,7 @@ const Form = () => {
     }).then(() => navigate('/'))
   }
 
+  // Trigger validation every time checkbox is changed
   const handleCheckboxChange = useCallback(
     evt => {
       const { name } = evt.target
@@ -249,19 +247,24 @@ const Form = () => {
       ) : (
         <Grommet plain>
           <FormContainer>
-            <InstantSearch
-              searchClient={searchClient}
-              indexName="prod_suburb_centroid"
-            >
-              <CustomAutocomplete />
-            </InstantSearch>
             <StyledForm
               ref={formRef}
               name="businessForm"
               onSubmit={handleSubmit(onSubmit)}
             >
-              <input type="hidden" ref={suburbRef} />
               <FormInputs>
+                <Controller
+                  as={
+                    <InstantSearch
+                      searchClient={searchClient}
+                      indexName="prod_suburb_centroid"
+                    >
+                      <CustomAutocomplete />
+                    </InstantSearch>
+                  }
+                  name="autocomplete"
+                  control={control}
+                />
                 <Controller
                   as={
                     <StyledFormField
