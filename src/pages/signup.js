@@ -2,20 +2,12 @@ import React, { useRef, useState, useCallback } from 'react'
 import styled from 'styled-components'
 import { navigate } from 'gatsby'
 import { useForm, Controller } from 'react-hook-form'
-import {
-  Grommet,
-  Form as GrommetForm,
-  Select,
-  CheckBox,
-  TextArea,
-} from 'grommet'
+import { Grommet, Form as GrommetForm, CheckBox } from 'grommet'
 
 import Page from '../components/shared/Page'
 import Spinner from '../components/shared/Spinner'
-import LocationSearch from '../components/signup/LocationSearch'
-import TextFormField from '../components/signup/TextFormField'
-import { businessOptions, offeringOptions } from '../components/signup/presets'
-import { API_HOST, EMAIL_REGEX } from '../utils/constants'
+import { offeringOptions } from '../components/signup/presets'
+import { API_HOST } from '../utils/constants'
 import { validationRules } from '../components/signup/validationRules'
 import { signupFields } from '../components/signup/signupFields'
 
