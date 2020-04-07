@@ -5,11 +5,14 @@ import Page from '../components/shared/Page'
 import MissionImage from '../images/about-mission.png'
 import WhoWeAreImage from '../images/about-who-we-are.png'
 import AboutMobileImage from '../images/about-mobile.png'
+import MobileDown from '../images/mobile-down.png'
+import MobileUp from '../images/mobile-up.png'
+
 import media from '../utils/media'
 import { ButtonInternalLink as Button } from '../components/shared/Button'
 
 const LeftSection = styled.div`
-  height: 300px;
+  height: 400px;
   background-color: ${({theme}) => theme.colour.violet};
   display: flex;
   justify-content: center;
@@ -20,8 +23,8 @@ const LeftSection = styled.div`
 `
 
 const RightSection = styled.div`
-  height: 300px;
-  background-color: white;
+  height: 400px;
+  background-color: #EEF0F8;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,14 +34,22 @@ const RightSection = styled.div`
 `
 
 const LargeSection = styled.div`
-  background-color: #B4BAED;
-  height: 300px;
+  background-color: white;
+  overflow: hidden;
+  
+  display: none;
+  ${media.md`
   width: 100%;
   display: flex;
-  overflow: hidden;
-  ${media.sm`
-    height: 350px;
+  justify-content: center;
+    height: 400px;
   `}
+`
+
+const LargeSectionContainer = styled.div`
+  width: 800px;
+  height: 400px;
+  position: relative;
 `
 
 const AboutContainer = styled.div`
@@ -93,56 +104,40 @@ const RightSectionImage = styled.img`
   margin-bottom: 1rem;
 `
 
-const LargeSectionDetails = styled.div`
-  width: 400px;
-  display: flex;
-  width: 100%;
-  align-items: center;
-`
-
 const LargeSectionLeft = styled.div`
-  flex: 1;
   display: none;
+  flex: 1;
   ${media.md`
     display: block;
   `}
-
 `
 
 const LargeSectionRight = styled.div`
-  flex: 1;
   display: flex;
+  flex: 1;
+
   justify-content: center;
   align-items: center;
 `
 
 const NumberTotal = styled.div`
   font-size: 5rem;
-  color: ${({theme}) => theme.colour.red};
+  color: ${({theme}) => theme.colour.violet};
 `
 
 const JoinUsSection = styled.div`
+  height: 400px;
   display: flex;
-  margin-right: 2rem;
-  margin-left: 2rem;
   align-items: center;
-
-  ${media.sm`
-    margin-top: 4rem;
-    margin-left: 4rem;
-  `}
-
-`
-
-const JoinUsRightContainer = styled.div`
-  width: 20rem;
-  color: ${({theme}) => theme.colour.greyDark};
-
+  background-color: ${({theme}) => theme.colour.violet};
 `
 
 const JoinUsLeftContainer = styled.div`
-  margin-right: 2rem;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
 `
 
 const WhatNextContainer = styled.div`
@@ -151,7 +146,6 @@ const WhatNextContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
 
 `
 
@@ -161,74 +155,128 @@ const WhatsUpDetails = styled.div`
 `
 
 const LargeSectionRightDetails = styled.div`
-  width: 300px;
+  width: 350px;
 `
 
 const MobileImage = styled.img`
+  position: absolute;
+  top: -1rem;
   width: 400px;
+
+  ${media.md`
+    width: 400px;
+    right: -2rem;
+  `}
+  ${media.lg`
+    width: 450px;
+    right: -7em;
+  `}
 
 `
 
 const MobileImageContainer = styled.div`
-  ${media.md`
-    margin-left: 10rem;
-  `}
+  position: relative;
+`
+
+const GotQuestionsSection = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+`
+
+const SectionLeft = styled.div`
+  display: flex;
+  width: 300px;
+  flex-direction: column;
+`
+
+const SectionRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+
+`
+
+const MobileDownImage = styled.img`
+width: 500px;
+position: absolute;
+top: 0;
+right: 0;
+`
+
+const MobileUpImage = styled.img`
+width: 500px;
+position: absolute;
+bottom: 0;
+left: 0;
+
+`
+const JoinUsRightContainer = styled.div`
+flex: 1;
+justify-content: center;
+display: flex;
+flex-direction: column;
+align-items: center;
 `
 
 const About = ({data}) => {
-  const listingsTotal = data.allBusinesses.edges.length
+  const listingsTotal = data.allBusinesses.edges.length;
   return (
     <Page>
-        <AboutContainer>
-        <LeftSection>
-          <LeftSectionDetailContainer>
-            <LeftSectionImage src={MissionImage}></LeftSectionImage>
-            <SectionTitle>OUR MISSION</SectionTitle>
-            <LeftSectionDetails>We want to help keep small businesses afloat and enable community support through technology.</LeftSectionDetails>
-            </LeftSectionDetailContainer>
-        </LeftSection>
-        <RightSection>
-          <RightSectionDetailContainer>
-          <RightSectionImage src={WhoWeAreImage}></RightSectionImage>
-          <SectionTitle>WHO WE ARE</SectionTitle>
-            <RightSectionDetails>A group of volunteers and our service is completely FREE of charge.</RightSectionDetails>
-          </RightSectionDetailContainer>
-        </RightSection>
-        </AboutContainer>
-        <LargeSection>
-          <LargeSectionLeft>
-            <MobileImageContainer>
-              <MobileImage src={AboutMobileImage}></MobileImage>  
-            </MobileImageContainer>
-            </LargeSectionLeft>
-            <LargeSectionRight>
-              <LargeSectionRightDetails>
-                <div>IS THIS PLATFORM FOR ME?</div>
-                <div>If you are looking to inform your local customers of what you're offering and your business has any of the following:</div>
-                <div>- A new online store or delivery option</div>        
-                <div>- Discounts</div>
-                <div>- Virtual services</div>
-                <div>- Pre-purchased credit options</div>
-                <div>- Any updates to share with your community</div>
-              </LargeSectionRightDetails>
-       
-            </LargeSectionRight>
-        </LargeSection>
-        <WhatNextContainer>
-          <div style={{color: 'white', marginBottom: '1rem'}}>WHAT'S UP NEXT?</div>
-          <WhatsUpDetails> Get your business into the pockets of the community.
-Provide updates, offers and tell your story.</WhatsUpDetails>
-        </WhatNextContainer>
-        <JoinUsSection>
-          <JoinUsLeftContainer>
+      <AboutContainer>
+      <LeftSection>
+        <LeftSectionDetailContainer>
+          <LeftSectionImage src={MissionImage}></LeftSectionImage>
+          <SectionTitle>OUR MISSION</SectionTitle>
+          <LeftSectionDetails>We want to help keep small businesses afloat and enable community support through technology.</LeftSectionDetails>
+          </LeftSectionDetailContainer>
+      </LeftSection>
+      <RightSection>
+        <RightSectionDetailContainer>
+        <RightSectionImage src={WhoWeAreImage}></RightSectionImage>
+        <SectionTitle>WHO WE ARE</SectionTitle>
+          <RightSectionDetails>A group of volunteers and our service is completely FREE of charge.</RightSectionDetails>
+        </RightSectionDetailContainer>
+      </RightSection>
+      </AboutContainer>
+      <LargeSection>
+        <LargeSectionContainer>
+          <MobileUpImage src={MobileUp}></MobileUpImage>
+          <MobileDownImage src={MobileDown}></MobileDownImage>
+        </LargeSectionContainer>
+      </LargeSection>
+    <WhatNextContainer>
+    <JoinUsLeftContainer>
             <NumberTotal>{listingsTotal}</NumberTotal>
+            <p>HELP EXPAND THE COMMUNITY</p>
+            <p>{listingsTotal} local businesses have signed up already</p>
           </JoinUsLeftContainer>
-          <JoinUsRightContainer>
-            <p>JOIN US TODAY</p>
-            <p>{listingsTotal} local businesses have signed up already, join us today and grow your community.</p>
-            <Button href="">Sign up now</Button>
-          </JoinUsRightContainer>
-        </JoinUsSection>
+        <JoinUsRightContainer>
+        <div style={{color: 'white', marginBottom: '1rem'}}>PROMOTE YOUR NEW SERVICES</div>
+          <WhatsUpDetails> Get your business into the pockets of the community.</WhatsUpDetails>
+        </JoinUsRightContainer>
+
+    </WhatNextContainer>
+  
+        <GotQuestionsSection>
+          <SectionLeft>
+
+            <div>If you are looking to inform  your loyal customers or make new connections  then we can help promote any of your new services without any fee.</div>
+            <Button href="">Sign up now!</Button>
+
+
+          </SectionLeft>
+          <SectionRight>
+            <SectionTitle>HAVE A QUESTION FOR US?</SectionTitle>
+            <div style={{marginBottom: '2rem'}}>Still not sure if this is for you, or have a few questions?  Our team will be happy to help!</div>
+            <Button href="">Contact our team</Button>
+          </SectionRight> 
+        </GotQuestionsSection> 
+
+        <Button href="">Sign up now</Button>
+
     </Page>
   )
 }
@@ -237,7 +285,7 @@ export const query = graphql`
   query {
     allBusinesses {
       edges {
-        node {
+       node {
           id
         }
       }
