@@ -185,7 +185,7 @@ const Form = () => {
                 </Section>
 
                 <Section title="Brand Story">
-                  {renderControlledField('business_type_other')}
+                  {renderControlledField('headline')}
                   {renderControlledField('product_details')}
                   {renderControlledField('business_details')}
                 </Section>
@@ -253,7 +253,7 @@ const Form = () => {
                           name="logo"
                           id="logo"
                           type="file"
-                          ref={headerImageRef}
+                          ref={logoRef}
                           style={{ display: 'none' }}
                         />
                         <label htmlFor="logo">Upload logo</label>
@@ -269,7 +269,7 @@ const Form = () => {
                           name="business_owner_image"
                           id="business_owner_image"
                           type="file"
-                          ref={headerImageRef}
+                          ref={businessOwnerImageRef}
                           style={{ display: 'none' }}
                         />
                         <label htmlFor="business_owner_image">
