@@ -1,8 +1,9 @@
-import React, { useRef, useState, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
 import { navigate } from 'gatsby'
 import { useForm, Controller } from 'react-hook-form'
 import { Grommet, Form as GrommetForm, CheckBox } from 'grommet'
+import ImageUploader from 'react-images-upload'
 
 import Page from '../components/shared/Page'
 import Spinner from '../components/shared/Spinner'
@@ -81,10 +82,9 @@ const Form = () => {
   const [businessType, setBusinessType] = useState('')
   const [otherOfferingChecked, setOtherOfferingChecked] = useState(false)
   const [offeringsChecked, setOfferingsChecked] = useState(0)
-
-  const headerImageRef = useRef(null)
-  const businessOwnerImageRef = useRef(null)
-  const logoRef = useRef(null)
+  const [logoImage, setLogoImage] = useState(null)
+  const [headerImage, setHeaderImage] = useState(null)
+  const [businessOwnerImage, setBusinessOwnerImage] = useState(null)
 
   const validateOfferings = _ => {
     const values = getValues({ nest: true })
@@ -123,12 +123,11 @@ const Form = () => {
     )
     formData.append('latitude', locationResult['_geoloc'].lat)
     formData.append('longitude', locationResult._geoloc.lng)
-    formData.append('header_image', headerImageRef.current.files[0])
-    formData.append('logo', logoRef.current.files[0])
-    formData.append(
-      'business_owner_image',
-      businessOwnerImageRef.current.files[0]
-    )
+
+    logoImage && formData.append('logo_image', logoImage[0])
+    headerImage && formData.append('header_image', headerImage[0])
+    businessOwnerImage &&
+      formData.append('business_owner_image', businessOwnerImage[0])
     setLoading(true)
     fetch(`${API_HOST}api/businesses`, {
       method: 'POST',
@@ -230,57 +229,33 @@ const Form = () => {
                 </Section>
 
                 <Section title="Display Images">
-                  <Controller
-                    as={
-                      <>
-                        <input
-                          name="header_image"
-                          id="header_image"
-                          type="file"
-                          ref={headerImageRef}
-                          style={{ display: 'none' }}
-                        />
-                        <label htmlFor="header_image">Upload hero image</label>
-                      </>
-                    }
-                    name="header_image"
-                    control={control}
+                  <ImageUploader
+                    withIcon={true}
+                    onChange={setLogoImage}
+                    imgExtension={['.jpg', '.png']}
+                    buttonText="Upload hero image"
+                    withPreview={true}
+                    singleImage={true}
+                    withLabel={false}
                   />
-                  <Controller
-                    as={
-                      <>
-                        <input
-                          name="logo"
-                          id="logo"
-                          type="file"
-                          ref={logoRef}
-                          style={{ display: 'none' }}
-                        />
-                        <label htmlFor="logo">Upload logo</label>
-                      </>
-                    }
-                    name="logo"
-                    control={control}
+                  <ImageUploader
+                    withIcon={true}
+                    onChange={setHeaderImage}
+                    imgExtension={['.jpg', '.png']}
+                    buttonText="Upload logo"
+                    withPreview={true}
+                    singleImage={true}
+                    withLabel={false}
                   />
-                  <Controller
-                    as={
-                      <>
-                        <input
-                          name="business_owner_image"
-                          id="business_owner_image"
-                          type="file"
-                          ref={businessOwnerImageRef}
-                          style={{ display: 'none' }}
-                        />
-                        <label htmlFor="business_owner_image">
-                          Upload profile photo
-                        </label>
-                      </>
-                    }
-                    name="business_owner_image"
-                    control={control}
+                  <ImageUploader
+                    withIcon={true}
+                    onChange={setBusinessOwnerImage}
+                    imgExtension={['.jpg', '.png']}
+                    buttonText="Upload profile photo"
+                    withPreview={true}
+                    singleImage={true}
+                    withLabel={false}
                   />
-                  z
                 </Section>
 
                 <Section title="Optional Information">
