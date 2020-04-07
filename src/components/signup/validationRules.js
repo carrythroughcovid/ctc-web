@@ -48,4 +48,19 @@ export const validationRules = {
       message: 'Business type is too long',
     },
   },
+  location_search: {},
+  headline: {
+    required: { value: true, message: 'Headline is required' },
+    maxLength: { value: 200, message: 'Headline is too long' },
+  },
+  product_details: {
+    required: {
+      value: true,
+      message: 'These details are required',
+    },
+    maxLength: {
+      value: 700,
+      message: 'Product details is too long',
+    },
+  },
 }

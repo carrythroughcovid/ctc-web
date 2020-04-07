@@ -8,6 +8,7 @@ import {
 } from 'grommet'
 
 import TextFormField from './TextFormField'
+import LocationSearch from '../../components/signup/LocationSearch'
 import { businessOptions } from './presets'
 
 export const signupFields = {
@@ -44,6 +45,22 @@ export const signupFields = {
     <TextFormField
       name="business_type_other"
       placeholder="Other type of Business"
+    />
+  ),
+  location_search: <LocationSearch />,
+  headline: (
+    <TextFormField
+      name="headline"
+      label="What is your business headline?"
+      placeholder="Describe your business in 25 characters or less."
+    />
+  ),
+  product_details: (
+    <TextFormField
+      component={<TextArea />}
+      name="product_details"
+      label="Product/Service Details"
+      placeholder="Tell us a bit about your business"
     />
   ),
 }

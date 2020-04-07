@@ -67,7 +67,7 @@ const Form = () => {
     watch,
   } = useForm()
 
-  const locationResult = watch('locationSearch')
+  const locationResult = watch('location_search')
 
   const [businessType, setBusinessType] = useState('')
   const [otherOfferingChecked, setOtherOfferingChecked] = useState(false)
@@ -134,13 +134,13 @@ const Form = () => {
   const renderField = field =>
     withError(signupFields[field], getErrorMessage(field, errors))
 
-  const renderControlledField = (fieldName, onChange = null) => (
+  const renderControlledField = (fieldName, { ...rest }) => (
     <Controller
       as={renderField(fieldName)}
       name={fieldName}
       control={control}
       rules={validationRules.fieldName}
-      onChange={onChange}
+      {...rest}
     />
   )
 
@@ -161,9 +161,11 @@ const Form = () => {
 
               {renderControlledField('name')}
               <SelectContainer>
-                {renderControlledField('business_type', selected => {
-                  setBusinessType(selected[0].value)
-                  return selected[0].value
+                {renderControlledField('business_type', {
+                  onChange: selected => {
+                    setBusinessType(selected[0].value)
+                    return selected[0].value
+                  },
                 })}
                 {errors.business_type && (
                   <ErrorMessage>{errors.business_type.message}</ErrorMessage>
@@ -171,54 +173,13 @@ const Form = () => {
               </SelectContainer>
               {businessType === 'Other' &&
                 renderControlledField('business_type_other')}
-              <Controller
-                as={LocationSearch}
-                control={control}
-                currentOption={locationResult}
-                name="locationSearch"
-              />
+              {renderControlledField('location_search', {
+                currentOption: locationResult,
+              })}
+
               <SectionTitle>Brand Story</SectionTitle>
-              <Controller
-                as={
-                  <TextFormField
-                    name="headline"
-                    label="What is your business headline?"
-                    placeholder="Describe your business in 25 characters or less."
-                    error={errors.headline && errors.headline.message}
-                  />
-                }
-                name="headline"
-                control={control}
-                rules={{
-                  required: { value: true, message: 'Headline is required' },
-                  maxLength: { value: 200, message: 'Headline is too long' },
-                }}
-              />
-              <Controller
-                as={
-                  <TextFormField
-                    component={<TextArea />}
-                    name="product_details"
-                    label="Product/Service Details"
-                    placeholder="Tell us a bit about your business"
-                    error={
-                      errors.product_details && errors.product_details.message
-                    }
-                  />
-                }
-                name="product_details"
-                control={control}
-                rules={{
-                  required: {
-                    value: true,
-                    message: 'These details are required',
-                  },
-                  maxLength: {
-                    value: 700,
-                    message: 'Product details is too long',
-                  },
-                }}
-              />
+              {renderControlledField('business_type_other')}
+              {renderControlledField('product_details')}
               <Controller
                 as={
                   <TextFormField
