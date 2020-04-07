@@ -18,7 +18,7 @@ const colour = {
   greySuperLight: '#F2F2F2',
 }
 const theme = {
-  maxWidth: '61.5rem', // 1024px
+  maxWidth: '80rem', // 1280px
   headerHeight: '3.75rem',
   containerGutter: '1.25rem',
 
