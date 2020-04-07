@@ -10,6 +10,7 @@ import {
   Select,
   CheckBox,
   TextArea,
+  TextInput,
 } from 'grommet'
 
 import Page from '../components/shared/Page'
@@ -65,8 +66,7 @@ const FormContainer = styled.div`
   box-shadow: 0px 6px 12px rgba(125, 76, 219, 0.3);
   border: 1px solid #9060eb;
   border-radius: 3px;
-  padding: 2rem;
-  max-width: 50%;
+  padding: 1rem;
   margin: 0 auto;
 `
 
@@ -113,6 +113,30 @@ const BorderlessFormField = styled(FormField)`
     border: none;
   }
 `
+
+const SectionTitle = styled.h3`
+  color: #6979f8;
+  text-transform: uppercase;
+`
+
+const Container = styled.div`
+  /* display: flex; */
+`
+
+const TextInputField = ({ errorMsg, label, ...rest }) => {
+  const [active, setActive] = useState(false)
+
+  const onFocus = () => setActive(true)
+  const onBlur = () => setActive(false)
+
+  return (
+    <Container>
+      {active && label}
+      <TextInput {...rest} onFocus={onFocus} onBlur={onBlur} />
+      {errorMsg && <p>errorMsg</p>}
+    </Container>
+  )
+}
 
 const Form = () => {
   const formRef = useRef(null)
@@ -193,12 +217,15 @@ const Form = () => {
               onSubmit={handleSubmit(onSubmit)}
             >
               <FormInputs>
+                <SectionTitle>Personal Details</SectionTitle>
                 <Controller
                   as={
-                    <StyledFormField
+                    // <StyledFormField
+                    <TextInputField
                       name="name"
                       label="Business Name"
-                      error={errors.name && errors.name.message}
+                      placeholder="Business Name"
+                      errorMsg={errors.name && errors.name.message}
                     />
                   }
                   name="name"
