@@ -98,9 +98,9 @@ const Footer = () => {
             <Logo />
           </Link>
           <div>
-            <FooterLink>About us</FooterLink>
-            <FooterLink>Explore offerings</FooterLink>
-            <FooterLink>Terms</FooterLink>
+            <FooterLink to="/about-us">About us</FooterLink>
+            <FooterLink to="/#explore">Explore offerings</FooterLink>
+            <FooterLink to="/terms">Terms</FooterLink>
             <CTALink>
               Sign up now <ArrowIcon size="1.5rem" />
             </CTALink>
