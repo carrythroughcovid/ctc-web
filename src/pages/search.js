@@ -148,6 +148,10 @@ const SearchResultsPage = () => {
                 attribute="categories.name"
                 resourceName="categories"
               ></CustomMenu>
+                <CustomMenu
+                attribute="offerings.name"
+                resourceName="offerings"
+              ></CustomMenu>
             </CategoryWrapper>
           </FormSection>
         </Container>

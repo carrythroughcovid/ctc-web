@@ -82,7 +82,7 @@ const truncateString = (str, num) => {
 }
 
 const Listing = ({ listing }) => {
-  const { location, categories, slug, images } = listing
+  const { location, categories, slug, images, headline } = listing
   const category = categories.length === 0 ? '' : categories[0].name
 
   return (
@@ -107,7 +107,7 @@ const Listing = ({ listing }) => {
           </BusinessName>
           <BusinessDescription>
             {truncateString(
-              'This is the description of the business and how they would like the puclic to reachout to help them in these strange times.',
+              headline,
               60
             )}
           </BusinessDescription>
