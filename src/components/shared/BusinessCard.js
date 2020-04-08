@@ -91,12 +91,12 @@ const Listing = ({ listing }) => {
         <ImageContainer>
           {location && location.suburb && (
             <SuburbLabel>
-              <Badge primary>{location.suburb}</Badge>
+              <Badge primary={true}>{location.suburb}</Badge>
             </SuburbLabel>
           )}
           {category && (
             <CategoryLabel>
-              <Badge secondary>{category}</Badge>
+              <Badge secondary={true}>{category}</Badge>
             </CategoryLabel>
           )}
           <ListingImage

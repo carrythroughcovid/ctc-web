@@ -86,13 +86,12 @@ const BusinessLocation = styled.div`
   `}
 `
 
-const DetailBlock = styled.div`
-`
+const DetailBlock = styled.div``
 
 const BlockContent = styled.div`
   font-size: 1.125rem;
   color: ${({ theme }) => theme.colour.grey};
-  margin-top: ${props => props.marginTop || '0'}
+  margin-top: ${props => props.marginTop || '0'};
 `
 
 const BlockCallout = styled.div`
@@ -137,8 +136,8 @@ const NewProduct = styled.li`
   padding-bottom: 0.5rem;
 `
 
-const UpdateTabBlock = ({ offerings, details, callout, newProducts }) => { 
-  const newProductsSplit = newProducts.split('-').filter(s => s != '')
+const UpdateTabBlock = ({ offerings, details, callout, newProducts }) => {
+  const newProductsSplit = newProducts.split('-').filter(s => s !== '')
   return (
     <>
       <DetailBlock>
@@ -147,13 +146,12 @@ const UpdateTabBlock = ({ offerings, details, callout, newProducts }) => {
           {offerings.map(({ name, id }) => (
             <Pill key={id}>{name}</Pill>
           ))}
-          <BlockContent marginTop='1rem'>
+          <BlockContent marginTop="1rem">
             <ul>
               {newProductsSplit.map(p => {
                 return <NewProduct>{p}</NewProduct>
               })}
             </ul>
-
           </BlockContent>
         </>
       </DetailBlock>
@@ -168,34 +166,29 @@ const UpdateTabBlock = ({ offerings, details, callout, newProducts }) => {
   )
 }
 
-const AboutTabBlock = ({details, headline}) => (
+const AboutTabBlock = ({ details, headline }) => (
   <>
     <DetailBlock>
       <DetailTitle>Our Background</DetailTitle>
-      <BlockCallout>
-        {headline}
-      </BlockCallout>
-      <BlockContent>
-        {details}
-      </BlockContent>
+      <BlockCallout>{headline}</BlockCallout>
+      <BlockContent>{details}</BlockContent>
     </DetailBlock>
-    {/* <DetailBlock>
-      <DetailTitle>our ethos</DetailTitle>
-      <BlockCallout>
-        Differentiate Yourself And Attract More Attention, Sales, And Profits
-      </BlockCallout>
-      <BlockContent>
-        There is no denying that the success of an advertisement lies mostly in
-        the headline. The headline should catch the reader’s attention and make
-        him read the rest of the advertisement.{' '}
-      </BlockContent>
-    </DetailBlock> */}
   </>
 )
 
 const BusinessDetailsPage = ({ data }) => {
-  const { businessType, details } = mockListing[0] // TODO hook up real data store
-  const { name, suburb, offerings, images, business_details, product_details, new_products, headline, website } = data.businesses
+  const { businessType } = mockListing[0] // TODO hook up real data store
+  const {
+    name,
+    suburb,
+    offerings,
+    images,
+    business_details,
+    product_details,
+    new_products,
+    headline,
+    website,
+  } = data.businesses
 
   const tabContent = [
     {
@@ -211,17 +204,22 @@ const BusinessDetailsPage = ({ data }) => {
     },
     {
       title: 'About us',
-      content: () => <AboutTabBlock details={business_details} headline={headline}/>,
+      content: () => (
+        <AboutTabBlock details={business_details} headline={headline} />
+      ),
     },
   ]
 
   return (
     <Page>
       <BackToSearch />
-      <Container fullWidth>
+      <Container fullWidth={true}>
         <Wrapper>
           <ImageWrapper>
-            <BusinessImage src={transformHttps(images.header_image)} alt="The businesses header image" />
+            <BusinessImage
+              src={transformHttps(images.header_image)}
+              alt="The businesses header image"
+            />
           </ImageWrapper>
 
           <DetailsWrapper>
@@ -237,7 +235,12 @@ const BusinessDetailsPage = ({ data }) => {
                 </BusinessLocation>
               </Details>
             </BusinessDetails>
-            <ButtonLink fullWidthMobile large href={website} target='_blank'>
+            <ButtonLink
+              fullWidthMobile={true}
+              large={true}
+              href={website}
+              target="_blank"
+            >
               Visit our website
             </ButtonLink>
           </DetailsWrapper>

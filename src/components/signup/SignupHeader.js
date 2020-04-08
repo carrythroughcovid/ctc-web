@@ -9,7 +9,11 @@ const AltSub = styled.div`
 `
 
 const Actions = () => (
-  <Button href="mailto:contact@carrythroughcovid.com" fixedWidth large>
+  <Button
+    href="mailto:contact@carrythroughcovid.com"
+    fixedWidth={true}
+    large={true}
+  >
     Contact us
   </Button>
 )

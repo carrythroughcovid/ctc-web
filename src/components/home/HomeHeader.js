@@ -16,10 +16,10 @@ const Title = () => (
 
 const Actions = () => (
   <>
-    <Button to="/signup" secondary large fixedWidth>
+    <Button to="/signup" secondary={true} large={true} fixedWidth={true}>
       Sign up now
     </Button>
-    <Button to="/about" large fixedWidth>
+    <Button to="/about" large={true} fixedWidth={true}>
       About us
     </Button>
   </>
@@ -30,7 +30,7 @@ const HomeHeader = () => (
     sub="we are"
     title={() => <Title />}
     actions={() => <Actions />}
-    large
+    large={true}
   />
 )
 

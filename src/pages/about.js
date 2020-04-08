@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { graphql } from 'gatsby'
 
 import Page from '../components/shared/Page'
 import AboutHeader from '../components/about/AboutHeader'
@@ -94,7 +95,7 @@ const SectionContainer = styled.div`
 `
 
 const AbsoluteImage = styled.img`
-   width: 500px;
+  width: 500px;
   position: absolute;
 `
 
@@ -114,7 +115,7 @@ const About = ({ data }) => {
     <Page customHeader={() => <AboutHeader />}>
       <ColumnRowDiv>
         <GenericSection color={theme.colour.violet}>
-          <ColumnSection width='300px'>
+          <ColumnSection width="300px">
             <SmallImage src={MissionImage}></SmallImage>
             <SectionTitle>OUR MISSION</SectionTitle>
             <CenteredText>
@@ -123,8 +124,8 @@ const About = ({ data }) => {
             </CenteredText>
           </ColumnSection>
         </GenericSection>
-        <GenericSection color='#eef0f8'>
-          <ColumnSection width='300px'>
+        <GenericSection color="#eef0f8">
+          <ColumnSection width="300px">
             <SmallImage src={WhoWeAreImage}></SmallImage>
             <SectionTitle>WHO WE ARE</SectionTitle>
             <CenteredText>
@@ -145,8 +146,10 @@ const About = ({ data }) => {
       <SectionContainer color={theme.colour.red}>
         <ColumnSection>
           <NumberTotal>{listingsTotal}</NumberTotal>
-          <p style={{color: 'white'}}>HELP EXPAND THE COMMUNITY</p>
-          <p style={{color: 'white'}}>{listingsTotal} local businesses have signed up already</p>
+          <p style={{ color: 'white' }}>HELP EXPAND THE COMMUNITY</p>
+          <p style={{ color: 'white' }}>
+            {listingsTotal} local businesses have signed up already
+          </p>
         </ColumnSection>
         <ColumnSection>
           <div style={{ color: 'white', marginBottom: '1rem' }}>
@@ -160,7 +163,7 @@ const About = ({ data }) => {
       </SectionContainer>
 
       <SectionContainer>
-        <ColumnSection width='300px'>
+        <ColumnSection width="300px">
           <div style={{ marginBottom: '2rem' }}>
             If you are looking to inform your loyal customers or make new
             connections then we can help promote any of your new services
@@ -168,13 +171,15 @@ const About = ({ data }) => {
           </div>
           <Button to="/signup">Sign up now!</Button>
         </ColumnSection>
-        <ColumnSection width='300px'>
+        <ColumnSection width="300px">
           <SectionTitle>HAVE A QUESTION FOR US?</SectionTitle>
           <div style={{ marginBottom: '2rem' }}>
             Still not sure if this is for you, or have a few questions?  Our
             team will be happy to help!
           </div>
-          <ButtonLink href="mailto:contact@carrythroughcovid.com">Contact our team</ButtonLink>
+          <ButtonLink href="mailto:contact@carrythroughcovid.com">
+            Contact our team
+          </ButtonLink>
         </ColumnSection>
       </SectionContainer>
     </Page>

@@ -193,7 +193,7 @@ const Form = () => {
 
                 <Section title="Your New Services">
                   <SelectContainer>
-                    {offeringOptions.map((offering, i) => (
+                    {offeringOptions.map(offering => (
                       <Controller
                         as={
                           <CheckBox
@@ -201,6 +201,7 @@ const Form = () => {
                             label={offering.label}
                           />
                         }
+                        key={offering.value}
                         name={`offering_type[${offering.value}]`}
                         control={control}
                         onChange={selected => {
