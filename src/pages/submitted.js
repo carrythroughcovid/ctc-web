@@ -5,13 +5,17 @@ import Page from '../components/shared/Page'
 import ThumbsUpImage from '../images/thumbs-up.png'
 import theme from '../styles/theme'
 import { ButtonLink as Button } from '../components/shared/Button'
+import media from '../utils/media'
 
 const Section1 = styled.div`
   background-color: ${props => props.colour};
-  height: ${props => props.height};
+  height: 350px;
   display: flex;
   justify-content: center;
   align-items: center;
+  ${media.sm`
+    height: ${props => props.height};
+  `}
 `
 
 const WidthContainer = styled.div`
@@ -48,10 +52,9 @@ const Submitted = () => {
       title="Submitted"
       description="Form submission complete."
     />
-    <Page>
+    <Page noMargin>
 
-
-    <Section1 height='300px' colour='#292B3C'>
+    <Section1 height='400px' colour='#292B3C'>
       <WidthContainer>
         <Image src={ThumbsUpImage}></Image>
         <Title colour={theme.colour.violet}>THANK YOU</Title>
@@ -59,7 +62,7 @@ const Submitted = () => {
       </WidthContainer>
       
     </Section1>
-    <Section1 height = '350px' colour='#6979F8'>
+    <Section1 height = '450px' colour='#6979F8'>
       <WidthContainer>
 
         <Title colour={theme.colour.greyDark}>IMPORTANT NEXT STEPS</Title>

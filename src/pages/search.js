@@ -136,7 +136,7 @@ const SearchResultsPage = () => {
         title="Search"
         description="Search for businesses, locations or offerings"
       />
-      <Page customHeader={() => <HomeHeader />}>
+      <Page noMargin customHeader={() => <HomeHeader />}>
         <InstantSearch searchClient={searchClient} indexName="prod_business">
           <Container>
             <FormSection>

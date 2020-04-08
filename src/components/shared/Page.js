@@ -16,18 +16,18 @@ const Wrapper = styled.div`
 
 const Main = styled.main`
   flex: 1;
-  margin-bottom: 2rem;
+  margin-bottom: ${props => props.noMargin ? '0' : '2rem'};
 
   ${media.sm`
-    margin-bottom: 4rem;
+    margin-bottom: ${props => props.noMargin ? '0' : '4rem'};
   `}
 `
 
-const Page = ({ children, customHeader }) => (
+const Page = ({ children, customHeader, noMargin }) => (
   <Document>
     <Wrapper>
       {!customHeader ? <Header /> : customHeader()}
-      <Main>{children}</Main>
+      <Main noMargin={noMargin}>{children} </Main>
       <Footer />
     </Wrapper>
   </Document>
