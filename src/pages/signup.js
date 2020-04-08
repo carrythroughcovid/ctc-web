@@ -155,7 +155,7 @@ const Form = () => {
     fetch(`${API_HOST}api/businesses`, {
       method: 'POST',
       body: formData,
-    }).then(() => navigate('/'))
+    }).then(() => navigate('/submitted'))
   }
 
   const handleCheckboxChange = useCallback(
