@@ -118,7 +118,7 @@ const About = ({ data }) => {
         title="About"
         description="Information about the Carry Through COVID project"
       />
-      <Page customHeader={() => <AboutHeader />}>
+      <Page noMargin customHeader={() => <AboutHeader />}>
         <ColumnRowDiv>
           <GenericSection color={theme.colour.violet}>
             <ColumnSection width="300px">
