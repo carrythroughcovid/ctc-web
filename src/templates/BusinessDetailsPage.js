@@ -136,7 +136,7 @@ const NewProduct = styled.div`
 `
 
 const UpdateTabBlock = ({ offerings, details, callout, newProducts }) => {
-  const newProductsSplit = newProducts.split('\n').filter(s => s != '')
+  const newProductsSplit = newProducts.split('\n').filter(s => s !== '')
   return (
     <>
       <DetailBlock>
