@@ -27,6 +27,7 @@ const LoadingContainer = styled.div`
 
 const FormContainer = styled.div`
   margin: 0 auto;
+  max-width: 27rem;
   textarea {
     box-shadow: none;
   }
@@ -53,6 +54,10 @@ const SectionTitle = styled.h3`
 
 const CheckBoxContainer = styled.div`
   padding: 0.75rem 0;
+`
+
+const StyledButton = styled(Button)`
+  margin-top: 3rem;
 `
 
 const Loading = () => (
@@ -294,14 +299,14 @@ const Form = () => {
                     {renderControlledField('business_email')}
                   </Section>
 
-                  <Button
+                  <StyledButton
                     type="submit"
                     disabled={buttonDisabled}
-                    fullWidthMobile
+                    fullWidth
                     onClick={handleSubmit(onSubmit)}
                   >
                     Submit
-                  </Button>
+                  </StyledButton>
                 </GrommetForm>
               </FormContainer>
             </ThemeContext.Extend>
