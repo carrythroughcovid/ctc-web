@@ -185,7 +185,7 @@ const AboutTabBlock = ({ details, headline }) => (
 )
 
 const BusinessDetailsPage = ({ data }) => {
-  const { businessType, details } = mockListing[0] // TODO hook up real data store
+  const { businessType } = mockListing[0] // TODO hook up real data store
   const {
     name,
     suburb,
