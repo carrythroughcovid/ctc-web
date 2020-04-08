@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { Link } from 'gatsby'
 import { FiArrowRight, FiMail, FiFacebook, FiInstagram } from 'react-icons/fi'
 
@@ -101,7 +101,7 @@ const Footer = () => {
             <FooterLink to="/about">About us</FooterLink>
             <FooterLink to="/#explore">Explore offerings</FooterLink>
             <FooterLink to="/terms">Terms</FooterLink>
-            <CTALink>
+            <CTALink to="/signup">
               Sign up now <ArrowIcon size="1.5rem" />
             </CTALink>
           </div>

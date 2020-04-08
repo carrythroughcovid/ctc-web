@@ -117,18 +117,20 @@ const UpdateListingPage = () => {
           />
         </label>
         <OfferingContainer>
-          <label>
+          <label htmlFor="offerings">
             <div>Offering</div>
             <CheckboxGroup
+              name="offerings"
               style={{ width: '100%' }}
               checkboxId="offerings"
               checkboxState={checkboxOfferings}
               handleCheck={updateCheckboxValues}
             />
           </label>
-          <label>
+          <label htmlFor="categories">
             <div>Categories</div>
             <CheckboxGroup
+              name="categories"
               checkboxId="categories"
               checkboxState={checkboxCategories}
               handleCheck={updateCheckboxValues}

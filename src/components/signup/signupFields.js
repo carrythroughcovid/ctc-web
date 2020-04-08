@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  Grommet,
-  Form as GrommetForm,
-  Select,
-  CheckBox,
-  TextArea,
-} from 'grommet'
+import { Select, TextArea } from 'grommet'
 
 import TextFormField from './TextFormField'
 import LocationSearch from '../../components/signup/LocationSearch'

@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { FiSearch } from 'react-icons/fi'
 
 const SelectWrapper = styled.div`
   background-color: #fff;

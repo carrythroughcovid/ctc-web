@@ -10,10 +10,6 @@ const StyledLogo = styled.div`
   color: black;
 `
 
-const Alt = styled.span`
-  color: ${({ theme }) => theme.colour.primary};
-`
-
 const Logo = ({ light }) => {
   return <StyledLogo>{light ? <LogoDark /> : <LogoLight />}</StyledLogo>
 }

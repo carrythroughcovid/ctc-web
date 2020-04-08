@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { graphql } from 'gatsby'
 
 import mockListing from '../../mockContent/listings'
-
 import media from '../utils/media'
 import Page from '../components/shared/Page'
 import BackToSearch from '../components/BDP/BackToSearch'
@@ -85,13 +85,12 @@ const BusinessLocation = styled.div`
   `}
 `
 
-const DetailBlock = styled.div`
-`
+const DetailBlock = styled.div``
 
 const BlockContent = styled.div`
   font-size: 1.125rem;
   color: ${({ theme }) => theme.colour.grey};
-  margin-top: ${props => props.marginTop || '0'}
+  margin-top: ${props => props.marginTop || '0'};
 `
 
 const BlockCallout = styled.div`
@@ -136,8 +135,8 @@ const NewProduct = styled.div`
   padding-top: 0.75rem;
 `
 
-const UpdateTabBlock = ({ offerings, details, callout, newProducts }) => { 
-  const newProductsSplit = newProducts.split('\n').filter(s => s != '')
+const UpdateTabBlock = ({ offerings, details, callout, newProducts }) => {
+  const newProductsSplit = newProducts.split('\n').filter(s => s !== '')
   return (
     <>
       <DetailBlock>
@@ -146,11 +145,10 @@ const UpdateTabBlock = ({ offerings, details, callout, newProducts }) => {
           {offerings.map(({ name, id }) => (
             <Pill key={id}>{name}</Pill>
           ))}
-          <BlockContent marginTop='1rem'>
-          {newProductsSplit.map(p => {
-            return <NewProduct>{p}</NewProduct>
-          })}
-
+          <BlockContent marginTop="1rem">
+            {newProductsSplit.map(p => {
+              return <NewProduct>{p}</NewProduct>
+            })}
           </BlockContent>
         </>
       </DetailBlock>
@@ -165,16 +163,12 @@ const UpdateTabBlock = ({ offerings, details, callout, newProducts }) => {
   )
 }
 
-const AboutTabBlock = ({details, headline}) => (
+const AboutTabBlock = ({ details, headline }) => (
   <>
     <DetailBlock>
       <DetailTitle>Our Background</DetailTitle>
-      <BlockCallout>
-        {headline}
-      </BlockCallout>
-      <BlockContent>
-        {details}
-      </BlockContent>
+      <BlockCallout>{headline}</BlockCallout>
+      <BlockContent>{details}</BlockContent>
     </DetailBlock>
     {/* <DetailBlock>
       <DetailTitle>our ethos</DetailTitle>
@@ -191,8 +185,18 @@ const AboutTabBlock = ({details, headline}) => (
 )
 
 const BusinessDetailsPage = ({ data }) => {
-  const { businessType, details } = mockListing[0] // TODO hook up real data store
-  const { name, suburb, offerings, images, business_details, product_details, new_products, headline, website } = data.businesses
+  const { businessType } = mockListing[0] // TODO hook up real data store
+  const {
+    name,
+    suburb,
+    offerings,
+    images,
+    business_details,
+    product_details,
+    new_products,
+    headline,
+    website,
+  } = data.businesses
 
   const tabContent = [
     {
@@ -208,7 +212,9 @@ const BusinessDetailsPage = ({ data }) => {
     },
     {
       title: 'About us',
-      content: () => <AboutTabBlock details={business_details} headline={headline}/>,
+      content: () => (
+        <AboutTabBlock details={business_details} headline={headline} />
+      ),
     },
   ]
 
@@ -218,7 +224,10 @@ const BusinessDetailsPage = ({ data }) => {
       <Container fullWidth>
         <Wrapper>
           <ImageWrapper>
-            <BusinessImage src={transformHttps(images.header_image)} alt="The businesses header image" />
+            <BusinessImage
+              src={transformHttps(images.header_image)}
+              alt="The businesses header image"
+            />
           </ImageWrapper>
 
           <DetailsWrapper>
@@ -234,7 +243,7 @@ const BusinessDetailsPage = ({ data }) => {
                 </BusinessLocation>
               </Details>
             </BusinessDetails>
-            <ButtonLink fullWidthMobile large href={website} target='_blank'>
+            <ButtonLink fullWidthMobile large href={website} target="_blank">
               Visit our website
             </ButtonLink>
           </DetailsWrapper>

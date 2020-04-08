@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { graphql } from 'gatsby'
 
 import Page from '../components/shared/Page'
 import AboutHeader from '../components/about/AboutHeader'

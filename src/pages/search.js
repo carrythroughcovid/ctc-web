@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Row, Col } from 'react-flexa'
-import { Link } from 'gatsby'
 import algoliasearch from 'algoliasearch/lite'
 
 import {
@@ -11,7 +10,6 @@ import {
   connectMenu,
   connectCurrentRefinements,
   connectSearchBox,
-  ClearRefinements,
 } from 'react-instantsearch-dom'
 
 import BusinessCard from '../components/shared/BusinessCard'
