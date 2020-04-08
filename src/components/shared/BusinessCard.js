@@ -4,6 +4,7 @@ import { Link } from 'gatsby'
 
 import Badge from './Badge'
 import { Highlight } from 'react-instantsearch-dom'
+import { transformHttps } from '../../utils/url'
 
 const ListingImage = styled.img`
   width: 100%;
@@ -81,7 +82,7 @@ const truncateString = (str, num) => {
 }
 
 const Listing = ({ listing }) => {
-  const { name, location, categories, slug, image } = listing
+  const { location, categories, slug, images } = listing
   const category = categories.length === 0 ? '' : categories[0].name
 
   return (
@@ -98,7 +99,7 @@ const Listing = ({ listing }) => {
               <Badge secondary>{category}</Badge>
             </CategoryLabel>
           )}
-          <ListingImage src={image}></ListingImage>
+          <ListingImage src={transformHttps(images.header_image)} alt=""></ListingImage>
         </ImageContainer>
         <ListingDetailsContainer>
           <BusinessName>

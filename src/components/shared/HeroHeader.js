@@ -19,7 +19,7 @@ const Hero = styled.div`
   ${props =>
     props.large &&
     media.md`
-    min-height: 44.5rem;
+    min-height: 34.5rem;
   `}
 `
 const LogoWrapper = styled.div`
