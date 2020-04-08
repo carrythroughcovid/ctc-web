@@ -11,6 +11,7 @@ import Pill from '../components/shared/Pill'
 import { ButtonLink } from '../components/shared/Button'
 import BusinessTypeIcon from '../components/shared/BusinessTypeIcon'
 import DetailsTabs from '../components/BDP/DetailsTabs'
+import { transformHttps } from '../utils/url'
 
 const BusinessImage = styled.img`
   width: 100%;
@@ -203,7 +204,7 @@ const BusinessDetailsPage = ({ data }) => {
       <Container fullWidth>
         <Wrapper>
           <ImageWrapper>
-            <BusinessImage src={images.header_image} alt="The businesses header image" />
+            <BusinessImage src={transformHttps(images.header_image)} alt="The businesses header image" />
           </ImageWrapper>
 
           <DetailsWrapper>
