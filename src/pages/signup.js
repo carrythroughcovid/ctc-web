@@ -50,6 +50,10 @@ const SectionTitle = styled.h3`
   text-transform: uppercase;
 `
 
+const CheckBoxContainer = styled.div`
+  padding: 0.75rem 0;
+`
+
 const Loading = () => (
   <LoadingContainer>
     <Spinner display />
@@ -169,6 +173,7 @@ const Form = () => {
                   },
                   focus: { border: { color: 'black' } },
                 },
+                checkBox: { color: colour.violet },
               }}
             >
               <FormContainer>
@@ -213,30 +218,32 @@ const Form = () => {
                   <Section title="Your New Services">
                     <SelectContainer>
                       {offeringOptions.map((offering, i) => (
-                        <Controller
-                          as={
-                            <CheckBox
-                              name="offering_type"
-                              label={offering.label}
-                            />
-                          }
-                          name={`offering_type[${offering.value}]`}
-                          control={control}
-                          onChange={selected => {
-                            handleCheckboxChange(selected[0])
-                            const { currentTarget: current } = selected[0]
-                            current.value === 'true'
-                              ? setOfferingsChecked(offeringsChecked - 1)
-                              : setOfferingsChecked(offeringsChecked + 1)
-                            if (current.name.match(/offering_type.+other/g)) {
-                              setOtherOfferingChecked(current.checked)
+                        <CheckBoxContainer>
+                          <Controller
+                            as={
+                              <CheckBox
+                                name="offering_type"
+                                label={offering.label}
+                              />
                             }
-                            return `${current.checked}`
-                          }}
-                          rules={{
-                            validate: validateOfferings,
-                          }}
-                        />
+                            name={`offering_type[${offering.value}]`}
+                            control={control}
+                            onChange={selected => {
+                              handleCheckboxChange(selected[0])
+                              const { currentTarget: current } = selected[0]
+                              current.value === 'true'
+                                ? setOfferingsChecked(offeringsChecked - 1)
+                                : setOfferingsChecked(offeringsChecked + 1)
+                              if (current.name.match(/offering_type.+other/g)) {
+                                setOtherOfferingChecked(current.checked)
+                              }
+                              return `${current.checked}`
+                            }}
+                            rules={{
+                              validate: validateOfferings,
+                            }}
+                          />
+                        </CheckBoxContainer>
                       ))}
                       {formState.isSubmitted && offeringsChecked === 0 && (
                         <ErrorMessage>
