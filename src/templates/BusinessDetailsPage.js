@@ -132,12 +132,12 @@ const BusinessTypeIconWrapper = styled.div`
   `}
 `
 
-const NewProduct = styled.li`
-  padding-bottom: 0.5rem;
+const NewProduct = styled.div`
+  padding-top: 0.75rem;
 `
 
 const UpdateTabBlock = ({ offerings, details, callout, newProducts }) => { 
-  const newProductsSplit = newProducts.split('-').filter(s => s != '')
+  const newProductsSplit = newProducts.split('\n').filter(s => s != '')
   return (
     <>
       <DetailBlock>
@@ -147,11 +147,9 @@ const UpdateTabBlock = ({ offerings, details, callout, newProducts }) => {
             <Pill key={id}>{name}</Pill>
           ))}
           <BlockContent marginTop='1rem'>
-            <ul>
-              {newProductsSplit.map(p => {
-                return <NewProduct>{p}</NewProduct>
-              })}
-            </ul>
+          {newProductsSplit.map(p => {
+            return <NewProduct>{p}</NewProduct>
+          })}
 
           </BlockContent>
         </>
