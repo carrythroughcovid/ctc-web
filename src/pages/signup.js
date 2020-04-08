@@ -14,6 +14,7 @@ import { signupFields } from '../components/signup/signupFields'
 import SignupHeader from '../components/signup/SignupHeader'
 import Container from '../components/shared/Container'
 import theme from '../styles/theme'
+import { ButtonLink as Button } from '../components/shared/Button'
 
 const { colour } = theme
 
@@ -293,9 +294,14 @@ const Form = () => {
                     {renderControlledField('business_email')}
                   </Section>
 
-                  <button type="submit" disabled={buttonDisabled}>
+                  <Button
+                    type="submit"
+                    disabled={buttonDisabled}
+                    fullWidthMobile
+                    onClick={handleSubmit(onSubmit)}
+                  >
                     Submit
-                  </button>
+                  </Button>
                 </GrommetForm>
               </FormContainer>
             </ThemeContext.Extend>
