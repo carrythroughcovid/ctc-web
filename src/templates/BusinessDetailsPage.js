@@ -86,12 +86,12 @@ const BusinessLocation = styled.div`
 `
 
 const DetailBlock = styled.div`
-  padding-bottom: 1.5rem;
 `
 
 const BlockContent = styled.div`
   font-size: 1.125rem;
   color: ${({ theme }) => theme.colour.grey};
+  margin-top: ${props => props.marginTop || '0'}
 `
 
 const BlockCallout = styled.div`
@@ -110,7 +110,7 @@ const DetailTitle = styled.div`
 
   ${media.md`
     font-weight: normal;
-    padding-top: 3.5rem;
+    padding-top: 2.5rem;
   `}
 `
 const Wrapper = styled.div`
@@ -132,25 +132,40 @@ const BusinessTypeIconWrapper = styled.div`
   `}
 `
 
-const UpdateTabBlock = ({ offerings, details, callout }) => (
-  <>
-    <DetailBlock>
-      <DetailTitle>Current Services</DetailTitle>
-      <>
-        {offerings.map(({ name, id }) => (
-          <Pill key={id}>{name}</Pill>
-        ))}
-      </>
-    </DetailBlock>
+const NewProduct = styled.li`
+  padding-bottom: 0.5rem;
+`
 
-    <DetailBlock>
-      <DetailTitle>Details</DetailTitle>
-      {/* TODO: Make sure new lines/tabs display corectly */}
-      <BlockCallout>{callout}</BlockCallout>
-      <BlockContent>{details}</BlockContent>
-    </DetailBlock>
-  </>
-)
+const UpdateTabBlock = ({ offerings, details, callout, newProducts }) => { 
+  const newProductsSplit = newProducts.split('-').filter(s => s != '')
+  return (
+    <>
+      <DetailBlock>
+        <DetailTitle>Current Services</DetailTitle>
+        <>
+          {offerings.map(({ name, id }) => (
+            <Pill key={id}>{name}</Pill>
+          ))}
+          <BlockContent marginTop='1rem'>
+            <ul>
+              {newProductsSplit.map(p => {
+                return <NewProduct>{p}</NewProduct>
+              })}
+            </ul>
+
+          </BlockContent>
+        </>
+      </DetailBlock>
+
+      <DetailBlock>
+        <DetailTitle>Details</DetailTitle>
+        {/* TODO: Make sure new lines/tabs display corectly */}
+        <BlockCallout>{callout}</BlockCallout>
+        <BlockContent>{details}</BlockContent>
+      </DetailBlock>
+    </>
+  )
+}
 
 const AboutTabBlock = ({details, headline}) => (
   <>
@@ -179,7 +194,7 @@ const AboutTabBlock = ({details, headline}) => (
 
 const BusinessDetailsPage = ({ data }) => {
   const { businessType, details } = mockListing[0] // TODO hook up real data store
-  const { name, suburb, offerings, images, business_details, product_details, headline, website } = data.businesses
+  const { name, suburb, offerings, images, business_details, product_details, new_products, headline, website } = data.businesses
 
   const tabContent = [
     {
@@ -189,6 +204,7 @@ const BusinessDetailsPage = ({ data }) => {
           offerings={offerings}
           details={product_details}
           callout={headline}
+          newProducts={new_products}
         />
       ),
     },
@@ -239,6 +255,7 @@ export const query = graphql`
       name
       business_details
       product_details
+      new_products
       website
       headline
       offerings {
