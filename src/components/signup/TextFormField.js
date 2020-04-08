@@ -1,10 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { TextInput, ThemeContext } from 'grommet'
-
-import theme from '../../styles/theme'
-
-const { colour } = theme
+import { TextInput } from 'grommet'
 
 const Container = styled.div`
   input {
@@ -33,20 +29,11 @@ const TextFormField = ({
 
   return (
     <Container>
-      <ThemeContext.Extend
-        value={{
-          global: {
-            control: { border: { color: colour.greyLight, width: '0.75px' } },
-            focus: { border: { color: 'black' }, boxShadow: null },
-          },
-        }}
-      >
-        {active && <LabelText>{label}</LabelText>}
-        <InputContainer>
-          {React.cloneElement(component, { onFocus, onBlur, ...rest })}
-        </InputContainer>
-        {error && error}
-      </ThemeContext.Extend>
+      {active && <LabelText>{label}</LabelText>}
+      <InputContainer>
+        {React.cloneElement(component, { onFocus, onBlur, ...rest })}
+      </InputContainer>
+      {error && error}
     </Container>
   )
 }

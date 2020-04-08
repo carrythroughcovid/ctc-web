@@ -1,15 +1,10 @@
 import React from 'react'
-import {
-  Grommet,
-  Form as GrommetForm,
-  Select,
-  CheckBox,
-  TextArea,
-} from 'grommet'
+import { Grommet, Form as GrommetForm, CheckBox, TextArea } from 'grommet'
 
 import TextFormField from './TextFormField'
 import LocationSearch from '../../components/signup/LocationSearch'
 import { businessOptions } from './presets'
+import Select from './Select'
 
 // Validation rules go in ./validationRules.js
 export const signupFields = {
