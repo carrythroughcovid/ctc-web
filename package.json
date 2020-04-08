@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "carry-through-covid",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "Web experience for Carry Through COVID",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Carry Through COVID Team <contact@carrythroughcovid.com>",
   "dependencies": {
     "algoliasearch": "^4.1.0",
     "gatsby": "^2.19.45",
@@ -53,9 +53,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/carrythroughcovid/ctc-web"
   },
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/carrythroughcovid/ctc-web/issues"
   }
 }
