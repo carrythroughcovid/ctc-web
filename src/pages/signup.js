@@ -151,7 +151,7 @@ const Form = () => {
       const { name } = evt.target
       triggerValidation({ name })
     },
-    [formState.touched, triggerValidation]
+    [triggerValidation]
   )
 
   return (
