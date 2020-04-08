@@ -54,6 +54,9 @@ const SectionTitle = styled.h3`
 
 const CheckBoxContainer = styled.div`
   padding: 0.75rem 0;
+  label {
+    color: ${({ theme }) => theme.colour.grey};
+  }
 `
 
 const StyledButton = styled(Button)`
@@ -93,8 +96,6 @@ const Form = () => {
     formState,
     watch,
   } = useForm()
-
-  console.log('form rendering')
 
   const locationResult = watch('location_search')
 
