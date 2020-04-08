@@ -8,7 +8,7 @@ export const validationRules = {
       message: 'Name is too long',
     },
   },
-  email: {
+  business_email: {
     required: { value: true, message: 'Email is required' },
     pattern: {
       value: EMAIL_REGEX,

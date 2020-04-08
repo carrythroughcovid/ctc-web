@@ -264,7 +264,7 @@ const Form = () => {
                   {renderControlledField('website')}
                   {renderControlledField('website_secondary')}
                   {renderControlledField('business_number')}
-                  {renderControlledField('email')}
+                  {renderControlledField('business_email')}
                 </Section>
 
                 <button type="submit" disabled={buttonDisabled}>

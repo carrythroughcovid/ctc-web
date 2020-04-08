@@ -98,7 +98,7 @@ export const signupFields = {
       placeholder="Business phone number"
     />
   ),
-  email: (
+  business_email: (
     <TextFormField
       name="contact_email"
       label="Business email to display on website"
