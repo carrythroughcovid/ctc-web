@@ -105,9 +105,10 @@ export const signupFields = {
   ),
   new_products: (
     <TextFormField
+      component={<TextArea />}
       name="new_products"
-      label="Information on these products/services"
-      placeholder="Description of products/services"
+      label="Any extra information on new services"
+      placeholder="Any extra information"
     />
   ),
 }
