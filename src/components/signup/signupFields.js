@@ -1,7 +1,7 @@
 import React from 'react'
-import { Grommet, Form as GrommetForm, CheckBox, TextArea } from 'grommet'
+import { TextArea } from 'grommet'
 
-import TextFormField from './TextFormField'
+import FormField from './FormField'
 import LocationSearch from '../../components/signup/LocationSearch'
 import { businessOptions } from './presets'
 import Select from './Select'
@@ -9,49 +9,46 @@ import Select from './Select'
 // Validation rules go in ./validationRules.js
 export const signupFields = {
   owner_name: (
-    <TextFormField
-      name="owner_name"
-      label="Your Name"
-      placeholder="Full Name"
-    />
+    <FormField name="owner_name" label="Your Name" placeholder="Full Name" />
   ),
   contact_number: (
-    <TextFormField
+    <FormField
       name="contact_number"
       label="Phone Number"
       placeholder="Your Phone Number"
     />
   ),
   name: (
-    <TextFormField
+    <FormField
       name="name"
       label="Business Name"
       placeholder="Your Business Name"
     />
   ),
   business_type: (
-    <Select
+    <FormField
+      component={<Select />}
       placeholder="Select business type"
       options={businessOptions}
       name="business_type"
     />
   ),
   business_type_other: (
-    <TextFormField
+    <FormField
       name="business_type_other"
       placeholder="Other type of Business"
     />
   ),
   location_search: <LocationSearch />,
   headline: (
-    <TextFormField
+    <FormField
       name="headline"
       label="What is your business headline?"
       placeholder="Describe your business in 25 characters or less."
     />
   ),
   product_details: (
-    <TextFormField
+    <FormField
       component={<TextArea />}
       name="product_details"
       label="Product/Service Details"
@@ -59,7 +56,7 @@ export const signupFields = {
     />
   ),
   business_details: (
-    <TextFormField
+    <FormField
       component={<TextArea />}
       name="business_details"
       label="Business Details / Your Story"
@@ -67,44 +64,40 @@ export const signupFields = {
     />
   ),
   offering_type_other: (
-    <TextFormField
+    <FormField
       name="offering_type_other"
       placeholder="Other type of offering"
     />
   ),
   website: (
-    <TextFormField
-      name="website"
-      label="Your website"
-      placeholder="Website URL"
-    />
+    <FormField name="website" label="Your website" placeholder="Website URL" />
   ),
   website_secondary: (
-    <TextFormField
+    <FormField
       name="website_secondary"
       label="Link to an ordering/online store"
       placeholder="Ordering/online store URL"
     />
   ),
   business_number: (
-    <TextFormField
+    <FormField
       name="business_number"
       label="Phone number to display on website"
       placeholder="Business phone number"
     />
   ),
   business_email: (
-    <TextFormField
+    <FormField
       name="contact_email"
       label="Business email to display on website"
       placeholder="Business email"
     />
   ),
   contact_email: (
-    <TextFormField name="email" label="Email" placeholder="Your Email" />
+    <FormField name="email" label="Email" placeholder="Your Email" />
   ),
   new_products: (
-    <TextFormField
+    <FormField
       component={<TextArea />}
       name="new_products"
       label="Any extra information on new services"
