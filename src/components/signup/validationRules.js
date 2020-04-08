@@ -9,11 +9,6 @@ export const validationRules = {
     },
   },
   business_email: {
-    required: { value: true, message: 'Email is required' },
-    pattern: {
-      value: EMAIL_REGEX,
-      message: 'Please enter a valid email',
-    },
     maxLength: { value: 200, message: 'Email is too long' },
   },
   contact_number: {
