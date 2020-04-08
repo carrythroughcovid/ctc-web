@@ -4,8 +4,8 @@ import { Helmet } from 'react-helmet'
 const SEO = ({ title, description }) => (
   <Helmet>
     <meta charSet="utf-8" />
-    {title && <title>{title}</title>}
-    {description && <meta name="description" content={content} />}
+    {title && <title>Carry Through COVID - {title}</title>}
+    {description && <meta name="description" content={description} />}
   </Helmet>
 )
 

@@ -23,6 +23,7 @@ import Button from '../components/shared/Button'
 import media from '../utils/media'
 import Spinner from '../components/shared/Spinner'
 import HomeHeader from '../components/home/HomeHeader'
+import SEO from '../components/shared/SEO'
 
 const FormSection = styled.div`
   padding-top: 2rem;
@@ -132,39 +133,45 @@ const Results = connectStateResults(
 
 const SearchResultsPage = () => {
   return (
-    <Page customHeader={() => <HomeHeader />}>
-      <InstantSearch searchClient={searchClient} indexName="prod_business">
-        <Container>
-          <FormSection>
-            <LocationWrapper>
-              <CustomSearchBox showLoadingIndicator={true} />
-            </LocationWrapper>
-            <CategoryWrapper>
-              <CustomMenu
-                attribute="location.state"
-                resourceName="states"
-              ></CustomMenu>
-              <CustomMenu
-                attribute="categories.name"
-                resourceName="categories"
-              ></CustomMenu>
-                <CustomMenu
-                attribute="offerings.name"
-                resourceName="offerings"
-              ></CustomMenu>
-            </CategoryWrapper>
-          </FormSection>
-        </Container>
-
-        <ListingsSection id="explore">
+    <>
+      <SEO
+        title="Search"
+        description="Search for businesses, locations or offerings"
+      />
+      <Page customHeader={() => <HomeHeader />}>
+        <InstantSearch searchClient={searchClient} indexName="prod_business">
           <Container>
-            <Results>
-              <CustomHits />
-            </Results>
+            <FormSection>
+              <LocationWrapper>
+                <CustomSearchBox showLoadingIndicator={true} />
+              </LocationWrapper>
+              <CategoryWrapper>
+                <CustomMenu
+                  attribute="location.state"
+                  resourceName="states"
+                ></CustomMenu>
+                <CustomMenu
+                  attribute="categories.name"
+                  resourceName="categories"
+                ></CustomMenu>
+                <CustomMenu
+                  attribute="offerings.name"
+                  resourceName="offerings"
+                ></CustomMenu>
+              </CategoryWrapper>
+            </FormSection>
           </Container>
-        </ListingsSection>
-      </InstantSearch>
-    </Page>
+
+          <ListingsSection id="explore">
+            <Container>
+              <Results>
+                <CustomHits />
+              </Results>
+            </Container>
+          </ListingsSection>
+        </InstantSearch>
+      </Page>
+    </>
   )
 }
 
