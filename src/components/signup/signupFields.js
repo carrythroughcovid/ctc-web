@@ -19,7 +19,6 @@ export const signupFields = {
       placeholder="Full Name"
     />
   ),
-  email: <TextFormField name="email" label="Email" placeholder="Your Email" />,
   contact_number: (
     <TextFormField
       name="contact_number"
@@ -97,5 +96,15 @@ export const signupFields = {
       label="Phone number to display on website"
       placeholder="Business phone number"
     />
+  ),
+  email: (
+    <TextFormField
+      name="contact_email"
+      label="Business email to display on website"
+      placeholder="Business email"
+    />
+  ),
+  contact_email: (
+    <TextFormField name="email" label="Email" placeholder="Your Email" />
   ),
 }

@@ -157,7 +157,7 @@ const Form = () => {
               >
                 <Section title="Personal Details">
                   {renderControlledField('owner_name')}
-                  {renderControlledField('email')}
+                  {renderControlledField('contact_email')}
                   {renderControlledField('contact_number')}
                 </Section>
 
@@ -261,6 +261,7 @@ const Form = () => {
                   {renderControlledField('website')}
                   {renderControlledField('website_secondary')}
                   {renderControlledField('business_number')}
+                  {renderControlledField('email')}
                 </Section>
 
                 <button type="submit" disabled={buttonDisabled}>
