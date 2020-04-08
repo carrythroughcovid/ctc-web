@@ -1,8 +1,24 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { TextInput } from 'grommet'
+import { TextInput, ThemeContext } from 'grommet'
 
-const TextInputContainer = styled.div``
+import theme from '../../styles/theme'
+
+const { colour } = theme
+
+const Container = styled.div`
+  input {
+    box-shadow: none;
+  }
+`
+
+const InputContainer = styled.div`
+  padding: 0.875rem 0;
+`
+
+const LabelText = styled.span`
+  font-size: 0.75rem;
+`
 
 const TextFormField = ({
   error,
@@ -16,11 +32,22 @@ const TextFormField = ({
   const onBlur = () => setActive(false)
 
   return (
-    <TextInputContainer>
-      {active && label}
-      {React.cloneElement(component, { onFocus, onBlur, ...rest })}
-      {error && error}
-    </TextInputContainer>
+    <Container>
+      <ThemeContext.Extend
+        value={{
+          global: {
+            control: { border: { color: colour.greyLight, width: '0.75px' } },
+            focus: { border: { color: 'black' }, boxShadow: null },
+          },
+        }}
+      >
+        {active && <LabelText>{label}</LabelText>}
+        <InputContainer>
+          {React.cloneElement(component, { onFocus, onBlur, ...rest })}
+        </InputContainer>
+        {error && error}
+      </ThemeContext.Extend>
+    </Container>
   )
 }
 

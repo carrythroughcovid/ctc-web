@@ -13,6 +13,7 @@ import { validationRules } from '../components/signup/validationRules'
 import { signupFields } from '../components/signup/signupFields'
 import SignupHeader from '../components/signup/SignupHeader'
 import Container from '../components/shared/Container'
+import theme from '../styles/theme'
 
 const LoadingContainer = styled.div`
   display: flex;
@@ -22,7 +23,6 @@ const LoadingContainer = styled.div`
 `
 
 const FormContainer = styled.div`
-  padding: 1rem;
   margin: 0 auto;
 `
 
@@ -39,7 +39,9 @@ const ErrorMessage = styled.p`
 `
 
 const SectionTitle = styled.h3`
-  color: #6979f8;
+  font-family: ${({ theme }) => theme.font.alt};
+  font-weight: normal;
+  color: ${({ theme }) => theme.colour.violet};
   text-transform: uppercase;
 `
 
@@ -76,6 +78,8 @@ const Form = () => {
     formState,
     watch,
   } = useForm()
+
+  console.log('form rendering')
 
   const locationResult = watch('location_search')
 
@@ -151,7 +155,7 @@ const Form = () => {
         {loading ? (
           <Loading />
         ) : (
-          <Grommet plain>
+          <Grommet theme={theme}>
             <FormContainer>
               <GrommetForm
                 name="businessForm"
