@@ -27,12 +27,7 @@ const ErrorText = styled.span`
   color: ${({ theme }) => theme.colour.red};
 `
 
-const TextFormField = ({
-  error,
-  label,
-  component = <TextInput />,
-  ...rest
-}) => {
+const FormField = ({ error, label, component = <TextInput />, ...rest }) => {
   const [active, setActive] = useState(false)
 
   const onFocus = () => setActive(true)
@@ -49,4 +44,4 @@ const TextFormField = ({
   )
 }
 
-export default TextFormField
+export default FormField
