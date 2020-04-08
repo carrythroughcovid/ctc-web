@@ -6,20 +6,27 @@ import Container from './Container'
 import media from '../../utils/media'
 import Logo from './Logo'
 
+import iconBG from '../../images/IconBG.png'
+
 const Hero = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #292b3c;
   color: white;
+  background-image: url(${iconBG});
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 50%;
 
   ${media.md`
     min-height: 34.5rem;
+    background-size: initial;
   `}
 
   ${props =>
     props.large &&
     media.md`
-    min-height: 34.5rem;
+    min-height: 44.5rem;
   `}
 `
 const LogoWrapper = styled.div`
