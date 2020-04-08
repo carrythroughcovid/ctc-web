@@ -95,6 +95,7 @@ const Form = () => {
     )
   }
 
+  // When adding a new field, it should be added to ./signupfields.js and validation rules should be added to ./validationRules.js
   const renderControlledField = (fieldName, rest = null) => (
     <Controller
       as={renderField(fieldName, errors)}
@@ -128,6 +129,7 @@ const Form = () => {
     headerImage && formData.append('header_image', headerImage[0])
     businessOwnerImage &&
       formData.append('business_owner_image', businessOwnerImage[0])
+
     setLoading(true)
     fetch(`${API_HOST}api/businesses`, {
       method: 'POST',
@@ -225,6 +227,7 @@ const Form = () => {
                   </SelectContainer>
                   {otherOfferingChecked &&
                     renderControlledField('offering_type_other')}
+                  {renderControlledField('new_products')}
                 </Section>
 
                 <Section title="Display Images">

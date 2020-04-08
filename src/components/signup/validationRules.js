@@ -91,4 +91,20 @@ export const validationRules = {
   business_number: {
     maxLength: { value: 15, message: 'Phone is too long' },
   },
+  contact_email: {
+    required: {
+      value: true,
+      message: 'Contact email is required.',
+    },
+    maxLength: {
+      value: 50,
+      message: 'Email is too long',
+    },
+  },
+  new_products: {
+    maxLength: {
+      value: 300,
+      message: 'Product description is limited to 300 characters.',
+    },
+  },
 }

@@ -11,6 +11,7 @@ import TextFormField from './TextFormField'
 import LocationSearch from '../../components/signup/LocationSearch'
 import { businessOptions } from './presets'
 
+// Validation rules go in ./validationRules.js
 export const signupFields = {
   owner_name: (
     <TextFormField
@@ -106,5 +107,12 @@ export const signupFields = {
   ),
   contact_email: (
     <TextFormField name="email" label="Email" placeholder="Your Email" />
+  ),
+  new_products: (
+    <TextFormField
+      name="new_products"
+      label="Information on these products/services"
+      placeholder="Description of products/services"
+    />
   ),
 }
