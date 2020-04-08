@@ -11,6 +11,7 @@ import MobileDown from '../images/mobile-down.png'
 import MobileUp from '../images/mobile-up.png'
 import media from '../utils/media'
 import theme from '../styles/theme'
+import SEO from '../components/shared/SEO'
 
 const GenericSection = styled.div`
   height: 400px;
@@ -94,7 +95,7 @@ const SectionContainer = styled.div`
 `
 
 const AbsoluteImage = styled.img`
-   width: 500px;
+  width: 500px;
   position: absolute;
 `
 
@@ -111,73 +112,83 @@ const MobileUpImage = styled(AbsoluteImage)`
 const About = ({ data }) => {
   const listingsTotal = data.allBusinesses.edges.length
   return (
-    <Page customHeader={() => <AboutHeader />}>
-      <ColumnRowDiv>
-        <GenericSection color={theme.colour.violet}>
-          <ColumnSection width='300px'>
-            <SmallImage src={MissionImage}></SmallImage>
-            <SectionTitle>OUR MISSION</SectionTitle>
-            <CenteredText>
-              We want to help keep small businesses afloat and enable community
-              support through technology.
-            </CenteredText>
+    <>
+      <SEO
+        title="About"
+        description="Information about the Carry Through COVID project"
+      />
+      <Page customHeader={() => <AboutHeader />}>
+        <ColumnRowDiv>
+          <GenericSection color={theme.colour.violet}>
+            <ColumnSection width="300px">
+              <SmallImage src={MissionImage}></SmallImage>
+              <SectionTitle>OUR MISSION</SectionTitle>
+              <CenteredText>
+                We want to help keep small businesses afloat and enable
+                community support through technology.
+              </CenteredText>
+            </ColumnSection>
+          </GenericSection>
+          <GenericSection color="#eef0f8">
+            <ColumnSection width="300px">
+              <SmallImage src={WhoWeAreImage}></SmallImage>
+              <SectionTitle>WHO WE ARE</SectionTitle>
+              <CenteredText>
+                A group of volunteers and our service is completely FREE of
+                charge.
+              </CenteredText>
+            </ColumnSection>
+          </GenericSection>
+        </ColumnRowDiv>
+
+        <LargeSection>
+          <LargeSectionContainer>
+            <MobileUpImage src={MobileUp}></MobileUpImage>
+            <MobileDownImage src={MobileDown}></MobileDownImage>
+          </LargeSectionContainer>
+        </LargeSection>
+
+        <SectionContainer color={theme.colour.red}>
+          <ColumnSection>
+            <NumberTotal>{listingsTotal}</NumberTotal>
+            <p style={{ color: 'white' }}>HELP EXPAND THE COMMUNITY</p>
+            <p style={{ color: 'white' }}>
+              {listingsTotal} local businesses have signed up already
+            </p>
           </ColumnSection>
-        </GenericSection>
-        <GenericSection color='#eef0f8'>
-          <ColumnSection width='300px'>
-            <SmallImage src={WhoWeAreImage}></SmallImage>
-            <SectionTitle>WHO WE ARE</SectionTitle>
-            <CenteredText>
-              A group of volunteers and our service is completely FREE of
-              charge.
-            </CenteredText>
+          <ColumnSection>
+            <div style={{ color: 'white', marginBottom: '1rem' }}>
+              PROMOTE YOUR NEW SERVICES
+            </div>
+            <WhatsUpDetails>
+              {' '}
+              Get your business into the pockets of the community.
+            </WhatsUpDetails>
           </ColumnSection>
-        </GenericSection>
-      </ColumnRowDiv>
+        </SectionContainer>
 
-      <LargeSection>
-        <LargeSectionContainer>
-          <MobileUpImage src={MobileUp}></MobileUpImage>
-          <MobileDownImage src={MobileDown}></MobileDownImage>
-        </LargeSectionContainer>
-      </LargeSection>
-
-      <SectionContainer color={theme.colour.red}>
-        <ColumnSection>
-          <NumberTotal>{listingsTotal}</NumberTotal>
-          <p style={{color: 'white'}}>HELP EXPAND THE COMMUNITY</p>
-          <p style={{color: 'white'}}>{listingsTotal} local businesses have signed up already</p>
-        </ColumnSection>
-        <ColumnSection>
-          <div style={{ color: 'white', marginBottom: '1rem' }}>
-            PROMOTE YOUR NEW SERVICES
-          </div>
-          <WhatsUpDetails>
-            {' '}
-            Get your business into the pockets of the community.
-          </WhatsUpDetails>
-        </ColumnSection>
-      </SectionContainer>
-
-      <SectionContainer>
-        <ColumnSection width='300px'>
-          <div style={{ marginBottom: '2rem' }}>
-            If you are looking to inform your loyal customers or make new
-            connections then we can help promote any of your new services
-            without any fee.
-          </div>
-          <Button to="/signup">Sign up now!</Button>
-        </ColumnSection>
-        <ColumnSection width='300px'>
-          <SectionTitle>HAVE A QUESTION FOR US?</SectionTitle>
-          <div style={{ marginBottom: '2rem' }}>
-            Still not sure if this is for you, or have a few questions?  Our
-            team will be happy to help!
-          </div>
-          <ButtonLink href="mailto:contact@carrythroughcovid.com">Contact our team</ButtonLink>
-        </ColumnSection>
-      </SectionContainer>
-    </Page>
+        <SectionContainer>
+          <ColumnSection width="300px">
+            <div style={{ marginBottom: '2rem' }}>
+              If you are looking to inform your loyal customers or make new
+              connections then we can help promote any of your new services
+              without any fee.
+            </div>
+            <Button to="/signup">Sign up now!</Button>
+          </ColumnSection>
+          <ColumnSection width="300px">
+            <SectionTitle>HAVE A QUESTION FOR US?</SectionTitle>
+            <div style={{ marginBottom: '2rem' }}>
+              Still not sure if this is for you, or have a few questions?  Our
+              team will be happy to help!
+            </div>
+            <ButtonLink href="mailto:contact@carrythroughcovid.com">
+              Contact our team
+            </ButtonLink>
+          </ColumnSection>
+        </SectionContainer>
+      </Page>
+    </>
   )
 }
 

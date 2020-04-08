@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+
 import CheckboxGroup from '../components/CheckboxGroup'
+import SEO from '../components/shared/SEO'
 
 const FormContainer = styled.form`
   max-width: 30rem;
@@ -80,70 +82,73 @@ const UpdateListingPage = () => {
   ]
 
   return (
-    <FormContainer
-      onSubmit={handleSubmit}
-      style={{ display: 'flex', flexDirection: 'column' }}
-    >
-      <div>Please tell us about your business.</div>
-      <label htmlFor="businessName">
-        <div>Business name</div>
-        <FullInput
-          type="text"
-          name="businessName"
-          value={values.businessName}
-          onChange={handleInputChange}
-        />
-      </label>
-      <label htmlFor="name">
-        <div>Your name</div>
-        <FullInput
-          type="text"
-          name="name"
-          value={values.name}
-          onChange={handleInputChange}
-        />
-      </label>
-      <label htmlFor="suburb">
-        <div>Suburb</div>
-        <FullInput
-          type="text"
-          name="suburb"
-          value={values.suburb}
-          onChange={handleInputChange}
-        />
-      </label>
-      <OfferingContainer>
-        <label>
-          <div>Offering</div>
-          <CheckboxGroup
-            style={{ width: '100%' }}
-            checkboxId="offerings"
-            checkboxState={checkboxOfferings}
-            handleCheck={updateCheckboxValues}
+    <>
+      <SEO title="Update" description="Update your business or offerings" />
+      <FormContainer
+        onSubmit={handleSubmit}
+        style={{ display: 'flex', flexDirection: 'column' }}
+      >
+        <div>Please tell us about your business.</div>
+        <label htmlFor="businessName">
+          <div>Business name</div>
+          <FullInput
+            type="text"
+            name="businessName"
+            value={values.businessName}
+            onChange={handleInputChange}
           />
         </label>
-        <label>
-          <div>Categories</div>
-          <CheckboxGroup
-            checkboxId="categories"
-            checkboxState={checkboxCategories}
-            handleCheck={updateCheckboxValues}
+        <label htmlFor="name">
+          <div>Your name</div>
+          <FullInput
+            type="text"
+            name="name"
+            value={values.name}
+            onChange={handleInputChange}
           />
         </label>
-      </OfferingContainer>
+        <label htmlFor="suburb">
+          <div>Suburb</div>
+          <FullInput
+            type="text"
+            name="suburb"
+            value={values.suburb}
+            onChange={handleInputChange}
+          />
+        </label>
+        <OfferingContainer>
+          <label>
+            <div>Offering</div>
+            <CheckboxGroup
+              style={{ width: '100%' }}
+              checkboxId="offerings"
+              checkboxState={checkboxOfferings}
+              handleCheck={updateCheckboxValues}
+            />
+          </label>
+          <label>
+            <div>Categories</div>
+            <CheckboxGroup
+              checkboxId="categories"
+              checkboxState={checkboxCategories}
+              handleCheck={updateCheckboxValues}
+            />
+          </label>
+        </OfferingContainer>
 
-      <label htmlFor="details">
-        <div>Details</div>
-        <FullTextArea name="details" onChange={handleInputChange} />
-      </label>
-      <label htmlFor="about">
-        <div>About</div>
-        <FullTextArea name="about" onChange={handleInputChange} />
-      </label>
-      <FullButton type="submit" value="Submit">
-        Submit
-      </FullButton>
-    </FormContainer>
+        <label htmlFor="details">
+          <div>Details</div>
+          <FullTextArea name="details" onChange={handleInputChange} />
+        </label>
+        <label htmlFor="about">
+          <div>About</div>
+          <FullTextArea name="about" onChange={handleInputChange} />
+        </label>
+        <FullButton type="submit" value="Submit">
+          Submit
+        </FullButton>
+      </FormContainer>
+    </>
   )
 }
 

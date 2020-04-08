@@ -13,6 +13,7 @@ import { validationRules } from '../components/signup/validationRules'
 import { signupFields } from '../components/signup/signupFields'
 import SignupHeader from '../components/signup/SignupHeader'
 import Container from '../components/shared/Container'
+import SEO from '../components/shared/SEO'
 
 const LoadingContainer = styled.div`
   display: flex;
@@ -146,136 +147,142 @@ const Form = () => {
   )
 
   return (
-    <Page customHeader={() => <SignupHeader />}>
-      <Container>
-        {loading ? (
-          <Loading />
-        ) : (
-          <Grommet plain>
-            <FormContainer>
-              <GrommetForm
-                name="businessForm"
-                onSubmit={handleSubmit(onSubmit)}
-              >
-                <Section title="Personal Details">
-                  {renderControlledField('owner_name')}
-                  {renderControlledField('contact_email')}
-                  {renderControlledField('contact_number')}
-                </Section>
+    <>
+      <SEO
+        title="Signup"
+        description="Signup as a business to list your offerings"
+      />
+      <Page customHeader={() => <SignupHeader />}>
+        <Container>
+          {loading ? (
+            <Loading />
+          ) : (
+            <Grommet plain>
+              <FormContainer>
+                <GrommetForm
+                  name="businessForm"
+                  onSubmit={handleSubmit(onSubmit)}
+                >
+                  <Section title="Personal Details">
+                    {renderControlledField('owner_name')}
+                    {renderControlledField('contact_email')}
+                    {renderControlledField('contact_number')}
+                  </Section>
 
-                <Section title="Business Summary">
-                  {renderControlledField('name')}
-                  <SelectContainer>
-                    {renderControlledField('business_type', {
-                      onChange: selected => {
-                        setBusinessType(selected[0].value)
-                        return selected[0].value
-                      },
+                  <Section title="Business Summary">
+                    {renderControlledField('name')}
+                    <SelectContainer>
+                      {renderControlledField('business_type', {
+                        onChange: selected => {
+                          setBusinessType(selected[0].value)
+                          return selected[0].value
+                        },
+                      })}
+                      {errors.business_type && (
+                        <ErrorMessage>
+                          {errors.business_type.message}
+                        </ErrorMessage>
+                      )}
+                    </SelectContainer>
+                    {businessType === 'Other' &&
+                      renderControlledField('business_type_other')}
+                    {renderControlledField('location_search', {
+                      currentOption: locationResult,
                     })}
-                    {errors.business_type && (
-                      <ErrorMessage>
-                        {errors.business_type.message}
-                      </ErrorMessage>
-                    )}
-                  </SelectContainer>
-                  {businessType === 'Other' &&
-                    renderControlledField('business_type_other')}
-                  {renderControlledField('location_search', {
-                    currentOption: locationResult,
-                  })}
-                </Section>
+                  </Section>
 
-                <Section title="Brand Story">
-                  {renderControlledField('headline')}
-                  {renderControlledField('product_details')}
-                  {renderControlledField('business_details')}
-                </Section>
+                  <Section title="Brand Story">
+                    {renderControlledField('headline')}
+                    {renderControlledField('product_details')}
+                    {renderControlledField('business_details')}
+                  </Section>
 
-                <Section title="Your New Services">
-                  <SelectContainer>
-                    {offeringOptions.map((offering, i) => (
-                      <Controller
-                        as={
-                          <CheckBox
-                            name="offering_type"
-                            label={offering.label}
-                          />
-                        }
-                        name={`offering_type[${offering.value}]`}
-                        control={control}
-                        onChange={selected => {
-                          handleCheckboxChange(selected[0])
-                          const { currentTarget: current } = selected[0]
-                          current.value === 'true'
-                            ? setOfferingsChecked(offeringsChecked - 1)
-                            : setOfferingsChecked(offeringsChecked + 1)
-                          if (current.name.match(/offering_type.+other/g)) {
-                            setOtherOfferingChecked(current.checked)
+                  <Section title="Your New Services">
+                    <SelectContainer>
+                      {offeringOptions.map((offering, i) => (
+                        <Controller
+                          as={
+                            <CheckBox
+                              name="offering_type"
+                              label={offering.label}
+                            />
                           }
-                          return `${current.checked}`
-                        }}
-                        rules={{
-                          validate: validateOfferings,
-                        }}
-                      />
-                    ))}
-                    {formState.isSubmitted && offeringsChecked === 0 && (
-                      <ErrorMessage>
-                        Please select at least one product
-                      </ErrorMessage>
-                    )}
-                  </SelectContainer>
-                  {otherOfferingChecked &&
-                    renderControlledField('offering_type_other')}
-                  {renderControlledField('new_products')}
-                </Section>
+                          name={`offering_type[${offering.value}]`}
+                          control={control}
+                          onChange={selected => {
+                            handleCheckboxChange(selected[0])
+                            const { currentTarget: current } = selected[0]
+                            current.value === 'true'
+                              ? setOfferingsChecked(offeringsChecked - 1)
+                              : setOfferingsChecked(offeringsChecked + 1)
+                            if (current.name.match(/offering_type.+other/g)) {
+                              setOtherOfferingChecked(current.checked)
+                            }
+                            return `${current.checked}`
+                          }}
+                          rules={{
+                            validate: validateOfferings,
+                          }}
+                        />
+                      ))}
+                      {formState.isSubmitted && offeringsChecked === 0 && (
+                        <ErrorMessage>
+                          Please select at least one product
+                        </ErrorMessage>
+                      )}
+                    </SelectContainer>
+                    {otherOfferingChecked &&
+                      renderControlledField('offering_type_other')}
+                    {renderControlledField('new_products')}
+                  </Section>
 
-                <Section title="Display Images">
-                  <ImageUploader
-                    withIcon={true}
-                    onChange={setHeaderImage}
-                    imgExtension={['.jpg', '.png']}
-                    buttonText="Upload hero image"
-                    withPreview={true}
-                    singleImage={true}
-                    withLabel={false}
-                  />
-                  <ImageUploader
-                    withIcon={true}
-                    onChange={setLogoImage}
-                    imgExtension={['.jpg', '.png']}
-                    buttonText="Upload logo"
-                    withPreview={true}
-                    singleImage={true}
-                    withLabel={false}
-                  />
-                  <ImageUploader
-                    withIcon={true}
-                    onChange={setBusinessOwnerImage}
-                    imgExtension={['.jpg', '.png']}
-                    buttonText="Upload profile photo"
-                    withPreview={true}
-                    singleImage={true}
-                    withLabel={false}
-                  />
-                </Section>
+                  <Section title="Display Images">
+                    <ImageUploader
+                      withIcon={true}
+                      onChange={setHeaderImage}
+                      imgExtension={['.jpg', '.png']}
+                      buttonText="Upload hero image"
+                      withPreview={true}
+                      singleImage={true}
+                      withLabel={false}
+                    />
+                    <ImageUploader
+                      withIcon={true}
+                      onChange={setLogoImage}
+                      imgExtension={['.jpg', '.png']}
+                      buttonText="Upload logo"
+                      withPreview={true}
+                      singleImage={true}
+                      withLabel={false}
+                    />
+                    <ImageUploader
+                      withIcon={true}
+                      onChange={setBusinessOwnerImage}
+                      imgExtension={['.jpg', '.png']}
+                      buttonText="Upload profile photo"
+                      withPreview={true}
+                      singleImage={true}
+                      withLabel={false}
+                    />
+                  </Section>
 
-                <Section title="Optional Information">
-                  {renderControlledField('website')}
-                  {renderControlledField('website_secondary')}
-                  {renderControlledField('business_number')}
-                  {renderControlledField('business_email')}
-                </Section>
+                  <Section title="Optional Information">
+                    {renderControlledField('website')}
+                    {renderControlledField('website_secondary')}
+                    {renderControlledField('business_number')}
+                    {renderControlledField('business_email')}
+                  </Section>
 
-                <button type="submit" disabled={buttonDisabled}>
-                  Submit
-                </button>
-              </GrommetForm>
-            </FormContainer>
-          </Grommet>
-        )}
-      </Container>
-    </Page>
+                  <button type="submit" disabled={buttonDisabled}>
+                    Submit
+                  </button>
+                </GrommetForm>
+              </FormContainer>
+            </Grommet>
+          )}
+        </Container>
+      </Page>
+    </>
   )
 }
 
