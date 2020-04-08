@@ -8,7 +8,7 @@ const searchClient = algoliasearch(
   '859c34030d228a6188c83731bb6e456f'
 )
 
-const Autocomplete = ({ onChange, currentOption, hits, refine }) => {
+const Autocomplete = ({ currentOption, hits, refine }) => {
   const loadOptions = (_, callback) => {
     callback(hits)
   }
@@ -19,7 +19,6 @@ const Autocomplete = ({ onChange, currentOption, hits, refine }) => {
   }
   const handleChoose = input => {
     refine(input)
-    onChange(input)
   }
   return (
     <AsyncSelect
@@ -37,11 +36,11 @@ const Autocomplete = ({ onChange, currentOption, hits, refine }) => {
   )
 }
 
-const LocationSearch = ({ onChange, currentOption }) => {
+const LocationSearch = ({ currentOption }) => {
   const CustomAutocomplete = connectAutoComplete(Autocomplete)
   return (
     <InstantSearch searchClient={searchClient} indexName="prod_suburb_centroid">
-      <CustomAutocomplete onChange={onChange} currentOption={currentOption} />
+      <CustomAutocomplete currentOption={currentOption} />
     </InstantSearch>
   )
 }
