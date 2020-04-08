@@ -1,9 +1,10 @@
 import React from 'react'
-import { Select, TextArea } from 'grommet'
+import { TextArea } from 'grommet'
 
 import TextFormField from './TextFormField'
 import LocationSearch from '../../components/signup/LocationSearch'
 import { businessOptions } from './presets'
+import Select from './Select'
 
 // Validation rules go in ./validationRules.js
 export const signupFields = {
@@ -104,9 +105,10 @@ export const signupFields = {
   ),
   new_products: (
     <TextFormField
+      component={<TextArea />}
       name="new_products"
-      label="Information on these products/services"
-      placeholder="Description of products/services"
+      label="Any extra information on new services"
+      placeholder="Any extra information"
     />
   ),
 }
