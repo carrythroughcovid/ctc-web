@@ -54,7 +54,6 @@ const UpdateListingPage = () => {
   }
 
   const handleSubmit = e => {
-    console.log(values)
     e.preventDefault()
   }
 
@@ -113,18 +112,20 @@ const UpdateListingPage = () => {
         />
       </label>
       <OfferingContainer>
-        <label>
+        <label htmlFor="offering">
           <div>Offering</div>
           <CheckboxGroup
+            name="offering"
             style={{ width: '100%' }}
             checkboxId="offerings"
             checkboxState={checkboxOfferings}
             handleCheck={updateCheckboxValues}
           />
         </label>
-        <label>
+        <label htmlFor="categories">
           <div>Categories</div>
           <CheckboxGroup
+            name="categories"
             checkboxId="categories"
             checkboxState={checkboxCategories}
             handleCheck={updateCheckboxValues}

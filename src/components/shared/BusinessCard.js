@@ -99,17 +99,17 @@ const Listing = ({ listing }) => {
               <Badge secondary>{category}</Badge>
             </CategoryLabel>
           )}
-          <ListingImage src={transformHttps(images.header_image)} alt=""></ListingImage>
+          <ListingImage
+            src={transformHttps(images.header_image)}
+            alt=""
+          ></ListingImage>
         </ImageContainer>
         <ListingDetailsContainer>
           <BusinessName>
             <Highlight attribute="name" hit={listing} />
           </BusinessName>
           <BusinessDescription>
-            {truncateString(
-              headline,
-              60
-            )}
+            {truncateString(headline, 60)}
           </BusinessDescription>
         </ListingDetailsContainer>
       </ListingContainer>

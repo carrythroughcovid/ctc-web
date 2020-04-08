@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Row, Col } from 'react-flexa'
-import { Link } from 'gatsby'
 import algoliasearch from 'algoliasearch/lite'
 
 import {
@@ -11,7 +10,6 @@ import {
   connectMenu,
   connectCurrentRefinements,
   connectSearchBox,
-  ClearRefinements,
 } from 'react-instantsearch-dom'
 
 import BusinessCard from '../components/shared/BusinessCard'
@@ -130,42 +128,32 @@ const Results = connectStateResults(
   }
 )
 
-const SearchResultsPage = () => {
-  return (
-    <Page customHeader={() => <HomeHeader />}>
-      <InstantSearch searchClient={searchClient} indexName="prod_business">
-        <Container>
-          <FormSection>
-            <LocationWrapper>
-              <CustomSearchBox showLoadingIndicator={true} />
-            </LocationWrapper>
-            <CategoryWrapper>
-              <CustomMenu
-                attribute="location.state"
-                resourceName="states"
-              ></CustomMenu>
-              <CustomMenu
-                attribute="categories.name"
-                resourceName="categories"
-              ></CustomMenu>
-                <CustomMenu
-                attribute="offerings.name"
-                resourceName="offerings"
-              ></CustomMenu>
-            </CategoryWrapper>
-          </FormSection>
-        </Container>
-
-        <ListingsSection id="explore">
-          <Container>
-            <Results>
-              <CustomHits />
-            </Results>
-          </Container>
-        </ListingsSection>
-      </InstantSearch>
-    </Page>
-  )
-}
+const SearchResultsPage = () => (
+  <Page customHeader={() => <HomeHeader />}>
+    <InstantSearch searchClient={searchClient} indexName="prod_business">
+      <Container>
+        <FormSection>
+          <LocationWrapper>
+            <CustomSearchBox showLoadingIndicator={true} />
+          </LocationWrapper>
+          <CategoryWrapper>
+            <CustomMenu
+              attribute="location.state"
+              resourceName="states"
+            ></CustomMenu>
+            <CustomMenu
+              attribute="categories.name"
+              resourceName="categories"
+            ></CustomMenu>
+            <CustomMenu
+              attribute="offerings.name"
+              resourceName="offerings"
+            ></CustomMenu>
+          </CategoryWrapper>
+        </FormSection>
+      </Container>
+    </InstantSearch>
+  </Page>
+)
 
 export default SearchResultsPage

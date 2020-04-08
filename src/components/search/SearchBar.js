@@ -36,28 +36,30 @@ const SearchInput = styled.input`
   }
 `
 
-const LabelWrapper = styled.div`
+const LabelWrapper = styled.label`
+  display: block;
   padding-bottom: 0.5rem;
   color: ${({ theme }) => theme.colour.grey};
   font-size: 1rem;
 `
 
-const SearchBar = ({ currentRefinement, refine, ...input }) => {
-  return (
-    <label>
-      <LabelWrapper>Search by location or business name</LabelWrapper>
-      <SearchWrapper>
-        <SearchIcon />
-        <SearchInput
-          placeholder="Search"
-          value={currentRefinement}
-          onChange={event => refine(event.currentTarget.value)}
-          type="search"
-          {...input}
-        />
-      </SearchWrapper>
-    </label>
-  )
-}
+const SearchBar = ({ currentRefinement, refine, ...input }) => (
+  <>
+    <LabelWrapper htmlFor="search">
+      Search by location or business name
+    </LabelWrapper>
+    <SearchWrapper>
+      <SearchIcon />
+      <SearchInput
+        name="search"
+        placeholder="Search"
+        value={currentRefinement}
+        onChange={event => refine(event.currentTarget.value)}
+        type="search"
+        {...input}
+      />
+    </SearchWrapper>
+  </>
+)
 
 export default SearchBar

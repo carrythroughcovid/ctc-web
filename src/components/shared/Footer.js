@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { Link } from 'gatsby'
 import { FiArrowRight, FiMail, FiFacebook, FiInstagram } from 'react-icons/fi'
 
@@ -89,53 +89,51 @@ const CopyContent = styled.span`
   font-size: 0.875rem;
 `
 
-const Footer = () => {
-  return (
-    <StyledFooter>
-      <Container>
-        <ContentWrapperTop alignBottom stack>
-          <Link to={`/`}>
-            <Logo />
-          </Link>
-          <div>
-            <FooterLink to="/about">About us</FooterLink>
-            <FooterLink to="/#explore">Explore offerings</FooterLink>
-            <FooterLink to="/terms">Terms</FooterLink>
-            <CTALink>
-              Sign up now <ArrowIcon size="1.5rem" />
-            </CTALink>
-          </div>
-        </ContentWrapperTop>
+const Footer = () => (
+  <StyledFooter>
+    <Container>
+      <ContentWrapperTop alignBottom stack>
+        <Link to={`/`}>
+          <Logo />
+        </Link>
+        <div>
+          <FooterLink to="/about">About us</FooterLink>
+          <FooterLink to="/#explore">Explore offerings</FooterLink>
+          <FooterLink to="/terms">Terms</FooterLink>
+          <CTALink>
+            Sign up now <ArrowIcon size="1.5rem" />
+          </CTALink>
+        </div>
+      </ContentWrapperTop>
 
-        <HR />
+      <HR />
 
-        <ContentWrapper>
-          <SocialWrapper>
-            <SocialLink href="mailto:contact@carrythroughcovid.com">
-              <FiMail size="1.5rem" />
-            </SocialLink>
-            <SocialLink
-              href="https://www.facebook.com/carrythroughcovid"
-              rel="noreferrer noopener"
-              target="_blank"
-            >
-              <FiFacebook size="1.5rem" />
-            </SocialLink>
-            <SocialLink
-              href="https://www.instagram.com/carrythroughcovid"
-              rel="noreferrer noopener"
-              target="_blank"
-            >
-              <FiInstagram size="1.5rem" />
-            </SocialLink>
-          </SocialWrapper>
-          <CopyContent>
-            © {new Date().getFullYear()} carry through covid
-          </CopyContent>
-        </ContentWrapper>
-      </Container>
-    </StyledFooter>
-  )
-}
+      <ContentWrapper>
+        <SocialWrapper>
+          <SocialLink href="mailto:contact@carrythroughcovid.com">
+            <FiMail size="1.5rem" />
+          </SocialLink>
+          <SocialLink
+            href="https://www.facebook.com/carrythroughcovid"
+            rel="noreferrer noopener"
+            target="_blank"
+          >
+            <FiFacebook size="1.5rem" />
+          </SocialLink>
+          <SocialLink
+            href="https://www.instagram.com/carrythroughcovid"
+            rel="noreferrer noopener"
+            target="_blank"
+          >
+            <FiInstagram size="1.5rem" />
+          </SocialLink>
+        </SocialWrapper>
+        <CopyContent>
+          © {new Date().getFullYear()} carry through covid
+        </CopyContent>
+      </ContentWrapper>
+    </Container>
+  </StyledFooter>
+)
 
 export default Footer
