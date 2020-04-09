@@ -1,0 +1,5 @@
+name: Check Previous Build
+description: Checks the data from the previous build to determine whether a new one should happen
+runs:
+  using: node12
+  main: dist/index.js # runs bundled version
