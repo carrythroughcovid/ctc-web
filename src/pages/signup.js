@@ -217,11 +217,6 @@ const Form = () => {
                             return selected[0].value
                           },
                         })}
-                        {errors.business_type && (
-                          <ErrorMessage>
-                            {errors.business_type.message}
-                          </ErrorMessage>
-                        )}
                       </SelectContainer>
                       {businessType === 'Other' &&
                         renderControlledField('business_type_other')}
