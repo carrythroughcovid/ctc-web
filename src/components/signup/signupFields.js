@@ -39,7 +39,14 @@ export const signupFields = {
       placeholder="Other type of Business"
     />
   ),
-  location_search: <LocationSearch />,
+  location_search: (
+    <FormField
+      component={<LocationSearch />}
+      name="location_search"
+      label="Location"
+      placeholder="Suburb"
+    />
+  ),
   headline: (
     <FormField
       name="headline"

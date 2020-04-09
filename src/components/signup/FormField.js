@@ -37,7 +37,11 @@ const FormField = ({ error, label, component = <TextInput />, ...rest }) => {
     <Container>
       {active && <LabelText>{label}</LabelText>}
       <InputContainer error={error}>
-        {React.cloneElement(component, { onFocus, onBlur, ...rest })}
+        {React.cloneElement(component, {
+          onFocus,
+          onBlur,
+          ...rest,
+        })}
       </InputContainer>
       {error && <ErrorText>{error}</ErrorText>}
     </Container>
