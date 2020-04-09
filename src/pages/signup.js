@@ -275,7 +275,7 @@ const Form = () => {
                       <ImageUploader
                         withIcon={true}
                         onChange={setHeaderImage}
-                        imgExtension={['.jpg', '.png']}
+                        imgExtension={['.jpg', '.jpeg', '.png']}
                         buttonText="Upload header image"
                         label="The main image to promote your business (landscape)"
                         withPreview={true}
@@ -284,7 +284,7 @@ const Form = () => {
                       <ImageUploader
                         withIcon={true}
                         onChange={setLogoImage}
-                        imgExtension={['.jpg', '.png']}
+                        imgExtension={['.jpg', '.jpeg', '.png']}
                         buttonText="Upload logo"
                         label="Please submit in .jpg or .png format"
                         withPreview={true}
@@ -293,7 +293,7 @@ const Form = () => {
                       <ImageUploader
                         withIcon={true}
                         onChange={setBusinessOwnerImage}
-                        imgExtension={['.jpg', '.png']}
+                        imgExtension={['.jpg', '.jpeg', '.png']}
                         buttonText="Upload profile photo"
                         label="A headshot of yourself (optional)"
                         withPreview={true}
