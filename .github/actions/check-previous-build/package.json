@@ -1,0 +1,22 @@
+{
+  "name": "check-previous-build",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@actions/core": "^1.2.3",
+    "aws-sdk": "^2.656.0",
+    "axios": "^0.19.2",
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}
