@@ -21,9 +21,10 @@ const { colour } = theme
 
 const LoadingContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 4rem;
+  margin-top: 2rem;
 `
 
 const FormContainer = styled.div`
@@ -64,9 +65,16 @@ const StyledButton = styled(Button)`
   margin-top: 3rem;
 `
 
+const StyledSpinner = styled(Spinner)`
+  margin-top: 2rem;
+`
+
 const Loading = () => (
   <LoadingContainer>
-    <Spinner display />
+    <SectionTitle>
+      Submitting your data. Please don't refresh just yet!
+    </SectionTitle>
+    <StyledSpinner display />
   </LoadingContainer>
 )
 
@@ -172,7 +180,7 @@ const Form = () => {
         title="Signup"
         description="Signup as a business to list your offerings"
       />
-      <Page customHeader={() => <SignupHeader />}>
+      <Page customHeader={() => !loading && <SignupHeader />}>
         <Container>
           {loading ? (
             <Loading />
@@ -209,11 +217,6 @@ const Form = () => {
                             return selected[0].value
                           },
                         })}
-                        {errors.business_type && (
-                          <ErrorMessage>
-                            {errors.business_type.message}
-                          </ErrorMessage>
-                        )}
                       </SelectContainer>
                       {businessType === 'Other' &&
                         renderControlledField('business_type_other')}

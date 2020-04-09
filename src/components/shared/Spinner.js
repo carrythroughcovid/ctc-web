@@ -3,8 +3,8 @@ import styled from 'styled-components'
 const Spinner = styled.span`
   width: 4rem;
   height: 4rem;
-  border-top-color: ${({ theme }) => theme.colour.primary};
-  border-left-color: ${({ theme }) => theme.colour.purple};
+  border-top-color: ${({ theme }) => theme.colour.violet};
+  border-left-color: ${({ theme }) => theme.colour.violetDark};
 
   animation: spinner 400ms linear infinite;
   border-bottom-color: transparent;

@@ -43,7 +43,9 @@ export const validationRules = {
       message: 'Business type is too long',
     },
   },
-  location_search: {},
+  location_search: {
+    required: { value: true, message: 'Suburb is required' },
+  },
   headline: {
     required: { value: true, message: 'Headline is required' },
     maxLength: { value: 200, message: 'Headline is too long' },
