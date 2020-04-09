@@ -276,28 +276,28 @@ const Form = () => {
                         withIcon={true}
                         onChange={setHeaderImage}
                         imgExtension={['.jpg', '.png']}
-                        buttonText="Upload hero image"
+                        buttonText="Upload header image"
+                        label="The main image to promote your business (landscape)"
                         withPreview={true}
                         singleImage={true}
-                        withLabel={false}
                       />
                       <ImageUploader
                         withIcon={true}
                         onChange={setLogoImage}
                         imgExtension={['.jpg', '.png']}
                         buttonText="Upload logo"
+                        label="Please submit in .jpg or .png format"
                         withPreview={true}
                         singleImage={true}
-                        withLabel={false}
                       />
                       <ImageUploader
                         withIcon={true}
                         onChange={setBusinessOwnerImage}
                         imgExtension={['.jpg', '.png']}
                         buttonText="Upload profile photo"
+                        label="A headshot of yourself (optional)"
                         withPreview={true}
                         singleImage={true}
-                        withLabel={false}
                       />
                     </Section>
 
