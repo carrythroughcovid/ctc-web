@@ -10,6 +10,10 @@ const SEO = ({ title, description }) => (
     <meta charSet="utf-8" />
     {<title>{createTitle(title)}</title>}
     {description && <meta name="description" content={description} />}
+    <meta
+      name="og:image"
+      content="https://carrythroughcovid.s3-ap-southeast-2.amazonaws.com/ctc_facebook3.png"
+    />
   </Helmet>
 )
 
