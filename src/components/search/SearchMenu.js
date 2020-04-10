@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { startCase } from 'lodash'
 
 const SelectWrapper = styled.div`
   background-color: #fff;
@@ -39,7 +40,7 @@ const SearchMenu = ({ items, currentRefinement, refine, resourceName }) => (
             key={item.label}
             value={item.isRefined ? currentRefinement : item.value}
           >
-            {item.label}
+            {startCase(item.label)}
           </option>
         ))}
       </Select>
