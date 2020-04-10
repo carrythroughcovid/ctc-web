@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { startCase } from 'lodash'
+import media from '../../utils/media'
 
 const SelectWrapper = styled.div`
   background-color: #fff;
@@ -14,9 +15,13 @@ const Select = styled.select`
   border: 0;
   box-shadow: 0px 7px 64px rgba(0, 0, 0, 0.07);
   border-radius: 6px;
-  padding-left: 0.75rem;
+  padding-left: 0.25rem;
   height: 3rem;
   border: 1px solid #c0c3dc;
+
+  ${media.sm`
+    padding-left: 0.75rem;
+  `}
 `
 
 const LabelWrapper = styled.div`
@@ -34,7 +39,7 @@ const SearchMenu = ({ items, currentRefinement, refine, resourceName }) => (
         value={currentRefinement || ''}
         onChange={event => refine(event.currentTarget.value)}
       >
-        <option value="">All {resourceName}</option>
+        <option value="">All</option>
         {items.map(item => (
           <option
             key={item.label}

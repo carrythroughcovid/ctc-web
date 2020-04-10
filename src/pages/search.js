@@ -52,7 +52,11 @@ const CategoryWrapper = styled.div`
   }
 
   & > label:not(:last-of-type) {
-    margin-right: 1rem;
+    margin-right: 0.5rem;
+
+    ${media.sm`
+      margin-right: 1rem;
+    `}
   }
 `
 
