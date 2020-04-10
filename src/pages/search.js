@@ -133,7 +133,7 @@ const SearchResultsPage = () => {
   return (
     <>
       <SEO description="Our mission is to maximise community support for small businesses throughout COVID-19. Are you a supporter of small business?" />
-      <Page noMargin customHeader={() => <HomeHeader />}>
+      <Page customHeader={() => <HomeHeader />}>
         <InstantSearch searchClient={searchClient} indexName="prod_business">
           <Container>
             <FormSection>
