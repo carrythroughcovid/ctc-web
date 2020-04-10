@@ -132,10 +132,7 @@ const Results = connectStateResults(
 const SearchResultsPage = () => {
   return (
     <>
-      <SEO
-        title="Search"
-        description="Search for businesses, locations or offerings"
-      />
+      <SEO description="Search for businesses, locations or offerings" />
       <Page noMargin customHeader={() => <HomeHeader />}>
         <InstantSearch searchClient={searchClient} indexName="prod_business">
           <Container>
