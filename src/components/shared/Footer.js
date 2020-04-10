@@ -100,7 +100,13 @@ const Footer = () => {
           <div>
             <FooterLink to="/about">About us</FooterLink>
             <FooterLink to="/#explore">Explore offerings</FooterLink>
-            <FooterLink to="/terms">Terms</FooterLink>
+            <FooterLink
+              as="a"
+              target="_blank"
+              href="https://carrythroughcovid.s3-ap-southeast-2.amazonaws.com/ctc_terms.pdf"
+            >
+              Terms
+            </FooterLink>
             <CTALink to="/signup">
               Sign up now <ArrowIcon size="1.5rem" />
             </CTALink>
