@@ -100,12 +100,14 @@ const Listing = ({ listing }) => {
               <Badge secondary>{category}</Badge>
             </CategoryLabel>
           )}
-          <ListingImage
-            src={images.header_image}
-            width={380}
-            height={124}
-            alt=""
-          ></ListingImage>
+          {images.header_image && (
+            <ListingImage
+              src={images.header_image}
+              width={380}
+              height={124}
+              alt=""
+            />
+          )}
         </ImageContainer>
         <ListingDetailsContainer>
           <BusinessName>
