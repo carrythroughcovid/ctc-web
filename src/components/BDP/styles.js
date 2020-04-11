@@ -92,6 +92,7 @@ export const BusinessImageWrapper = styled.div`
 
 export const BusinessImage = styled(Imgix)`
   width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
   background-color: ${({ theme }) => theme.colour.black};

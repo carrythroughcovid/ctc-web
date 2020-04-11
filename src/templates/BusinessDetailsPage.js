@@ -102,8 +102,8 @@ const BusinessDetailsPage = ({ data }) => {
               )}
             </ContactDetailsBlock>
           </BusinessInfo>
-          {images.header_image ? (
-            <BusinessImageWrapper>
+          <BusinessImageWrapper>
+            {images.header_image ? (
               <BusinessImage
                 width={928}
                 height={456}
@@ -111,10 +111,10 @@ const BusinessDetailsPage = ({ data }) => {
                 imgixParams={{ q: 90, fit: 'crop' }}
                 alt="The businesses header image"
               />
-            </BusinessImageWrapper>
-          ) : (
-            <NoImage />
-          )}
+            ) : (
+              <NoImage />
+            )}
+          </BusinessImageWrapper>
         </BlockWrapper>
       </BusinessBlock>
 
