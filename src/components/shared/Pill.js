@@ -2,8 +2,7 @@ import styled from 'styled-components'
 
 const Pill = styled.span`
   color: white;
-  font-weight: bold;
-  background-color: ${({ theme }) => theme.colour.teal};
+  background-color: ${({ theme }) => theme.colour.brand};
   padding-left: 1rem;
   padding-right: 1rem;
   height: 2.5rem;

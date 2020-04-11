@@ -47,8 +47,7 @@ const ContactDetailsBlock = styled.div`
   padding-top: 2.5rem;
 `
 
-const ContactLink = styled.a`
-  color: ${({ theme }) => theme.colour.grey};
+const ContactLinkWrapper = styled.div`
   display: flex;
   align-items: center;
   padding-bottom: 1.875rem;
@@ -59,6 +58,10 @@ const ContactLink = styled.a`
   }
 `
 
+const ContactLink = styled.a`
+  color: ${({ theme }) => theme.colour.grey};
+`
+
 const BusinessImage = styled(Imgix)`
   flex: 1;
   height: 28.5rem;
@@ -67,17 +70,74 @@ const BusinessImage = styled(Imgix)`
   background-color: ${({ theme }) => theme.colour.black};
 `
 
-const DetailsBlock = styled.div``
-const DetailsWrapper = styled.div``
-const ServicesDetails = styled.div``
-const ServiceCallout = styled.div``
-const ServiceInfo = styled.div``
-const Offerings = styled.div``
-const NewProducts = styled.div``
+const DetailsBlock = styled.div`
+  background-color: ${({ theme }) => theme.colour.greySuperLight};
+  padding-top: 4.25rem;
+  padding-bottom: 6rem;
+`
+const DetailsWrapper = styled.div`
+  display: flex;
+`
+const ServicesDetails = styled.div`
+  background-color: white;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  flex-basis: 23.75rem;
+  width: 23.75rem;
 
-const AboutDetails = styled.div``
-const Heading = styled.div``
-const AboutContent = styled.div``
+  padding: 2.5rem 1.75rem;
+`
+const ServiceCallout = styled.div`
+  color: ${({ theme }) => theme.colour.accent2};
+  font-size: 1.5rem;
+  line-height: 2rem;
+  padding-bottom: 1.125rem;
+`
+const ServiceInfo = styled.div`
+  padding-bottom: 1.125rem;
+  line-height: 1.5rem;
+`
+
+const OfferingsTitle = styled.div`
+  font-weight: bold;
+  padding-bottom: 2rem;
+`
+const OfferingWrapper = styled.div`
+  padding-bottom: 0.5rem;
+`
+
+const Offerings = styled.div`
+  padding-bottom: 1rem;
+`
+const NewProducts = styled.div`
+  line-height: 1.5rem;
+`
+
+const AboutDetails = styled.div`
+  flex: 1;
+  padding-left: 3.75rem;
+  padding-top: 5rem;
+`
+const Heading = styled.div`
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colour.brand};
+  font-family: ${({ theme }) => theme.font.alt};
+
+  padding-bottom: 1.5rem;
+`
+
+const Spacer = styled.div`
+  width: 5.75rem;
+  height: 3px;
+  background-color: ${({ theme }) => theme.colour.brand};
+  margin-bottom: 2rem;
+`
+
+const AboutContent = styled.div`
+  line-height: 1.5rem;
+  padding-bottom: 2rem;
+`
 
 const BusinessDetailsPage = ({ data }) => {
   const {
@@ -97,37 +157,52 @@ const BusinessDetailsPage = ({ data }) => {
   const category = categories.length === 0 ? '' : categories[0].name
 
   return (
-    <Page>
+    <Page noMargin>
       <BackToSearch />
       <BusinessBlock>
         <BlockWrapper>
           <BusinessInfo>
             <BusinessName>{name}</BusinessName>
+
             <BusinessLocation>
               {category && category}
               {suburb && ` • ${suburb}`}
             </BusinessLocation>
+
             <ContactDetailsBlock>
               {business_number && (
-                <ContactLink>
+                <ContactLinkWrapper>
                   <FiPhone size="1.5rem" />
-                  {business_number}
-                </ContactLink>
+                  <ContactLink href={`tel:${business_number}`}>
+                    {business_number}
+                  </ContactLink>
+                </ContactLinkWrapper>
               )}
+
               {website && (
-                <ContactLink>
+                <ContactLinkWrapper>
                   <FiLink size="1.5rem" />
-                  {website}
-                </ContactLink>
+                  <ContactLink
+                    href={website}
+                    rel="noreferrer noopener"
+                    target="_blank"
+                  >
+                    {website}
+                  </ContactLink>
+                </ContactLinkWrapper>
               )}
+
               {business_email && (
-                <ContactLink>
+                <ContactLinkWrapper>
                   <FiMail size="1.5rem" />
-                  {business_email}
-                </ContactLink>
+                  <ContactLink href={`mailto:${business_email}`}>
+                    {business_email}
+                  </ContactLink>
+                </ContactLinkWrapper>
               )}
             </ContactDetailsBlock>
           </BusinessInfo>
+
           <BusinessImage
             width={928}
             height={456}
@@ -144,15 +219,37 @@ const BusinessDetailsPage = ({ data }) => {
             <ServicesDetails>
               {headline && <ServiceCallout>{headline}</ServiceCallout>}
               {product_details && <ServiceInfo>{product_details}</ServiceInfo>}
-              {offerings.length >= 1 && <Offerings>TODO</Offerings>}
+              {offerings.length >= 1 && (
+                <>
+                  <OfferingsTitle>
+                    We now offer these new services:
+                  </OfferingsTitle>
+                  <OfferingWrapper>
+                    {offerings.map(({ name, id }) => (
+                      <Offerings>
+                        <Pill key={id}>{name}</Pill>
+                      </Offerings>
+                    ))}
+                  </OfferingWrapper>
+                </>
+              )}
               {new_products && <NewProducts>{new_products}</NewProducts>}
             </ServicesDetails>
             <AboutDetails>
               <Heading>Our Story</Heading>
-              <AboutContent>
-                {business_details}
-                <a>vist our website</a>
-              </AboutContent>
+              <Spacer />
+              <AboutContent>{business_details}</AboutContent>
+              {website && (
+                <>
+                  <ButtonLink
+                    href={website}
+                    rel="noreferrer noopener"
+                    target="_blank"
+                  >
+                    Vist our website
+                  </ButtonLink>
+                </>
+              )}
             </AboutDetails>
           </DetailsWrapper>
         </Container>
