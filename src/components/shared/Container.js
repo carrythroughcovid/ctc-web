@@ -18,6 +18,12 @@ const Container = styled.div`
       padding-right: ${({ theme }) => theme.containerGutter};
       `}
     `}
+
+  ${props =>
+    props.small &&
+    css`
+      max-width: ${({ theme }) => theme.maxWidthSmall};
+    `}
 `
 
 export default Container

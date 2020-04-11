@@ -1,178 +1,40 @@
 import React from 'react'
-import styled from 'styled-components'
 import { graphql } from 'gatsby'
-import Imgix from 'react-imgix'
 
-import mockListing from '../../mockContent/listings'
-import media from '../utils/media'
+import { FiPhone, FiLink, FiMail } from 'react-icons/fi'
+
 import Page from '../components/shared/Page'
 import BackToSearch from '../components/BDP/BackToSearch'
 import Container from '../components/shared/Container'
 import Pill from '../components/shared/Pill'
 import { ButtonLink } from '../components/shared/Button'
-import BusinessTypeIcon from '../components/shared/BusinessTypeIcon'
-import DetailsTabs from '../components/BDP/DetailsTabs'
+import NoImage from '../components/shared/NoImage'
 
-const BusinessImage = styled(Imgix)`
-  width: 100%;
-  height: 15rem;
-  object-fit: cover;
-  object-position: center;
-  background-color: ${({ theme }) => theme.colour.black};
-
-  ${media.md`
-    height: 20.5rem;
-    border-radius: 0.5rem;
-  `}
-`
-
-const BusinessDetails = styled.div`
-  padding-top: 1.5rem;
-  padding-bottom: 2.25rem;
-  display: flex;
-  align-items: center;
-
-  ${media.md`
-    flex-direction: column-reverse;
-    align-items: start;
-    padding: 0;
-  `}
-`
-
-const DetailsWrapper = styled.div`
-  width: auto;
-  flex-basis: auto;
-  padding-left: ${({ theme }) => theme.containerGutter};
-  padding-right: ${({ theme }) => theme.containerGutter};
-
-  ${media.md`
-    padding: 3rem 1.5rem 3rem 0;
-    width: 24rem;
-    flex-basis: 20.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  `}
-`
-
-const Details = styled.div`
-  padding-left: 1rem;
-
-  ${media.md`
-    padding-left: 0;
-  `}
-`
-const BusinessName = styled.h1`
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 0;
-  padding-bottom: 0.5rem;
-
-  ${media.md`
-    font-size: 1.75rem;
-    font-weight: normal;
-  `}
-`
-
-const BusinessLocation = styled.div`
-  text-transform: capitalize;
-  color: ${({ theme }) => theme.colour.grey};
-  font-size: 0.875rem;
-
-  ${media.md`
-    padding-top: 0.75rem;
-    padding-bottom: 2rem;
-    font-size: 1rem;
-  `}
-`
-
-const DetailBlock = styled.div``
-
-const BlockContent = styled.div`
-  font-size: 1.125rem;
-  color: ${({ theme }) => theme.colour.grey};
-  margin-top: ${props => props.marginTop || '0'};
-`
-
-const BlockCallout = styled.div`
-  font-size: 1.625rem;
-  padding-bottom: 1rem;
-  font-weight: 500;
-`
-
-const DetailTitle = styled.div`
-  color: ${({ theme }) => theme.colour.primary};
-  font-family: ${({ theme }) => theme.font.alt};
-  text-transform: uppercase;
-  letter-spacing: 1.75px;
-  padding-top: 2rem;
-  padding-bottom: 1.5rem;
-
-  ${media.md`
-    font-weight: normal;
-    padding-top: 2.5rem;
-  `}
-`
-const Wrapper = styled.div`
-  ${media.md`
-    display: flex;
-    flex-direction: row-reverse;
-    padding-top: 1.875rem;
-  `}
-`
-
-const ImageWrapper = styled.div`
-  flex: 1;
-`
-
-const BusinessTypeIconWrapper = styled.div`
-  display: block;
-  ${media.md`
-    display: none;
-  `}
-`
-
-const NewProduct = styled.div`
-  padding-top: 0.75rem;
-`
-
-const UpdateTabBlock = ({ offerings, details, callout, newProducts }) => {
-  const newProductsSplit = newProducts.split('\n').filter(s => s !== '')
-  return (
-    <>
-      <DetailBlock>
-        <DetailTitle>Current Services</DetailTitle>
-        <>
-          {offerings.map(({ name, id }) => (
-            <Pill key={id}>{name}</Pill>
-          ))}
-          <BlockContent marginTop="1rem">
-            {newProductsSplit.map(p => {
-              return <NewProduct>{p}</NewProduct>
-            })}
-          </BlockContent>
-        </>
-      </DetailBlock>
-
-      <DetailBlock>
-        <DetailTitle>Details</DetailTitle>
-        {/* TODO: Make sure new lines/tabs display corectly */}
-        <BlockCallout>{callout}</BlockCallout>
-        <BlockContent>{details}</BlockContent>
-      </DetailBlock>
-    </>
-  )
-}
-
-const AboutTabBlock = ({ details, headline }) => (
-  <>
-    <DetailBlock>
-      <DetailTitle>Our Background</DetailTitle>
-      <BlockCallout>{headline}</BlockCallout>
-      <BlockContent>{details}</BlockContent>
-    </DetailBlock>
-  </>
-)
+import {
+  BusinessBlock,
+  BlockWrapper,
+  BusinessInfo,
+  BusinessName,
+  BusinessLocation,
+  ContactDetailsBlock,
+  ContactLinkWrapper,
+  ContactLink,
+  BusinessImageWrapper,
+  BusinessImage,
+  DetailsBlock,
+  DetailsWrapper,
+  ServicesDetails,
+  ServiceCallout,
+  ServiceInfo,
+  OfferingsTitle,
+  OfferingWrapper,
+  Offerings,
+  NewProducts,
+  AboutDetails,
+  Heading,
+  Spacer,
+  AboutContent,
+} from '../components/BDP/styles'
 
 const BusinessDetailsPage = ({ data }) => {
   const {
@@ -182,71 +44,128 @@ const BusinessDetailsPage = ({ data }) => {
     categories,
     imgix_images: images,
     business_details,
+    business_number,
+    business_email,
     product_details,
     new_products,
     headline,
     website,
   } = data.businesses
-
   const category = categories.length === 0 ? '' : categories[0].name
-
-  const tabContent = [
-    {
-      title: 'Updates',
-      content: () => (
-        <UpdateTabBlock
-          offerings={offerings}
-          details={product_details}
-          callout={headline}
-          newProducts={new_products}
-        />
-      ),
-    },
-    {
-      title: 'About us',
-      content: () => (
-        <AboutTabBlock details={business_details} headline={headline} />
-      ),
-    },
-  ]
+  const newProductsSplit = new_products
+    ? new_products.split('\n').filter(s => s !== '')
+    : []
 
   return (
-    <Page>
+    <Page noMargin>
       <BackToSearch />
-      <Container fullWidth>
-        <Wrapper>
-          <ImageWrapper>
-            {images.header_image && (
+      <BusinessBlock>
+        <BlockWrapper>
+          <BusinessInfo>
+            <BusinessName>{name}</BusinessName>
+
+            <BusinessLocation>
+              {category && category}
+              {suburb && ` • ${suburb}`}
+            </BusinessLocation>
+
+            <ContactDetailsBlock>
+              {business_number && false && (
+                <ContactLinkWrapper>
+                  <FiPhone size="1.5rem" />
+                  <ContactLink href={`tel:${business_number}`}>
+                    {business_number}
+                  </ContactLink>
+                </ContactLinkWrapper>
+              )}
+
+              {website && (
+                <ContactLinkWrapper>
+                  <FiLink size="1.5rem" />
+                  <ContactLink
+                    href={website}
+                    rel="noreferrer noopener"
+                    target="_blank"
+                  >
+                    {website}
+                  </ContactLink>
+                </ContactLinkWrapper>
+              )}
+
+              {business_email && false && (
+                <ContactLinkWrapper>
+                  <FiMail size="1.5rem" />
+                  <ContactLink href={`mailto:${business_email}`}>
+                    {business_email}
+                  </ContactLink>
+                </ContactLinkWrapper>
+              )}
+            </ContactDetailsBlock>
+          </BusinessInfo>
+          {images.header_image ? (
+            <BusinessImageWrapper>
               <BusinessImage
-                width={912}
-                height={328}
+                width={928}
+                height={456}
                 src={images.header_image}
+                imgixParams={{ q: 90, fit: 'crop' }}
                 alt="The businesses header image"
               />
-            )}
-          </ImageWrapper>
+            </BusinessImageWrapper>
+          ) : (
+            <NoImage />
+          )}
+        </BlockWrapper>
+      </BusinessBlock>
 
+      <DetailsBlock>
+        <Container small>
           <DetailsWrapper>
-            <BusinessDetails>
-              <BusinessTypeIconWrapper>
-                <BusinessTypeIcon />
-              </BusinessTypeIconWrapper>
-              <Details>
-                <BusinessName>{name}</BusinessName>
-                <BusinessLocation>
-                  {category && category}
-                  <span> / {suburb}</span>
-                </BusinessLocation>
-              </Details>
-            </BusinessDetails>
-            <ButtonLink fullWidthMobile large href={website} target="_blank">
-              Visit our website
-            </ButtonLink>
+            <ServicesDetails>
+              {headline && <ServiceCallout>{headline}</ServiceCallout>}
+              {product_details && <ServiceInfo>{product_details}</ServiceInfo>}
+              {offerings.length >= 1 && (
+                <>
+                  <OfferingsTitle>
+                    We now offer these new services:
+                  </OfferingsTitle>
+                  <OfferingWrapper>
+                    {offerings.map(({ name, id }) => (
+                      <Offerings>
+                        <Pill key={id}>{name}</Pill>
+                      </Offerings>
+                    ))}
+                  </OfferingWrapper>
+                </>
+              )}
+              {newProductsSplit.length >= 1 && (
+                <NewProducts>
+                  {newProductsSplit.map(product => {
+                    return <p>{product}</p>
+                  })}
+                </NewProducts>
+              )}
+            </ServicesDetails>
+            <AboutDetails>
+              <Heading>Our Story</Heading>
+              <Spacer />
+              <AboutContent>{business_details}</AboutContent>
+              {website && (
+                <>
+                  <ButtonLink
+                    href={website}
+                    rel="noreferrer noopener"
+                    target="_blank"
+                    fullWidthMobile
+                  >
+                    Vist our website
+                  </ButtonLink>
+                </>
+              )}
+            </AboutDetails>
           </DetailsWrapper>
-        </Wrapper>
-      </Container>
-
-      <DetailsTabs tabs={tabContent} />
+        </Container>
+      </DetailsBlock>
     </Page>
   )
 }
@@ -257,6 +176,8 @@ export const query = graphql`
       id
       name
       business_details
+      business_number
+      business_email
       product_details
       new_products
       website
