@@ -4,35 +4,58 @@ import { graphql } from 'gatsby'
 import Imgix from 'react-imgix'
 import { FiPhone, FiLink, FiMail } from 'react-icons/fi'
 
-import mockListing from '../../mockContent/listings'
 import media from '../utils/media'
 import Page from '../components/shared/Page'
 import BackToSearch from '../components/BDP/BackToSearch'
 import Container from '../components/shared/Container'
 import Pill from '../components/shared/Pill'
 import { ButtonLink } from '../components/shared/Button'
-import BusinessTypeIcon from '../components/shared/BusinessTypeIcon'
-import DetailsTabs from '../components/BDP/DetailsTabs'
+import NoImage from '../components/shared/NoImage'
 
 const BusinessBlock = styled.div`
   display: grid;
-  grid-template-columns: 1fr 11.25rem ${({ theme }) => theme.maxWidthSmall} 11.25rem 1fr;
   min-height: 28.5rem;
+
+  ${media.md`
+    grid-template-columns: 1fr ${({ theme }) => theme.maxWidthSmall} 1fr;
+  `}
+
+  @media (min-width: 1440px) {
+    grid-template-columns: 1fr 11.25rem ${({ theme }) => theme.maxWidthSmall} 11.25rem 1fr;
+  }
 `
 const BlockWrapper = styled.div`
-  grid-column-start: 3;
-  grid-column-end: 5;
   display: flex;
+  flex-direction: column-reverse;
+
+  ${media.md`
+    flex-direction: row;
+    grid-column-start: 2;
+    grid-column-end: 4;
+  `}
+
+  @media (min-width: 1440px) {
+    grid-column-start: 3;
+    grid-column-end: 5;
+  }
 `
 
 const BusinessInfo = styled.div`
   padding-left: ${({ theme }) => theme.containerGutter};
   padding-right: ${({ theme }) => theme.containerGutter};
-  width: 20.75rem;
-  flex-basis: 20.75rem;
-  display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: 2.25rem;
+  padding-bottom: 1rem;
+
+  ${media.md`
+    width: 20.75rem;
+    flex-basis: 20.75rem;
+    display: flex;
+    flex-shrink: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  `}
 `
 const BusinessName = styled.h1`
   margin: 0;
@@ -50,42 +73,60 @@ const ContactDetailsBlock = styled.div`
 const ContactLinkWrapper = styled.div`
   display: flex;
   align-items: center;
-  padding-bottom: 1.875rem;
+  padding-bottom: 1.5rem;
 
   > svg {
     color: ${({ theme }) => theme.colour.violet};
     margin-right: 0.875rem;
+    flex-shrink: 0;
   }
 `
 
 const ContactLink = styled.a`
   color: ${({ theme }) => theme.colour.grey};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 const BusinessImage = styled(Imgix)`
   flex: 1;
-  height: 28.5rem;
+  width: 100%;
+  height: 15rem;
   object-fit: cover;
   object-position: center;
   background-color: ${({ theme }) => theme.colour.black};
+
+  ${media.md`
+    height: 28.5rem;
+  `}
 `
 
 const DetailsBlock = styled.div`
   background-color: ${({ theme }) => theme.colour.greySuperLight};
-  padding-top: 4.25rem;
-  padding-bottom: 6rem;
+  padding-top: 1.75rem;
+  padding-bottom: 4rem;
+
+  ${media.md`
+    padding-top: 4.25rem;
+  `}
 `
 const DetailsWrapper = styled.div`
-  display: flex;
+  ${media.md`
+    display: flex;
+  `}
 `
 const ServicesDetails = styled.div`
   background-color: white;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  flex-basis: 23.75rem;
-  width: 23.75rem;
 
   padding: 2.5rem 1.75rem;
+
+  ${media.md`
+    flex-basis: 23.75rem;
+    width: 23.75rem;
+  `}
 `
 const ServiceCallout = styled.div`
   color: ${({ theme }) => theme.colour.accent2};
@@ -108,15 +149,24 @@ const OfferingWrapper = styled.div`
 
 const Offerings = styled.div`
   padding-bottom: 1rem;
+
+  &:last-of-type {
+    padding-bottom: 0;
+  }
 `
 const NewProducts = styled.div`
+  padding-top: 1rem;
   line-height: 1.5rem;
 `
 
 const AboutDetails = styled.div`
   flex: 1;
+  padding-top: 3rem;
+
+  ${media.md`
   padding-left: 3.75rem;
   padding-top: 5rem;
+  `}
 `
 const Heading = styled.div`
   letter-spacing: 1.5px;
@@ -155,6 +205,9 @@ const BusinessDetailsPage = ({ data }) => {
     website,
   } = data.businesses
   const category = categories.length === 0 ? '' : categories[0].name
+  const newProductsSplit = new_products
+    ? new_products.split('\n').filter(s => s !== '')
+    : []
 
   return (
     <Page noMargin>
@@ -202,14 +255,17 @@ const BusinessDetailsPage = ({ data }) => {
               )}
             </ContactDetailsBlock>
           </BusinessInfo>
-
-          <BusinessImage
-            width={928}
-            height={456}
-            src={images.header_image}
-            imgixParams={{ q: 90, fit: 'crop' }}
-            alt="The businesses header image"
-          />
+          {images.header_image ? (
+            <BusinessImage
+              width={928}
+              height={456}
+              src={images.header_image}
+              imgixParams={{ q: 90, fit: 'crop' }}
+              alt="The businesses header image"
+            />
+          ) : (
+            <NoImage />
+          )}
         </BlockWrapper>
       </BusinessBlock>
 
@@ -233,7 +289,13 @@ const BusinessDetailsPage = ({ data }) => {
                   </OfferingWrapper>
                 </>
               )}
-              {new_products && <NewProducts>{new_products}</NewProducts>}
+              {newProductsSplit.length >= 1 && (
+                <NewProducts>
+                  {newProductsSplit.map(product => {
+                    return <p>{product}</p>
+                  })}
+                </NewProducts>
+              )}
             </ServicesDetails>
             <AboutDetails>
               <Heading>Our Story</Heading>
@@ -245,6 +307,7 @@ const BusinessDetailsPage = ({ data }) => {
                     href={website}
                     rel="noreferrer noopener"
                     target="_blank"
+                    fullWidthMobile
                   >
                     Vist our website
                   </ButtonLink>
