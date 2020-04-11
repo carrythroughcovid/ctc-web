@@ -5,7 +5,7 @@ import Imgix from 'react-imgix'
 
 import Badge from './Badge'
 import { Highlight } from 'react-instantsearch-dom'
-import { transformHttps } from '../../utils/url'
+import NoImage from '../shared/NoImage'
 
 const ListingImage = styled(Imgix)`
   width: 100%;
@@ -100,7 +100,7 @@ const Listing = ({ listing }) => {
               <Badge secondary>{category}</Badge>
             </CategoryLabel>
           )}
-          {images.header_image && (
+          {images.header_image ? (
             <ListingImage
               src={images.header_image}
               width={380}
@@ -108,6 +108,8 @@ const Listing = ({ listing }) => {
               imgixParams={{ q: 70, fit: 'crop' }}
               alt=""
             />
+          ) : (
+            <NoImage height="7.75rem" />
           )}
         </ImageContainer>
         <ListingDetailsContainer>
