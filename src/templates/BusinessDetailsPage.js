@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { graphql } from 'gatsby'
+import Imgix from 'react-imgix'
 
 import mockListing from '../../mockContent/listings'
 import media from '../utils/media'
@@ -13,7 +14,7 @@ import BusinessTypeIcon from '../components/shared/BusinessTypeIcon'
 import DetailsTabs from '../components/BDP/DetailsTabs'
 import { transformHttps } from '../utils/url'
 
-const BusinessImage = styled.img`
+const BusinessImage = styled(Imgix)`
   width: 100%;
   height: 15rem;
   object-fit: cover;
@@ -170,17 +171,6 @@ const AboutTabBlock = ({ details, headline }) => (
       <BlockCallout>{headline}</BlockCallout>
       <BlockContent>{details}</BlockContent>
     </DetailBlock>
-    {/* <DetailBlock>
-      <DetailTitle>our ethos</DetailTitle>
-      <BlockCallout>
-        Differentiate Yourself And Attract More Attention, Sales, And Profits
-      </BlockCallout>
-      <BlockContent>
-        There is no denying that the success of an advertisement lies mostly in
-        the headline. The headline should catch the reader’s attention and make
-        him read the rest of the advertisement.{' '}
-      </BlockContent>
-    </DetailBlock> */}
   </>
 )
 
@@ -225,6 +215,8 @@ const BusinessDetailsPage = ({ data }) => {
         <Wrapper>
           <ImageWrapper>
             <BusinessImage
+              width={912}
+              height={328}
               src={transformHttps(images.header_image)}
               alt="The businesses header image"
             />

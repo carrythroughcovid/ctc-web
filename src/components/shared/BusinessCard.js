@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
+import Imgix from 'react-imgix'
 
 import Badge from './Badge'
 import { Highlight } from 'react-instantsearch-dom'
 import { transformHttps } from '../../utils/url'
 
-const ListingImage = styled.img`
+const ListingImage = styled(Imgix)`
   width: 100%;
   height: 7.75rem;
   object-fit: cover;
@@ -99,17 +100,19 @@ const Listing = ({ listing }) => {
               <Badge secondary>{category}</Badge>
             </CategoryLabel>
           )}
-          <ListingImage src={transformHttps(images.header_image)} alt=""></ListingImage>
+          <ListingImage
+            src={transformHttps(images.header_image)}
+            width={380}
+            height={124}
+            alt=""
+          ></ListingImage>
         </ImageContainer>
         <ListingDetailsContainer>
           <BusinessName>
             <Highlight attribute="name" hit={listing} />
           </BusinessName>
           <BusinessDescription>
-            {truncateString(
-              headline,
-              60
-            )}
+            {truncateString(headline, 60)}
           </BusinessDescription>
         </ListingDetailsContainer>
       </ListingContainer>
