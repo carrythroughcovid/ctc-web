@@ -44,7 +44,7 @@ const ContentWrapper = styled.div`
 
   ${media.md`
     padding-top: 0;
-    padding-left: 6.75rem;
+    /* padding-left: 6.75rem; */
     padding-bottom: 5rem;
   `}
 `
@@ -91,7 +91,7 @@ const HeroHeader = ({ sub, title, actions, large }) => (
       </Container>
     </LogoWrapper>
     <HeaderContent>
-      <Container>
+      <Container small>
         <ContentWrapper>
           {sub && <SubTitle>{renderFuncOrStr(sub)}</SubTitle>}
           {title && <Title>{renderFuncOrStr(title)}</Title>}

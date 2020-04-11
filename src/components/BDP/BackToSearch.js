@@ -5,7 +5,8 @@ import { FiChevronLeft } from 'react-icons/fi'
 import Container from '../shared/Container'
 
 const BackBar = styled.div`
-  height: 3rem;
+  height: 4rem;
+  background-color: ${({ theme }) => theme.colour.greySuperLight};
   display: flex;
   align-items: center;
 `
@@ -17,7 +18,7 @@ const Chevron = styled.span`
 `
 
 const BackLink = styled.a`
-  color: ${({ theme }) => theme.colour.greyLight};
+  color: ${({ theme }) => theme.colour.black};
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -34,10 +35,10 @@ const BackLink = styled.a`
 
 const BackToSearch = () => (
   <BackBar>
-    <Container>
+    <Container small>
       <BackLink onClick={() => window.history.back()}>
         <Chevron>
-          <FiChevronLeft size="1.5rem" />
+          <FiChevronLeft size="2rem" />
         </Chevron>{' '}
         Back to results
       </BackLink>

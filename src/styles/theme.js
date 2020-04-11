@@ -19,6 +19,7 @@ const colour = {
 }
 const theme = {
   maxWidth: '80rem', // 1280px
+  maxWidthSmall: '67.5rem', // 1080px
   headerHeight: '5.5rem',
   containerGutter: '1.25rem',
 

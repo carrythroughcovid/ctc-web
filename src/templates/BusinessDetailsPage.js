@@ -213,7 +213,7 @@ const BusinessDetailsPage = ({ data }) => {
   return (
     <Page>
       <BackToSearch />
-      <Container fullWidth>
+      <Container fullWidth small>
         <Wrapper>
           <ImageWrapper>
             <BusinessImage
