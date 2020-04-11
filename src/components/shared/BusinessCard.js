@@ -104,6 +104,7 @@ const Listing = ({ listing }) => {
             src={images.header_image}
             width={380}
             height={124}
+            imgixParams={{ q: 70, fit: 'crop' }}
             alt=""
           ></ListingImage>
         </ImageContainer>
