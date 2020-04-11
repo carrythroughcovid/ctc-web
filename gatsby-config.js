@@ -1,6 +1,4 @@
 module.exports = {
-  //  Temporarily adding a path prefix whilst its hosted on GH pages
-  pathPrefix: '/ctc-web',
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
@@ -16,7 +14,7 @@ module.exports = {
       resolve: 'gatsby-plugin-react-svg',
       options: {
         rule: {
-          include: /assets/, // See below to configure properly
+          include: /assets/,
         },
       },
     },
