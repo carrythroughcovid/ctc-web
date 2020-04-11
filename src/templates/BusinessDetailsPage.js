@@ -216,12 +216,14 @@ const BusinessDetailsPage = ({ data }) => {
       <Container fullWidth>
         <Wrapper>
           <ImageWrapper>
-            <BusinessImage
-              width={912}
-              height={328}
-              src={images.header_image}
-              alt="The businesses header image"
-            />
+            {images.header_image && (
+              <BusinessImage
+                width={912}
+                height={328}
+                src={images.header_image}
+                alt="The businesses header image"
+              />
+            )}
           </ImageWrapper>
 
           <DetailsWrapper>
