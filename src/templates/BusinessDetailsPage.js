@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { graphql } from 'gatsby'
+import Imgix from 'react-imgix'
 
 import mockListing from '../../mockContent/listings'
 import media from '../utils/media'
@@ -11,9 +12,8 @@ import Pill from '../components/shared/Pill'
 import { ButtonLink } from '../components/shared/Button'
 import BusinessTypeIcon from '../components/shared/BusinessTypeIcon'
 import DetailsTabs from '../components/BDP/DetailsTabs'
-import { transformHttps } from '../utils/url'
 
-const BusinessImage = styled.img`
+const BusinessImage = styled(Imgix)`
   width: 100%;
   height: 15rem;
   object-fit: cover;
@@ -75,6 +75,7 @@ const BusinessName = styled.h1`
 `
 
 const BusinessLocation = styled.div`
+  text-transform: capitalize;
   color: ${({ theme }) => theme.colour.grey};
   font-size: 0.875rem;
 
@@ -170,33 +171,24 @@ const AboutTabBlock = ({ details, headline }) => (
       <BlockCallout>{headline}</BlockCallout>
       <BlockContent>{details}</BlockContent>
     </DetailBlock>
-    {/* <DetailBlock>
-      <DetailTitle>our ethos</DetailTitle>
-      <BlockCallout>
-        Differentiate Yourself And Attract More Attention, Sales, And Profits
-      </BlockCallout>
-      <BlockContent>
-        There is no denying that the success of an advertisement lies mostly in
-        the headline. The headline should catch the reader’s attention and make
-        him read the rest of the advertisement.{' '}
-      </BlockContent>
-    </DetailBlock> */}
   </>
 )
 
 const BusinessDetailsPage = ({ data }) => {
-  const { businessType } = mockListing[0] // TODO hook up real data store
   const {
     name,
     suburb,
     offerings,
-    images,
+    categories,
+    imgix_images: images,
     business_details,
     product_details,
     new_products,
     headline,
     website,
   } = data.businesses
+
+  const category = categories.length === 0 ? '' : categories[0].name
 
   const tabContent = [
     {
@@ -225,7 +217,9 @@ const BusinessDetailsPage = ({ data }) => {
         <Wrapper>
           <ImageWrapper>
             <BusinessImage
-              src={transformHttps(images.header_image)}
+              width={912}
+              height={328}
+              src={images.header_image}
               alt="The businesses header image"
             />
           </ImageWrapper>
@@ -238,7 +232,7 @@ const BusinessDetailsPage = ({ data }) => {
               <Details>
                 <BusinessName>{name}</BusinessName>
                 <BusinessLocation>
-                  {businessType}
+                  {category && category}
                   <span> / {suburb}</span>
                 </BusinessLocation>
               </Details>
@@ -275,7 +269,7 @@ export const query = graphql`
       }
       slug
       suburb
-      images {
+      imgix_images {
         header_image
       }
     }
