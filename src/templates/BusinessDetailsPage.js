@@ -12,7 +12,6 @@ import Pill from '../components/shared/Pill'
 import { ButtonLink } from '../components/shared/Button'
 import BusinessTypeIcon from '../components/shared/BusinessTypeIcon'
 import DetailsTabs from '../components/BDP/DetailsTabs'
-import { transformHttps } from '../utils/url'
 
 const BusinessImage = styled(Imgix)`
   width: 100%;
@@ -76,6 +75,7 @@ const BusinessName = styled.h1`
 `
 
 const BusinessLocation = styled.div`
+  text-transform: capitalize;
   color: ${({ theme }) => theme.colour.grey};
   font-size: 0.875rem;
 
@@ -175,18 +175,20 @@ const AboutTabBlock = ({ details, headline }) => (
 )
 
 const BusinessDetailsPage = ({ data }) => {
-  const { businessType } = mockListing[0] // TODO hook up real data store
   const {
     name,
     suburb,
     offerings,
-    images,
+    categories,
+    imgix_images: images,
     business_details,
     product_details,
     new_products,
     headline,
     website,
   } = data.businesses
+
+  const category = categories.length === 0 ? '' : categories[0].name
 
   const tabContent = [
     {
@@ -217,7 +219,7 @@ const BusinessDetailsPage = ({ data }) => {
             <BusinessImage
               width={912}
               height={328}
-              src={transformHttps(images.header_image)}
+              src={images.header_image}
               alt="The businesses header image"
             />
           </ImageWrapper>
@@ -230,7 +232,7 @@ const BusinessDetailsPage = ({ data }) => {
               <Details>
                 <BusinessName>{name}</BusinessName>
                 <BusinessLocation>
-                  {businessType}
+                  {category && category}
                   <span> / {suburb}</span>
                 </BusinessLocation>
               </Details>
@@ -267,7 +269,7 @@ export const query = graphql`
       }
       slug
       suburb
-      images {
+      imgix_images {
         header_image
       }
     }

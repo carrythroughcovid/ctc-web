@@ -83,7 +83,7 @@ const truncateString = (str, num) => {
 }
 
 const Listing = ({ listing }) => {
-  const { location, categories, slug, images, headline } = listing
+  const { location, categories, slug, imgix_images: images, headline } = listing
   const category = categories.length === 0 ? '' : categories[0].name
 
   return (
@@ -101,7 +101,7 @@ const Listing = ({ listing }) => {
             </CategoryLabel>
           )}
           <ListingImage
-            src={transformHttps(images.header_image)}
+            src={images.header_image}
             width={380}
             height={124}
             alt=""
