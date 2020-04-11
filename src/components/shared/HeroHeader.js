@@ -44,7 +44,6 @@ const ContentWrapper = styled.div`
 
   ${media.md`
     padding-top: 0;
-    /* padding-left: 6.75rem; */
     padding-bottom: 5rem;
   `}
 `
