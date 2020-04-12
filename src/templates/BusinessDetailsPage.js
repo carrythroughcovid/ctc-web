@@ -70,7 +70,7 @@ const BusinessDetailsPage = ({ data }) => {
             </BusinessLocation>
 
             <ContactDetailsBlock>
-              {business_number && false && (
+              {business_number && (
                 <ContactLinkWrapper>
                   <FiPhone size="1.5rem" />
                   <ContactLink href={`tel:${business_number}`}>
@@ -87,12 +87,12 @@ const BusinessDetailsPage = ({ data }) => {
                     rel="noreferrer noopener"
                     target="_blank"
                   >
-                    {website}
+                    visit our website
                   </ContactLink>
                 </ContactLinkWrapper>
               )}
 
-              {business_email && false && (
+              {business_email && (
                 <ContactLinkWrapper>
                   <FiMail size="1.5rem" />
                   <ContactLink href={`mailto:${business_email}`}>
