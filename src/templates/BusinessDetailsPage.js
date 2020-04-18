@@ -158,7 +158,7 @@ const BusinessDetailsPage = ({ data }) => {
                     target="_blank"
                     fullWidthMobile
                   >
-                    Vist our website
+                    Visit our website
                   </ButtonLink>
                 </>
               )}
