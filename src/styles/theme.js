@@ -6,10 +6,12 @@ const font = {
 const colour = {
   violet: '#6979F8',
   violetDark: '#5F6CD1',
+  blueDark: '#001E61',
   purple: '#BE52F2',
   purpleDark: '#A053C5',
   teal: '#6CD4C4',
   tealDark: '#24A390',
+  lime: '#68D07F',
   red: '#F95861',
 
   greyDark: '#292B3C',
