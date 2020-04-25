@@ -4,6 +4,8 @@ import { Link } from 'gatsby'
 import Imgix from 'react-imgix'
 
 import Badge from './Badge'
+import { getCategoryFromSlug } from '../../utils/categoryMappings'
+import CategoryIcon from './CategoryIcon'
 import { Highlight } from 'react-instantsearch-dom'
 import NoImage from '../shared/NoImage'
 
@@ -34,11 +36,13 @@ const BusinessDescription = styled.div`
 
 const ListingContainer = styled(Link)`
   display: block;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-  border-radius: 0.25rem;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 0.625rem;
   overflow: hidden;
   flex-grow: 1;
   text-decoration: none;
+  display: flex;
+  flex-direction: column;
 
   &:hover {
     text-decoration: none;
@@ -54,25 +58,55 @@ const ListingCard = styled.div`
 
 const ListingDetailsContainer = styled.div`
   background-color: #ffffff;
-  padding: 1rem 1rem 1.5rem;
+  padding: 2.75rem 1rem 1rem;
   margin-bottom: 0rem;
-`
-
-const SuburbLabel = styled.div`
-  left: 1rem;
-  top: 1rem;
-  position: absolute;
-`
-
-const CategoryLabel = styled.div`
-  right: 1rem;
-  top: 1rem;
-  text-transform: capitalize;
-  position: absolute;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
 `
 
 const ImageContainer = styled.div`
   position: relative;
+`
+
+const CategoryIconBubble = styled.div`
+  background-color: ${props => props.colour};
+  border: 2px solid white;
+  border-radius: 100%;
+  width: 3.25rem;
+  height: 3.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: -1.625rem;
+  margin-left: -1.625rem;
+  left: 50%;
+
+  > svg {
+    height: 30px;
+    width: auto;
+  }
+`
+
+const BadgeContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+
+  > span {
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+`
+const CapCase = styled.span`
+  text-transform: capitalize;
 `
 
 const truncateString = (str, num) => {
@@ -83,22 +117,27 @@ const truncateString = (str, num) => {
 }
 
 const Listing = ({ listing }) => {
-  const { location, categories, slug, imgix_images: images, headline } = listing
-  const category = categories.length === 0 ? '' : categories[0].name
+  console.log(listing)
+  const {
+    location,
+    categories,
+    slug,
+    imgix_images: images,
+    headline,
+    offerings,
+  } = listing
+  const categorySlug = categories.length === 0 ? '' : categories[0].name
+  const categoryInfo = getCategoryFromSlug(categorySlug)
+  const offeringsSliced = offerings.slice(0, 2)
 
   return (
     <ListingCard>
       <ListingContainer to={`business/${slug}`}>
         <ImageContainer>
-          {location && location.suburb && (
-            <SuburbLabel>
-              <Badge primary>{location.suburb}</Badge>
-            </SuburbLabel>
-          )}
-          {category && (
-            <CategoryLabel>
-              <Badge secondary>{category}</Badge>
-            </CategoryLabel>
+          {categorySlug && (
+            <CategoryIconBubble colour={categoryInfo.colour}>
+              <CategoryIcon icon={categoryInfo.icon} />
+            </CategoryIconBubble>
           )}
           {images.header_image ? (
             <ListingImage
@@ -113,12 +152,25 @@ const Listing = ({ listing }) => {
           )}
         </ImageContainer>
         <ListingDetailsContainer>
-          <BusinessName>
-            <Highlight attribute="name" hit={listing} />
-          </BusinessName>
-          <BusinessDescription>
-            {truncateString(headline, 60)}
-          </BusinessDescription>
+          <div>
+            <BusinessName>
+              <Highlight attribute="name" hit={listing} />
+            </BusinessName>
+            <BusinessDescription>
+              {truncateString(headline, 60)}
+            </BusinessDescription>
+          </div>
+          <BadgeContainer>
+            {location && location.suburb && (
+              <Badge light>{location.suburb}</Badge>
+            )}
+            {offeringsSliced.length >= 1 &&
+              offeringsSliced.map((offering, index) => (
+                <Badge key={index} light>
+                  <CapCase>{offering.name}</CapCase>
+                </Badge>
+              ))}
+          </BadgeContainer>
         </ListingDetailsContainer>
       </ListingContainer>
     </ListingCard>

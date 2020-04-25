@@ -9,7 +9,7 @@ const categories = [
   },
   {
     name: 'Health and wellness',
-    slug: 'health-and-wellness',
+    slug: 'health',
     colour: theme.colour.violet,
     icon: 'Health',
   },
@@ -21,27 +21,31 @@ const categories = [
   },
   {
     name: 'Consulting',
+    slug: 'services',
     colour: theme.colour.greyDark,
     icon: 'Briefcase',
   },
   {
     name: 'Home and Car',
-    slug: 'home-and-car',
+    slug: 'home',
     colour: theme.colour.lime,
     icon: 'Car',
   },
   {
     name: 'Food and Drink',
-    slug: 'food-and-drink',
+    slug: 'hospitality',
     colour: theme.colour.purple,
     icon: 'Food',
   },
   {
-    name: 'More',
-    slug: 'more',
+    name: 'Other',
+    slug: 'other',
     colour: theme.colour.blueDark,
     icon: 'Rocketship',
   },
 ]
+
+export const getCategoryFromSlug = slug =>
+  categories.find(cat => cat.slug === slug.toLowerCase())
 
 export default categories

@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'gatsby'
 
 import categories from '../../utils/categoryMappings'
 import CategoryIcon from '../shared/CategoryIcon'
@@ -17,6 +18,7 @@ const OverflowContainer = styled.div`
   padding-left: ${({ theme }) => theme.containerGutter};
   padding-right: ${({ theme }) => theme.containerGutter};
   overflow-x: scroll;
+  margin-top: 2.75rem;
 `
 
 const Row = styled.div`
@@ -51,6 +53,21 @@ const CategoryTile = styled.div`
   align-items: center;
   justify-content: space-between;
   text-align: center;
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 0px 20rem inset;
+  }
+
+  &:active {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 0px 20rem inset;
+  }
+`
+
+const TileLink = styled(Link)`
+  &:hover {
+    text-decoration: none;
+    cursor: pointer;
+  }
 `
 
 const CategoryShowcase = () => {
@@ -59,10 +76,12 @@ const CategoryShowcase = () => {
       <Row>
         {categories.map((category, index) => (
           <Col key={index}>
-            <CategoryTile colour={category.colour}>
-              <CategoryIcon icon={category.icon} />
-              {category.name}
-            </CategoryTile>
+            <TileLink to={`/search?category=${category.slug}`}>
+              <CategoryTile colour={category.colour}>
+                <CategoryIcon icon={category.icon} />
+                {category.name}
+              </CategoryTile>
+            </TileLink>
           </Col>
         ))}
       </Row>

@@ -1,8 +1,9 @@
 import styled, { css } from 'styled-components'
 
 const Badge = styled.span`
-  border-radius: 0.25rem;
-  padding: 0.25rem 0.5rem;
+  border-radius: 6.25rem;
+  display: inline-block;
+  padding: 0.375rem 0.625rem;
   color: #ffffff;
   font-size: 0.75rem;
   background-color: ${props => props.theme.colour.black};
@@ -17,6 +18,13 @@ const Badge = styled.span`
     props.secondary &&
     css`
       background-color: ${props.theme.colour.tealDark};
+    `}
+
+  ${props =>
+    props.light &&
+    css`
+      background-color: #eceffd;
+      color: ${props => props.theme.colour.black};
     `}
 `
 

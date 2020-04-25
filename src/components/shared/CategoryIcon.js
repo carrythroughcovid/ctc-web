@@ -1,29 +1,31 @@
 import React from 'react'
 
-import Beauty from '../../assets/categoryIcons/beauty.svg'
-import Briefcase from '../../assets/categoryIcons/briefcase.svg'
-import Car from '../../assets/categoryIcons/car.svg'
-import Food from '../../assets/categoryIcons/food.svg'
-import Groceries from '../../assets/categoryIcons/groceries.svg'
-import Health from '../../assets/categoryIcons/health.svg'
-import Rocketship from '../../assets/categoryIcons/rocketship.svg'
+import beauty from '../../assets/categoryIcons/beauty.svg'
+import briefcase from '../../assets/categoryIcons/briefcase.svg'
+import car from '../../assets/categoryIcons/car.svg'
+import food from '../../assets/categoryIcons/food.svg'
+import groceries from '../../assets/categoryIcons/groceries.svg'
+import health from '../../assets/categoryIcons/health.svg'
+import rocketship from '../../assets/categoryIcons/rocketship.svg'
 
 const categoryIcons = {
-  Beauty,
-  Briefcase,
-  Car,
-  Food,
-  Groceries,
-  Health,
-  Rocketship,
+  beauty,
+  briefcase,
+  car,
+  food,
+  groceries,
+  health,
+  rocketship,
 }
 
 const CategoryIcon = ({ icon }) => {
-  if (!categoryIcons.hasOwnProperty(icon)) {
+  const iconName = icon.toLowerCase()
+
+  if (!categoryIcons.hasOwnProperty(iconName)) {
     return ''
   }
 
-  const Icon = categoryIcons[icon]
+  const Icon = categoryIcons[iconName]
 
   return <Icon />
 }
