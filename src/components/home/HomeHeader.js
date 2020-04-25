@@ -27,9 +27,10 @@ const Actions = () => (
 
 const HomeHeader = () => (
   <HeroHeader
-    sub="we are"
+    sub="who we are"
     title={() => <Title />}
     actions={() => <Actions />}
+    description="CarryThroughCovid is a new website and app for small retail and service businesses adapting to COVID-19 to access customers (regulars and new) and keep them up-to-date on your latest offerings at the touch of a finger - free of charge."
     large
   />
 )

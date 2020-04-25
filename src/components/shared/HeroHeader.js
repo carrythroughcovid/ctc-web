@@ -39,12 +39,12 @@ const HeaderContent = styled.div`
   justify-content: center;
 `
 const ContentWrapper = styled.div`
-  padding-top: 3.5rem;
+  padding-top: 5rem;
   padding-bottom: 3.75rem;
 
   ${media.md`
     padding-top: 0;
-    padding-bottom: 5rem;
+    padding-bottom: 0;
   `}
 `
 
@@ -52,6 +52,8 @@ const SubTitle = styled.div`
   font-family: ${({ theme }) => theme.font.alt};
   text-transform: uppercase;
   letter-spacing: 1.5px;
+  color: ${({ theme }) => theme.colour.accent2};
+  padding-bottom: 0.625rem;
 `
 
 const Title = styled.h1`
@@ -61,6 +63,19 @@ const Title = styled.h1`
 
   ${media.md`
     font-size: 3.25rem;
+    line-height: 3.5rem;
+  `}
+`
+
+const Description = styled.div`
+  max-width: 38.75rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  padding-top: 2rem;
+  display: none;
+
+  ${media.sm`
+    display: block;
   `}
 `
 
@@ -70,6 +85,11 @@ const Actions = styled.div`
   & > * {
     margin-right: 1rem;
     margin-bottom: 1rem;
+    display: block;
+
+    ${media.sm`
+      display: inline-block;
+    `}
   }
 
   & > *:last-child {
@@ -80,7 +100,7 @@ const Actions = styled.div`
 const renderFuncOrStr = entity =>
   typeof entity === 'function' ? entity() : entity
 
-const HeroHeader = ({ sub, title, actions, large }) => (
+const HeroHeader = ({ sub, title, description, actions, large }) => (
   <Hero large={large}>
     <LogoWrapper>
       <Container>
@@ -94,6 +114,9 @@ const HeroHeader = ({ sub, title, actions, large }) => (
         <ContentWrapper>
           {sub && <SubTitle>{renderFuncOrStr(sub)}</SubTitle>}
           {title && <Title>{renderFuncOrStr(title)}</Title>}
+          {description && (
+            <Description>{renderFuncOrStr(description)}</Description>
+          )}
           {actions && <Actions>{renderFuncOrStr(actions)}</Actions>}
         </ContentWrapper>
       </Container>
