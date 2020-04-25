@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import categories from '../../utils/categoryMappings'
+import CategoryIcon from '../shared/CategoryIcon'
 
 const tileMinWidth = 168
 const tileGutter = 16
@@ -14,24 +15,21 @@ const OverflowContainer = styled.div`
   width: 100%;
   margin: 0 auto;
   padding-left: ${({ theme }) => theme.containerGutter};
-
-  @media (min-width: ${overflowWidth}px) {
-    padding-right: ${({ theme }) => theme.containerGutter};
-  }
+  padding-right: ${({ theme }) => theme.containerGutter};
+  overflow-x: scroll;
 `
 
 const Row = styled.div`
   display: flex;
-  /* margin-left: -${tileGutter / 2 / 16}rem;
-  margin-right: -${tileGutter / 2 / 16}rem; */
-  overflow-x: scroll;
+
+  align-items: stretch;
 `
 const Col = styled.div`
   flex: 1;
-  text-align: center;
-  /* padding-left: ${tileGutter / 2 / 16}rem; */
+  /* text-align: center; */
   padding-right: ${tileGutter / 16}rem;
   min-width: ${tileMinWidth / 16}rem;
+  min-height: ${tileMinWidth / 16}rem;
 
   @media (min-width: ${overflowWidth}px) {
     &:last-of-type {
@@ -44,9 +42,15 @@ const CategoryTile = styled.div`
   background-color: ${props => props.colour};
   color: white;
   border-radius: 0.5rem;
-  padding: 1rem;
+  padding: 1.5rem 1.5rem 1rem;
   font-size: 1.125rem;
+  height: 100%;
   line-height: 1.625rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
 `
 
 const CategoryShowcase = () => {
@@ -56,6 +60,7 @@ const CategoryShowcase = () => {
         {categories.map((category, index) => (
           <Col key={index}>
             <CategoryTile colour={category.colour}>
+              <CategoryIcon icon={category.icon} />
               {category.name}
             </CategoryTile>
           </Col>
