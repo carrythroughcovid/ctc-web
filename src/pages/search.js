@@ -133,11 +133,14 @@ const Results = connectStateResults(
   }
 )
 
-const SearchResultsPage = () => {
+const SearchResultsPage = ({
+  header = () => <HomeHeader />,
+  categorySlug = '',
+}) => {
   return (
     <>
       <SEO description="Our mission is to maximise community support for small businesses throughout COVID-19. Are you a supporter of small business?" />
-      <Page customHeader={() => <HomeHeader />}>
+      <Page customHeader={header}>
         <InstantSearch searchClient={searchClient} indexName="prod_business">
           <Container>
             <FormSection>
@@ -152,6 +155,7 @@ const SearchResultsPage = () => {
                 <CustomMenu
                   attribute="categories.name"
                   resourceName="categories"
+                  defaultRefinement={categorySlug}
                 ></CustomMenu>
                 <CustomMenu
                   attribute="offerings.name"

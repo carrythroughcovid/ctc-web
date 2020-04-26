@@ -76,7 +76,7 @@ const CategoryShowcase = () => {
       <Row>
         {categories.map((category, index) => (
           <Col key={index}>
-            <TileLink to={`/search?category=${category.slug}`}>
+            <TileLink to={`/category/${category.slug}`}>
               <CategoryTile colour={category.colour}>
                 <CategoryIcon icon={category.icon} />
                 {category.name}
