@@ -117,7 +117,6 @@ const truncateString = (str, num) => {
 }
 
 const Listing = ({ listing }) => {
-  console.log(listing)
   const {
     location,
     categories,
@@ -132,7 +131,7 @@ const Listing = ({ listing }) => {
 
   return (
     <ListingCard>
-      <ListingContainer to={`business/${slug}`}>
+      <ListingContainer to={`/business/${slug}`}>
         <ImageContainer>
           {categorySlug && (
             <CategoryIconBubble colour={categoryInfo.colour}>
