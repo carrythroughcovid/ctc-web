@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import media from '../../utils/media'
 import LogoDark from '../../assets/logoDark.svg'
 import LogoLight from '../../assets/logoLight.svg'
-import LogoLightSmall from '../../assets/LogoLightSmall.svg'
+import LogoLightSmall from '../../assets/logoLightSmall.svg'
 
 const DesktopLogo = styled.div`
   display: none;
