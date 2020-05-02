@@ -116,13 +116,13 @@ const truncateString = (str, num) => {
   return str.slice(0, num) + '...'
 }
 
-const Listing = ({ listing }) => {
+const Listing = ({ listing, highlight = false }) => {
   const {
-    location,
     categories,
     slug,
     imgix_images: images,
     headline,
+    name,
     offerings,
   } = listing
   const categorySlug = categories.length === 0 ? '' : categories[0].name
@@ -153,16 +153,13 @@ const Listing = ({ listing }) => {
         <ListingDetailsContainer>
           <div>
             <BusinessName>
-              <Highlight attribute="name" hit={listing} />
+              {highlight ? <Highlight attribute="name" hit={listing} /> : name}
             </BusinessName>
             <BusinessDescription>
               {truncateString(headline, 60)}
             </BusinessDescription>
           </div>
           <BadgeContainer>
-            {location && location.suburb && (
-              <Badge light>{location.suburb}</Badge>
-            )}
             {offeringsSliced.length >= 1 &&
               offeringsSliced.map((offering, index) => (
                 <Badge key={index} light>

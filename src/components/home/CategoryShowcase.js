@@ -18,7 +18,8 @@ const OverflowContainer = styled.div`
   padding-left: ${({ theme }) => theme.containerGutter};
   padding-right: ${({ theme }) => theme.containerGutter};
   overflow-x: scroll;
-  margin-top: 2.75rem;
+  margin-top: 2rem;
+  padding-bottom: 1rem;
 `
 
 const Row = styled.div`
@@ -42,6 +43,7 @@ const Col = styled.div`
 
 const CategoryTile = styled.div`
   background-color: ${props => props.colour};
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
   color: white;
   border-radius: 0.5rem;
   padding: 1.5rem 1.5rem 1rem;

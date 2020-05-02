@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Link } from 'gatsby'
 
 import Container from './Container'
@@ -22,6 +22,14 @@ const Hero = styled.div`
     min-height: 34.5rem;
     background-size: initial;
   `}
+
+  ${props =>
+    props.small &&
+    css`
+      ${media.md`
+      min-height: 20rem;
+    `}
+    `}
 
   ${props =>
     props.large &&
@@ -100,8 +108,8 @@ const Actions = styled.div`
 const renderFuncOrStr = entity =>
   typeof entity === 'function' ? entity() : entity
 
-const HeroHeader = ({ sub, title, description, actions, large }) => (
-  <Hero large={large}>
+const HeroHeader = ({ sub, title, description, actions, large, small }) => (
+  <Hero large={large} small={small}>
     <LogoWrapper>
       <Container>
         <Link to={`/`}>
