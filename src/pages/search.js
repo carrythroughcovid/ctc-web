@@ -111,22 +111,27 @@ const CustomSearchBox = connectSearchBox(SearchBar)
 const CustomMenu = connectMenu(SearchMenu)
 
 const Results = connectStateResults(
-  ({ searching, searchState, searchResults, children }) => {
+  ({ searching, searchState, searchResults, children, renderUnlessSearch }) => {
+    if (Object.keys(searchState).length === 0) {
+      return renderUnlessSearch()
+    }
     if (searchResults && searchResults.nbHits !== 0) {
-      return children
+      return <Container>{children}</Container>
     } else {
       if (searching) {
         return (
-          <LoadingContainer>
-            <Spinner></Spinner>
-          </LoadingContainer>
+          <Container>
+            <LoadingContainer>
+              <Spinner></Spinner>
+            </LoadingContainer>
+          </Container>
         )
       } else {
         return (
-          <>
+          <Container>
             <p>No results have been found for "{searchState.query}"</p>
             <ClearClearButton clearsQuery />
-          </>
+          </Container>
         )
       }
     }
@@ -136,6 +141,7 @@ const Results = connectStateResults(
 const SearchResultsPage = ({
   header = () => <HomeHeader />,
   categorySlug = '',
+  renderUnlessSearch = false,
 }) => {
   return (
     <>
@@ -166,11 +172,9 @@ const SearchResultsPage = ({
           </Container>
 
           <ListingsSection id="explore">
-            <Container>
-              <Results>
-                <CustomHits />
-              </Results>
-            </Container>
+            <Results renderUnlessSearch={renderUnlessSearch}>
+              <CustomHits />
+            </Results>
           </ListingsSection>
         </InstantSearch>
       </Page>
