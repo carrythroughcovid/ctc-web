@@ -112,7 +112,7 @@ const CustomMenu = connectMenu(SearchMenu)
 
 const Results = connectStateResults(
   ({ searching, searchState, searchResults, children, renderUnlessSearch }) => {
-    if (Object.keys(searchState).length === 0) {
+    if (Object.keys(searchState).length === 0 && renderUnlessSearch) {
       return renderUnlessSearch()
     }
     if (searchResults && searchResults.nbHits !== 0) {
