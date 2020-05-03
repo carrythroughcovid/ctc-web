@@ -5,7 +5,10 @@
   "version": "0.1.0",
   "author": "Carry Through COVID Team <contact@carrythroughcovid.com>",
   "dependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
     "algoliasearch": "^4.1.0",
+    "esm": "^3.2.25",
     "gatsby": "^2.19.45",
     "gatsby-image": "^2.2.44",
     "gatsby-plugin-google-analytics": "^2.2.2",
@@ -36,6 +39,8 @@
     "styled-normalize": "^8.0.7"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.9.4",
+    "@babel/register": "^7.9.0",
     "gh-pages": "^2.2.0",
     "prettier": "^1.19.1"
   },

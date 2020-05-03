@@ -83,7 +83,7 @@ const InfiniteHits = ({ hits, hasMore, refineNext }) => {
       <Row>
         {hits.map((hit, index) => (
           <Col display="flex" xs={12} sm={6} md={4} lg={3} key={index}>
-            <BusinessCard listing={hit}></BusinessCard>
+            <BusinessCard listing={hit} highlight />
           </Col>
         ))}
       </Row>
@@ -111,33 +111,42 @@ const CustomSearchBox = connectSearchBox(SearchBar)
 const CustomMenu = connectMenu(SearchMenu)
 
 const Results = connectStateResults(
-  ({ searching, searchState, searchResults, children }) => {
+  ({ searching, searchState, searchResults, children, renderUnlessSearch }) => {
+    if (Object.keys(searchState).length === 0 && renderUnlessSearch) {
+      return renderUnlessSearch()
+    }
     if (searchResults && searchResults.nbHits !== 0) {
-      return children
+      return <Container>{children}</Container>
     } else {
       if (searching) {
         return (
-          <LoadingContainer>
-            <Spinner></Spinner>
-          </LoadingContainer>
+          <Container>
+            <LoadingContainer>
+              <Spinner></Spinner>
+            </LoadingContainer>
+          </Container>
         )
       } else {
         return (
-          <>
+          <Container>
             <p>No results have been found for "{searchState.query}"</p>
             <ClearClearButton clearsQuery />
-          </>
+          </Container>
         )
       }
     }
   }
 )
 
-const SearchResultsPage = () => {
+const SearchResultsPage = ({
+  header = () => <HomeHeader />,
+  categorySlug = '',
+  renderUnlessSearch = false,
+}) => {
   return (
     <>
       <SEO description="Our mission is to maximise community support for small businesses throughout COVID-19. Are you a supporter of small business?" />
-      <Page customHeader={() => <HomeHeader />}>
+      <Page customHeader={header}>
         <InstantSearch searchClient={searchClient} indexName="prod_business">
           <Container>
             <FormSection>
@@ -152,6 +161,7 @@ const SearchResultsPage = () => {
                 <CustomMenu
                   attribute="categories.name"
                   resourceName="categories"
+                  defaultRefinement={categorySlug}
                 ></CustomMenu>
                 <CustomMenu
                   attribute="offerings.name"
@@ -162,11 +172,9 @@ const SearchResultsPage = () => {
           </Container>
 
           <ListingsSection id="explore">
-            <Container>
-              <Results>
-                <CustomHits />
-              </Results>
-            </Container>
+            <Results renderUnlessSearch={renderUnlessSearch}>
+              <CustomHits />
+            </Results>
           </ListingsSection>
         </InstantSearch>
       </Page>
