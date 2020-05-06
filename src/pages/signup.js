@@ -280,7 +280,7 @@ const Form = () => {
                         onChange={setHeaderImage}
                         imgExtension={['.jpg', '.jpeg', '.png']}
                         buttonText="Upload header image"
-                        label="The main image to promote your business (landscape)"
+                        label="The main image to promote your business (landscape - 928 x 456px)"
                         withPreview={true}
                         singleImage={true}
                       />
