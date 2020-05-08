@@ -2,6 +2,12 @@ import theme from '../styles/theme'
 
 const categories = [
   {
+    name: "Mother's Day Specials",
+    slug: 'mothersday',
+    colour: '#F5A5BD',
+    icon: 'Flower',
+  },
+  {
     name: 'Retail',
     slug: 'retail',
     colour: theme.colour.red,

@@ -26,9 +26,19 @@ const renderCategory = (node, categoryInfo) => {
 }
 
 const IndexPage = ({ data }) => {
-  const { retail, health, beauty, services, home, hospitality, other } = data
+  const {
+    mothersday,
+    retail,
+    health,
+    beauty,
+    services,
+    home,
+    hospitality,
+    other,
+  } = data
 
   const categories = {
+    mothersday,
     retail,
     health,
     beauty,
@@ -85,6 +95,16 @@ export const query = graphql`
   }
 
   query {
+    mothersday: allBusinesses(
+      limit: 4
+      filter: { categories: { elemMatch: { name: { eq: "mothersday" } } } }
+    ) {
+      edges {
+        node {
+          ...BusinessInfo
+        }
+      }
+    }
     retail: allBusinesses(
       limit: 4
       filter: { categories: { elemMatch: { name: { eq: "retail" } } } }
