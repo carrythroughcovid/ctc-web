@@ -1,6 +1,7 @@
 import React from 'react'
 
 import beauty from '../../assets/categoryIcons/beauty.svg'
+import flower from '../../assets/categoryIcons/flower.svg'
 import briefcase from '../../assets/categoryIcons/briefcase.svg'
 import car from '../../assets/categoryIcons/car.svg'
 import food from '../../assets/categoryIcons/food.svg'
@@ -9,6 +10,7 @@ import health from '../../assets/categoryIcons/health.svg'
 import rocketship from '../../assets/categoryIcons/rocketship.svg'
 
 const categoryIcons = {
+  flower,
   beauty,
   briefcase,
   car,
