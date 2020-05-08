@@ -36,6 +36,25 @@ import {
   AboutContent,
 } from '../components/BDP/styles'
 
+const createTextLinks = text =>
+  (text || '').replace(
+    /([^\S]|^)(((https?\:\/\/)|(www\.))(\S+))/gi,
+    (match, space, url) => {
+      let hyperlink = url
+      if (!hyperlink.match('^https?://')) {
+        hyperlink = 'http://' + hyperlink
+      }
+      return (
+        space +
+        '<a href="' +
+        hyperlink +
+        '" rel="noreferrer noopener" target="_blank">' +
+        url +
+        '</a>'
+      )
+    }
+  )
+
 const BusinessDetailsPage = ({ data }) => {
   const {
     name,
@@ -50,6 +69,8 @@ const BusinessDetailsPage = ({ data }) => {
     new_products,
     headline,
     website,
+    special_title,
+    special_content,
   } = data.businesses
   const category = categories.length === 0 ? '' : categories[0].name
   const newProductsSplit = new_products
@@ -147,6 +168,17 @@ const BusinessDetailsPage = ({ data }) => {
               )}
             </ServicesDetails>
             <AboutDetails>
+              {special_title && special_content && (
+                <div>
+                  <Heading>{special_title}</Heading>
+                  <Spacer />
+                  <AboutContent
+                    dangerouslySetInnerHTML={{
+                      __html: createTextLinks(special_content),
+                    }}
+                  />
+                </div>
+              )}
               <Heading>Our Story</Heading>
               <Spacer />
               <AboutContent>{business_details}</AboutContent>
@@ -195,6 +227,8 @@ export const query = graphql`
       imgix_images {
         header_image
       }
+      special_title
+      special_content
     }
   }
 `
