@@ -31,7 +31,7 @@ const Col = styled.div`
   flex: 1;
   /* text-align: center; */
   padding-right: ${tileGutter / 16}rem;
-  min-width: ${tileMinWidth / 16}rem;
+  min-width: ${tileMinWidth / 16 - 16}rem;
   min-height: ${tileMinWidth / 16}rem;
 
   @media (min-width: ${overflowWidth}px) {
