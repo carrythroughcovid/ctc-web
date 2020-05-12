@@ -10,6 +10,7 @@ import {
   connectMenu,
   connectCurrentRefinements,
   connectSearchBox,
+  connectRefinementList,
 } from 'react-instantsearch-dom'
 
 import BusinessCard from '../components/shared/BusinessCard'
@@ -22,10 +23,11 @@ import media from '../utils/media'
 import Spinner from '../components/shared/Spinner'
 import HomeHeader from '../components/home/HomeHeader'
 import SEO from '../components/shared/SEO'
+import SubCategoriesRefinements from '../components/subcategories/SubcategoriesRefinements'
 
 const FormSection = styled.div`
   padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-bottom: 0.5rem;
 
   ${media.sm`
     display: flex;
@@ -106,6 +108,7 @@ const ClearButton = ({ items, refine }) => (
 )
 
 const ClearClearButton = connectCurrentRefinements(ClearButton)
+const SubCategories = connectRefinementList(SubCategoriesRefinements)
 const CustomHits = connectInfiniteHits(InfiniteHits)
 const CustomSearchBox = connectSearchBox(SearchBar)
 const CustomMenu = connectMenu(SearchMenu)
@@ -169,6 +172,7 @@ const SearchResultsPage = ({
                 ></CustomMenu>
               </CategoryWrapper>
             </FormSection>
+            <SubCategories attribute="subcategories.display" />
           </Container>
 
           <ListingsSection id="explore">
