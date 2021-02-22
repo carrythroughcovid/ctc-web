@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "Carry Through COVID Team <contact@carrythroughcovid.com>",
   "dependencies": {
+    "@babel/compat-data": "^7.12.13",
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
     "algoliasearch": "^4.1.0",

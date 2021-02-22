@@ -120,6 +120,11 @@
   dependencies:
     "@babel/highlight" "^7.8.3"
 
+"@babel/compat-data@^7.12.13":
+  version "7.12.13"
+  resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.12.13.tgz#27e19e0ed3726ccf54067ced4109501765e7e2e8"
+  integrity sha512-U/hshG5R+SIoW7HVWIdmy1cB7s3ki+r3FpyEZiCgpi4tFgPnX/vynY80ZGSASOIrUM6O7VxOgCZgdt7h97bUGg==
+
 "@babel/compat-data@^7.8.6":
   version "7.8.6"
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.8.6.tgz#7eeaa0dfa17e50c7d9c0832515eee09b56f04e35"
